@@ -218,6 +218,21 @@ Lưu vết kiểm toán khi Quản lý CSKH thực thi gộp 2 hồ sơ khách h
 
 ---
 
+### 12. Bảng Người Dùng Hệ Thống (`Staff_User` / DocType `User` / `tabUser`)
+Đại diện cho 5 vai trò nhân sự nội bộ (Bán hàng & CSKH cửa hàng, Quản lý cửa hàng, CSKH chuỗi, Quản lý chuỗi, Quản trị hệ thống) và phân quyền chi nhánh (User Permissions).
+
+| Tên logic | Tên vật lý (Fieldname) | Ý nghĩa nghiệp vụ | Kiểu dữ liệu (Frappe/SQL) | Bắt buộc | Duy nhất | Giá trị hợp lệ / Enum | Nguồn dữ liệu & Quy tắc kiểm tra |
+| :--- | :--- | :--- | :---: | :---: | :---: | :--- | :--- |
+| **Tên đăng nhập / Email** | `name` / `email` | Mã định danh duy nhất / Email | Data / VARCHAR(140) | Yes | Yes | Format email: `user@cellphones.com.vn` | Quản trị viên khởi tạo; Bắt buộc duy nhất |
+| **Họ và tên nhân viên** | `full_name` / `first_name` | Tên đầy đủ của nhân sự | Data / VARCHAR(140) | Yes | No | Chuỗi ký tự, tối đa 140 ký tự | Quản trị viên nhập |
+| **Số điện thoại nội bộ** | `phone` / `mobile_no` | SĐT liên hệ công việc | Data / VARCHAR(20) | No | No | Chuỗi 10 số (Regex VN) | Quản trị viên nhập |
+| **Vai trò người dùng** | `role_profile_name` | 5 Nhóm vai trò chuẩn theo BA | Select / VARCHAR(100) | Yes | No | `Ban_hang_CSKH_cua_hang`, `Quan_ly_cua_hang`, `CSKH_chuoi`, `Quan_ly_chuoi`, `Quan_tri_he_thong` | Gán Role Profile chuẩn hóa |
+| **Chi nhánh trực thuộc** | `default_branch` | Cửa hàng nhân viên công tác | Link / VARCHAR(140) | No | No | Link tới `Branch_Store` | Căn cứ thiết lập User Permission phân vùng dữ liệu |
+| **Phân loại người dùng** | `user_type` | Loại tài khoản hệ thống | Select / VARCHAR(50) | Yes | No | `System User` | Mặc định: `System User` |
+| **Đang hoạt động** | `enabled` | Trạng thái tài khoản | Check / INT(1) | Yes | No | `1` (Active), `0` (Disabled) | Mặc định: `1` |
+
+---
+
 ## PHẦN 2: CÁC QUY TẮC KIỂM TRA TÍNH HỢP LỆ CHI TIẾT (VALIDATION RULES)
 
 ### 1. Quy tắc Định dạng Số điện thoại Việt Nam (Regex Validation)
@@ -311,6 +326,16 @@ Lưu vết kiểm toán khi Quản lý CSKH thực thi gộp 2 hồ sơ khách h
 | `TCK-2026-00150` | `CUST-2026-00002` | `0912345678` | Lê Thị Bích Trâm| `SP-LOQ-83GS001RVN` | `83GS001RVNVN101` | `Tiep_nhan_bao_hanh` | High | `In_Progress` | — | `Chua_thong_bao` |
 | `TCK-2026-00142` | `CUST-2026-00003` | `0987654321` | Hoàng Minh Quân | `SP-GAN-65W` | `AN2024GAN65001` | `Doi_tra_theo_chinh_sach`| Medium | `Resolved` | `Doi_theo_chinh_sach` | `Da_thong_bao_qua_dien_thoai` |
 
+### 4. Dữ liệu Mẫu Bảng Người Dùng Hệ Thống (`Staff_User` - 5 Vai trò chuẩn)
+
+| `email` (`name`) | `full_name` | `phone` | `role_profile_name` | `default_branch` | `enabled` |
+| :--- | :--- | :--- | :--- | :--- | :---: |
+| `admin@cellphones.com.vn` | Trần Quang Huy | `0909000001` | `Quan_tri_he_thong` (System Administrator) | `BR-00101` | 1 |
+| `linh.manager@cellphones.com.vn` | Đỗ Mỹ Linh | `0909000002` | `Quan_ly_cua_hang` (Store Manager) | `BR-00102` | 1 |
+| `thuan.cskh@cellphones.com.vn` | Nguyễn Văn Thuận | `0909000003` | `Ban_hang_CSKH_cua_hang` (Store Sales & CSKH) | `BR-00101` | 1 |
+| `my.chain@cellphones.com.vn` | Bùi Trà My | `0909000004` | `CSKH_chuoi` (Chain CSKH Agent) | `BR-00101` | 1 |
+| `phuc.head@cellphones.com.vn` | Lê Hoàng Phúc | `0909000005` | `Quan_ly_chuoi` (Chain Manager / Head CSKH)| `BR-00101` | 1 |
+
 ---
 
 ## PHẦN 5: QUY ĐỊNH CỘT CSV CẦN NHẬP (CSV IMPORT SPECIFICATIONS)
@@ -367,3 +392,18 @@ Dưới đây là đặc tả chi tiết danh sách cột trong các file mẫu 
 | `Item Group` | `item_group` | **BẮT BUỘC** | Enum | `Laptop` | `Điện thoại`, `Laptop`, `Phụ kiện` |
 | `Warranty Months`| `standard_warranty_months`| **BẮT BUỘC** | Int | `24` | Số tháng bảo hành chính hãng (24 tháng cho Lenovo LOQ) |
 | `Is Active` | `is_active` | **BẮT BUỘC** | Int | `1` | `1` (Mở bán), `0` (Ngừng kinh doanh) |
+
+---
+
+### 4. File CSV Import Nhân sự & Người dùng (`Staff_User_Import.csv`)
+* **Mục đích:** Khởi tạo danh sách tài khoản nội bộ và phân quyền 5 nhóm vai trò theo chi nhánh.
+* **Quy định cột:**
+
+| Header Cột CSV | Fieldname Frappe tương ứng | Bắt buộc | Kiểu dữ liệu | Ví dụ giá trị | Ghi chú kiểm tra |
+| :--- | :--- | :---: | :--- | :--- | :--- |
+| `Email / User ID` | `name` / `email` | **BẮT BUỘC** | Text | `thuan.cskh@cellphones.com.vn` | Email đăng nhập duy nhất |
+| `Full Name` | `first_name` | **BẮT BUỘC** | Text | `Nguyễn Văn Thuận` | Họ và tên đầy đủ |
+| `Phone` | `phone` | Tùy chọn | Text | `0909000003` | Số điện thoại nội bộ |
+| `Role Profile` | `role_profile_name` | **BẮT BUỘC** | Enum | `Ban_hang_CSKH_cua_hang` | 5 Vai trò chuẩn theo BA |
+| `Default Branch` | `default_branch` | Tùy chọn | Text | `BR-00101` | Mã chi nhánh cửa hàng |
+| `Is Active` | `enabled` | **BẮT BUỘC** | Int | `1` | `1` (Hoạt động), `0` (Khóa tài khoản) |

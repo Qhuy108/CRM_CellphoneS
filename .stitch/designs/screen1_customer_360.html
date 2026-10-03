@@ -1,19 +1,18 @@
 <!DOCTYPE html>
-
-<html class="light" lang="vi"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Frappe Desk v15 - CellphoneS CRM Enterprise</title>
-<!-- Material Symbols Outlined -->
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<!-- Inter & Public Sans Google Fonts -->
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<!-- Tailwind CSS v3 -->
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script id="tailwind-config">
+<html class="light" lang="vi">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>CellphoneS CRM - Hồ Sơ Khách Hàng 360° (Frappe Desk v15)</title>
+  <!-- Material Symbols Outlined -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+  <!-- Fonts: Inter & JetBrains Mono -->
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+  <!-- Tailwind CSS v3 -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
     tailwind.config = {
       darkMode: "class",
       theme: {
@@ -47,13 +46,14 @@
             headline: ["Inter", "sans-serif"],
             display: ["Inter", "sans-serif"],
             body: ["Inter", "sans-serif"],
-            label: ["Public Sans", "sans-serif"]
+            label: ["Public Sans", "sans-serif"],
+            mono: ["JetBrains Mono", "monospace"]
           }
         },
       },
     }
   </script>
-<style>
+  <style>
     .material-symbols-outlined {
       font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
       display: inline-block;
@@ -63,7 +63,6 @@
     .material-symbols-outlined.fill {
       font-variation-settings: 'FILL' 1;
     }
-    /* Frappe Desk subtle scrollbar */
     ::-webkit-scrollbar {
       width: 6px;
       height: 6px;
@@ -81,690 +80,596 @@
   </style>
 </head>
 <body class="bg-[#F8FAFC] text-slate-800 font-body antialiased min-h-screen flex flex-col selection:bg-rose-100 selection:text-brand-600">
-<!-- ================= TOPBAR (Shared Component: TopNavBar adapted) ================= -->
+
+<!-- ================= TOPBAR (Frappe Desk v15 Header) ================= -->
 <header class="w-full h-14 px-4 flex items-center justify-between z-40 fixed top-0 left-0 bg-white border-b border-slate-200 shadow-sm select-none">
-<!-- Left Section: Brand Logo & Frappe Awesome Bar Search -->
-<div class="flex items-center gap-6 flex-1 max-w-3xl">
-<!-- Brand Logo -->
-<div class="flex items-center gap-2.5 shrink-0 pr-2 border-r border-slate-200">
-<div class="w-8 h-8 rounded-lg bg-[#D70018] flex items-center justify-center text-white font-black text-xl tracking-tighter shadow-sm shadow-rose-200">
-<span>C</span>
-</div>
-<div class="flex flex-col">
-<span class="font-headline font-extrabold text-base text-[#D70018] tracking-tight leading-none">CellphoneS CRM</span>
-<span class="text-[10px] font-semibold text-slate-400 tracking-wider uppercase font-label">Enterprise v15</span>
-</div>
-</div>
-<!-- Frappe Awesome Bar Search Input -->
-<div class="relative w-full max-w-lg">
-<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-<span class="material-symbols-outlined text-[19px]">search</span>
-</div>
-<input class="w-full pl-9 pr-14 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-normal text-slate-700 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#D70018] focus:border-[#D70018] transition-all shadow-inner" placeholder="Tìm kiếm SĐT, IMEI, Mã khách hàng, mã hóa đơn... [Ctrl+K]" type="text"/>
-<div class="absolute inset-y-0 right-0 pr-2 flex items-center pointer-events-none">
-<kbd class="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono text-slate-400 bg-white border border-slate-200 rounded shadow-2xs">Ctrl K</kbd>
-</div>
-</div>
-</div>
-<!-- Center Navigation Links (Frappe Desk Quick Tabs) -->
-<nav class="hidden xl:flex items-center gap-6 px-4">
-<a class="text-[#D70018] font-medium text-xs border-b-2 border-[#D70018] pb-1" href="#">Desk</a>
-<a class="text-slate-500 hover:text-slate-900 font-normal text-xs transition-colors" href="#">Workspace</a>
-<a class="text-slate-500 hover:text-slate-900 font-normal text-xs transition-colors" href="#">Support</a>
-<a class="text-slate-500 hover:text-slate-900 font-normal text-xs transition-colors" href="#">Settings</a>
-</nav>
-<!-- Right Actions & SLA Pill & User Profile -->
-<div class="flex items-center gap-3 shrink-0">
-<!-- Live SLA Alert Badge -->
-<div class="flex items-center gap-1.5 bg-rose-50 border border-rose-200 text-rose-700 px-2.5 py-1 rounded-full text-xs font-medium cursor-pointer hover:bg-rose-100 transition-colors shadow-2xs">
-<span class="relative flex h-2 w-2">
-<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D70018] opacity-75"></span>
-<span class="relative inline-flex rounded-full h-2 w-2 bg-[#D70018]"></span>
-</span>
-<span class="material-symbols-outlined text-[16px] text-[#D70018]">timer</span>
-<span class="font-semibold text-[11px]">3 SLA Warning</span>
-</div>
-<!-- Quick Add Action -->
-<button class="flex items-center gap-1 bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1.5 rounded-lg text-xs font-medium transition-colors cursor-pointer border border-slate-200">
-<span class="material-symbols-outlined text-[16px]">add</span>
-<span class="hidden md:inline">Quick Add</span>
-</button>
-<!-- Trailing Action Icons -->
-<button class="relative p-1.5 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors" title="Thông báo hệ thống">
-<span class="material-symbols-outlined text-[20px]">notifications</span>
-<span class="absolute top-1 right-1 w-2 h-2 bg-[#D70018] rounded-full border border-white"></span>
-</button>
-<button class="p-1.5 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors" title="Trợ giúp &amp; Tài liệu">
-<span class="material-symbols-outlined text-[20px]">help</span>
-</button>
-<!-- Support Agent Avatar & Name -->
-<div class="flex items-center gap-2 pl-2 border-l border-slate-200 cursor-pointer">
-<img class="w-7 h-7 rounded-full object-cover ring-1 ring-slate-200" data-alt="Professional headshot portrait of an Asian customer support manager named Tran Quang Huy in a crisp modern office environment, warm directional lighting, high resolution, confident and approachable expression." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKcEzrOKfMqpHMQueAQnwQcijq5GfFQ8CYZQJk8uvMKpkzSxEGkzRPNlztU6RPtpojbdjtVrp4xkC9jdEypVRJUuVjS_uRI8He9oXhiY3VCGoBXazJmkcp1OBi94A2b_6Wg0gfcANKMDaA2qVEStBkQxNGGofK3G9HzWd5EScXwfewGOIv--j65s87AQYHSW0yHdHPNVOHb9sf1by_zse69-1Kp9n0w1mvxRoqwPvXkuCtZs_fk2WjS6Aya8hJml0xsVJk6hewJf8"/>
-<div class="hidden sm:flex flex-col text-left">
-<span class="text-xs font-semibold text-slate-800 leading-tight">Trần Quang Huy</span>
-<span class="text-[10px] text-slate-400 font-medium">CSKH Manager</span>
-</div>
-<span class="material-symbols-outlined text-[16px] text-slate-400">arrow_drop_down</span>
-</div>
-</div>
+  <!-- Left: Logo & Awesome Bar Search -->
+  <div class="flex items-center gap-6 flex-1 max-w-3xl">
+    <div class="flex items-center gap-2.5 shrink-0 pr-2 border-r border-slate-200">
+      <div class="w-8 h-8 rounded-lg bg-[#D70018] flex items-center justify-center text-white font-black text-xl tracking-tighter shadow-sm shadow-rose-200">
+        <span>C</span>
+      </div>
+      <div class="flex flex-col">
+        <span class="font-headline font-extrabold text-base text-[#D70018] tracking-tight leading-none">CellphoneS CRM</span>
+        <span class="text-[10px] font-semibold text-slate-400 tracking-wider uppercase font-label">Enterprise v15</span>
+      </div>
+    </div>
+    <!-- Frappe Awesome Bar Search Input -->
+    <div class="relative w-full max-w-lg">
+      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+        <span class="material-symbols-outlined text-[19px]">search</span>
+      </div>
+      <input class="w-full pl-9 pr-14 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-normal text-slate-700 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#D70018] focus:border-[#D70018] transition-all shadow-inner" placeholder="Tìm kiếm SĐT, IMEI, Mã khách hàng CUST-, Ticket TCK-... [Ctrl+K]" type="text" value="0912345678"/>
+      <div class="absolute inset-y-0 right-0 pr-2 flex items-center pointer-events-none">
+        <kbd class="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono text-slate-400 bg-white border border-slate-200 rounded shadow-2xs">Ctrl K</kbd>
+      </div>
+    </div>
+  </div>
+
+  <!-- Center Quick Nav Links -->
+  <nav class="hidden xl:flex items-center gap-6 px-4">
+    <a class="text-[#D70018] font-medium text-xs border-b-2 border-[#D70018] pb-1" href="#">Desk</a>
+    <a class="text-slate-500 hover:text-slate-900 font-normal text-xs transition-colors" href="#">Khách hàng</a>
+    <a class="text-slate-500 hover:text-slate-900 font-normal text-xs transition-colors" href="#">Bảo hành Điện Thoại Vui</a>
+    <a class="text-slate-500 hover:text-slate-900 font-normal text-xs transition-colors" href="#">Báo cáo</a>
+  </nav>
+
+  <!-- Right Actions & User Profile -->
+  <div class="flex items-center gap-3 shrink-0">
+    <div class="flex items-center gap-1.5 bg-rose-50 border border-rose-200 text-rose-700 px-2.5 py-1 rounded-full text-xs font-medium cursor-pointer hover:bg-rose-100 transition-colors shadow-2xs">
+      <span class="relative flex h-2 w-2">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D70018] opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2 w-2 bg-[#D70018]"></span>
+      </span>
+      <span class="material-symbols-outlined text-[16px] text-[#D70018]">timer</span>
+      <span class="font-semibold text-[11px]">SLA Real-time</span>
+    </div>
+    
+    <div class="flex items-center gap-2 pl-2 border-l border-slate-200 cursor-pointer">
+      <div class="w-7 h-7 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-xs">
+        QH
+      </div>
+      <div class="hidden sm:flex flex-col text-left">
+        <span class="text-xs font-semibold text-slate-800 leading-tight">Trần Quang Huy</span>
+        <span class="text-[10px] text-slate-400 font-medium">HuyTV4 (Admin)</span>
+      </div>
+      <span class="material-symbols-outlined text-[16px] text-slate-400">arrow_drop_down</span>
+    </div>
+  </div>
 </header>
+
 <!-- ================= MAIN LAYOUT WITH SIDEBAR ================= -->
 <div class="flex pt-14 min-h-screen">
-<!-- ================= LEFT SIDEBAR (Frappe Desk v15 Style) ================= -->
-<aside class="w-64 fixed top-14 left-0 h-[calc(100vh-3.5rem)] bg-[#F8FAFC] border-r border-slate-200 p-3 flex flex-col justify-between z-30 select-none">
-<div class="flex flex-col gap-4">
-<!-- Workspace Header Sub-badge -->
-<div class="flex items-center justify-between px-2 py-1.5 bg-white border border-slate-200/80 rounded-lg shadow-2xs">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-slate-500 text-[18px]">domain</span>
-<div>
-<p class="text-xs font-semibold text-slate-800 leading-tight">Frappe Desk</p>
-<p class="text-[10px] text-slate-400">Enterprise CRM v15.4</p>
-</div>
-</div>
-<span class="bg-emerald-50 text-emerald-700 text-[10px] font-semibold px-1.5 py-0.5 rounded border border-emerald-200">Online</span>
-</div>
-<!-- Primary Desk Navigation Items -->
-<nav class="flex flex-col space-y-1">
-<a class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-normal text-slate-600 hover:bg-slate-200/60 hover:text-slate-900 transition-colors" href="#">
-<span class="material-symbols-outlined text-[18px] text-slate-400">dashboard</span>
-<span>Tổng quan</span>
-</a>
-<!-- Active Item: Khách hàng -->
-<a class="flex items-center justify-between px-3 py-2 rounded-lg text-xs font-semibold bg-rose-50 text-[#D70018] border-l-4 border-[#D70018] shadow-2xs" href="#">
-<div class="flex items-center gap-2.5">
-<span class="material-symbols-outlined text-[18px] text-[#D70018] fill">person</span>
-<span>Khách hàng</span>
-</div>
-<span class="bg-white text-[#D70018] font-bold text-[10px] px-1.5 py-0.5 rounded-full border border-rose-200 shadow-2xs">1.4k</span>
-</a>
-<a class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-normal text-slate-600 hover:bg-slate-200/60 hover:text-slate-900 transition-colors" href="#">
-<span class="material-symbols-outlined text-[18px] text-slate-400">record_voice_over</span>
-<span>Nhu cầu tư vấn</span>
-</a>
-<a class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-normal text-slate-600 hover:bg-slate-200/60 hover:text-slate-900 transition-colors" href="#">
-<span class="material-symbols-outlined text-[18px] text-slate-400">forum</span>
-<span>Tương tác đa kênh</span>
-</a>
-<a class="flex items-center justify-between px-3 py-2 rounded-lg text-xs font-normal text-slate-600 hover:bg-slate-200/60 hover:text-slate-900 transition-colors" href="#">
-<div class="flex items-center gap-2.5">
-<span class="material-symbols-outlined text-[18px] text-slate-400">confirmation_number</span>
-<span>Phiếu hỗ trợ</span>
-</div>
-<span class="bg-rose-100 text-[#D70018] font-semibold text-[10px] px-1.5 py-0.2 rounded-full">3</span>
-</a>
-<a class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-normal text-slate-600 hover:bg-slate-200/60 hover:text-slate-900 transition-colors" href="#">
-<span class="material-symbols-outlined text-[18px] text-slate-400">monitoring</span>
-<span>CSKH Dashboard</span>
-</a>
-<a class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-normal text-slate-600 hover:bg-slate-200/60 hover:text-slate-900 transition-colors" href="#">
-<span class="material-symbols-outlined text-[18px] text-[#D70018]">build</span>
-<span class="font-medium text-slate-800">Điện Thoại Vui Service</span>
-</a>
-<a class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-normal text-slate-600 hover:bg-slate-200/60 hover:text-slate-900 transition-colors" href="#">
-<span class="material-symbols-outlined text-[18px] text-slate-400">verified</span>
-<span>Báo cáo &amp; SLA</span>
-</a>
-</nav>
-</div>
-<!-- Sidebar Bottom Links & New DocType Action -->
-<div class="pt-4 border-t border-slate-200 flex flex-col gap-1.5">
-<button class="w-full flex items-center justify-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-white py-2 px-3 rounded-lg text-xs font-medium transition-all shadow-sm">
-<span class="material-symbols-outlined text-[16px]">add_circle</span>
-<span>New Record</span>
-</button>
-<a class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs text-slate-500 hover:bg-slate-200/50 hover:text-slate-800 transition-colors" href="#">
-<span class="material-symbols-outlined text-[18px]">menu_book</span>
-<span>Documentation</span>
-</a>
-<a class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs text-slate-500 hover:bg-slate-200/50 hover:text-slate-800 transition-colors" href="#">
-<span class="material-symbols-outlined text-[18px]">swap_horiz</span>
-<span>Switch Workspace</span>
-</a>
-</div>
-</aside>
-<!-- ================= MAIN DESK CONTENT AREA (1440px Canvas Focus) ================= -->
-<main class="ml-64 flex-1 p-6 max-w-[1440px] mx-auto w-full">
-<!-- 1. BREADCRUMB & STATUS BAR -->
-<div class="flex flex-wrap items-center justify-between pb-4 gap-3">
-<div class="flex items-center gap-2 text-xs font-medium text-slate-500">
-<span class="hover:text-slate-800 cursor-pointer">CellphoneS CRM</span>
-<span class="material-symbols-outlined text-[14px]">chevron_right</span>
-<span class="hover:text-slate-800 cursor-pointer">Khách hàng</span>
-<span class="material-symbols-outlined text-[14px]">chevron_right</span>
-<div class="flex items-center gap-1.5 bg-white border border-slate-200 px-2 py-0.5 rounded shadow-2xs">
-<span class="font-mono font-semibold text-slate-800">CUST-2026-00001</span>
-<button class="text-slate-400 hover:text-slate-600 transition-colors" onclick="navigator.clipboard.writeText('CUST-2026-00001')" title="Copy Document ID">
-<span class="material-symbols-outlined text-[14px]">content_copy</span>
-</button>
-</div>
-<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
-<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-            Đang hoạt động
-          </span>
-</div>
-<!-- Quick Top Controls -->
-<div class="flex items-center gap-2 text-xs">
-<span class="text-slate-400">Đồng bộ gần nhất: 2 phút trước</span>
-<button class="p-1.5 bg-white border border-slate-200 rounded hover:bg-slate-50 text-slate-600">
-<span class="material-symbols-outlined text-[16px]">refresh</span>
-</button>
-<button class="p-1.5 bg-white border border-slate-200 rounded hover:bg-slate-50 text-slate-600">
-<span class="material-symbols-outlined text-[16px]">print</span>
-</button>
-</div>
-</div>
-<!-- Subtle Frappe Alert Banner -->
-<div class="mb-4 bg-blue-50/80 border border-blue-200/90 text-blue-900 rounded-lg p-3 text-xs flex items-center justify-between shadow-2xs">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-blue-600 text-[18px]">info</span>
-<span><strong>Cảnh báo thông tin:</strong> Đã xác thực SĐT <strong>0908123456</strong> liên kết thành công với tài khoản ứng dụng Smember và Cổng Dịch Vụ Khách Hàng.</span>
-</div>
-<button class="text-blue-500 hover:text-blue-700 font-bold text-xs" onclick="this.parentElement.remove()">✕</button>
-</div>
-<!-- ================= 2. CUSTOMER HEADER CARD (Frappe DocType Header) ================= -->
-<div class="bg-white border border-slate-200 rounded-xl p-5 mb-5 shadow-sm">
-<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-slate-100">
-<!-- Identity & Badges -->
-<div class="flex items-start gap-4">
-<div class="w-16 h-16 rounded-xl bg-gradient-to-br from-rose-500 to-[#D70018] text-white flex items-center justify-center font-bold text-2xl shadow-md shadow-rose-100 shrink-0">
-              NA
+  <!-- Left Sidebar (Frappe Desk v15 Navigation) -->
+  <aside class="w-64 fixed top-14 left-0 h-[calc(100vh-3.5rem)] bg-[#F8FAFC] border-r border-slate-200 p-3 flex flex-col justify-between z-30 select-none">
+    <div class="flex flex-col gap-4">
+      <div class="flex items-center justify-between px-2 py-1.5 bg-white border border-slate-200/80 rounded-lg shadow-2xs">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-slate-500 text-[18px]">domain</span>
+          <div>
+            <p class="text-xs font-semibold text-slate-800 leading-tight">Frappe Desk</p>
+            <p class="text-[10px] text-slate-400">Enterprise CRM v15.4</p>
+          </div>
+        </div>
+        <span class="bg-emerald-50 text-emerald-700 text-[10px] font-semibold px-1.5 py-0.5 rounded border border-emerald-200">Online</span>
+      </div>
+
+      <nav class="flex flex-col space-y-1">
+        <a class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-normal text-slate-600 hover:bg-slate-200/60 hover:text-slate-900 transition-colors" href="index.html">
+          <span class="material-symbols-outlined text-[18px] text-slate-400">dashboard</span>
+          <span>Tổng quan Portal</span>
+        </a>
+        <!-- Active Item: Khách hàng -->
+        <a class="flex items-center justify-between px-3 py-2 rounded-lg text-xs font-semibold bg-rose-50 text-[#D70018] border-l-4 border-[#D70018] shadow-2xs" href="screen1_customer_360.html">
+          <div class="flex items-center gap-2.5">
+            <span class="material-symbols-outlined text-[18px] text-[#D70018] fill">person</span>
+            <span>Khách hàng 360°</span>
+          </div>
+          <span class="bg-white text-[#D70018] font-bold text-[10px] px-1.5 py-0.5 rounded-full border border-rose-200 shadow-2xs">M1</span>
+        </a>
+        <a class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-normal text-slate-600 hover:bg-slate-200/60 hover:text-slate-900 transition-colors" href="screen2_lead_preorder.html">
+          <span class="material-symbols-outlined text-[18px] text-slate-400">record_voice_over</span>
+          <span>Cơ hội &amp; Nhu cầu tư vấn</span>
+        </a>
+        <a class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-normal text-slate-600 hover:bg-slate-200/60 hover:text-slate-900 transition-colors" href="screen3_interaction_reminder.html">
+          <span class="material-symbols-outlined text-[18px] text-slate-400">forum</span>
+          <span>Tương tác đa kênh</span>
+        </a>
+        <a class="flex items-center justify-between px-3 py-2 rounded-lg text-xs font-normal text-slate-600 hover:bg-slate-200/60 hover:text-slate-900 transition-colors" href="screen4_ticket_kanban.html">
+          <div class="flex items-center gap-2.5">
+            <span class="material-symbols-outlined text-[18px] text-slate-400">view_kanban</span>
+            <span>Kanban Phiếu hỗ trợ</span>
+          </div>
+          <span class="bg-rose-100 text-[#D70018] font-semibold text-[10px] px-1.5 py-0.2 rounded-full">5 Cột</span>
+        </a>
+        <a class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-normal text-slate-600 hover:bg-slate-200/60 hover:text-slate-900 transition-colors" href="screen5_ticket_detail.html">
+          <span class="material-symbols-outlined text-[18px] text-slate-400">confirmation_number</span>
+          <span>Chi tiết Phiếu &amp; Nghiệm thu</span>
+        </a>
+        <a class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-normal text-slate-600 hover:bg-slate-200/60 hover:text-slate-900 transition-colors" href="screen6_cskh_dashboard.html">
+          <span class="material-symbols-outlined text-[18px] text-slate-400">monitoring</span>
+          <span>CSKH Analytics Dashboard</span>
+        </a>
+      </nav>
+    </div>
+
+    <div class="pt-4 border-t border-slate-200 flex flex-col gap-1.5">
+      <div class="text-[11px] text-slate-500 bg-slate-100 p-2 rounded-lg">
+        <p class="font-semibold text-slate-700">D03 Standard View</p>
+        <p class="text-[10px] text-slate-500">Màn hình 1 / 6 chuẩn Frappe Desk</p>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN DESK CONTENT AREA ================= -->
+  <main class="ml-64 flex-1 p-6 max-w-[1440px] mx-auto w-full">
+    
+    <!-- 1. BREADCRUMB & HEADER STATUS -->
+    <div class="flex flex-wrap items-center justify-between pb-3 gap-3">
+      <div class="flex items-center gap-2 text-xs font-medium text-slate-500">
+        <span class="hover:text-slate-800 cursor-pointer">CellphoneS CRM</span>
+        <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+        <span class="hover:text-slate-800 cursor-pointer">Khách hàng</span>
+        <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+        <div class="flex items-center gap-1.5 bg-white border border-slate-200 px-2 py-0.5 rounded shadow-2xs">
+          <span class="font-mono font-semibold text-slate-800">CUST-2026-00002</span>
+          <button class="text-slate-400 hover:text-slate-600 transition-colors" onclick="navigator.clipboard.writeText('CUST-2026-00002')" title="Copy ID">
+            <span class="material-symbols-outlined text-[14px]">content_copy</span>
+          </button>
+        </div>
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-amber-50 text-amber-800 border border-amber-300">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+          ⭐ S-MEM
+        </span>
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-purple-50 text-purple-700 border border-purple-200">
+          🎓 S-Student: Đã duyệt
+        </span>
+      </div>
+
+      <!-- Quick Actions / Save -->
+      <div class="flex items-center gap-2">
+        <button class="flex items-center gap-1.5 bg-[#D70018] hover:bg-[#b90014] text-white px-4 py-1.5 rounded-lg text-xs font-semibold transition-all shadow-sm cursor-pointer">
+          <span class="material-symbols-outlined text-[16px]">save</span>
+          <span>Lưu Dữ Liệu</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 2. IMPORTANT VALIDATION & ERROR ALERTS (Mục 4 D03) -->
+    <div class="space-y-2 mb-5">
+      <!-- Cảnh báo trùng SĐT -->
+      <div class="bg-amber-50 border border-amber-300 text-amber-900 rounded-lg p-3 text-xs flex items-center justify-between shadow-2xs">
+        <div class="flex items-center gap-2.5">
+          <span class="material-symbols-outlined text-amber-600 text-[20px] shrink-0">warning</span>
+          <span><strong>Cảnh báo kiểm tra trùng SĐT:</strong> Số điện thoại <strong>[0908123456]</strong> đã tồn tại trên hồ sơ <strong class="font-mono">CUST-2026-00001</strong>! Hệ thống cảnh báo để kiểm tra, không tự ý gộp hồ sơ.</span>
+        </div>
+        <span class="text-[10px] bg-amber-200 text-amber-900 font-bold px-2 py-0.5 rounded shrink-0">Validation Check</span>
+      </div>
+
+      <!-- Cảnh báo quyền hạn -->
+      <div class="bg-blue-50/90 border border-blue-200 text-blue-900 rounded-lg p-2.5 text-xs flex items-center justify-between shadow-2xs">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-blue-600 text-[18px]">verified_user</span>
+          <span><strong>Lưu ý quyền hạn:</strong> Bạn không có quyền chỉnh sửa thông tin Hạng thành viên hoặc Xác minh nhóm Giáo dục! <em>(Chỉ quản trị viên <strong>HuyTV4 (Admin)</strong> mới được duyệt cập nhật).</em></span>
+        </div>
+        <span class="text-[10px] text-blue-600 font-medium">Role: Frappe Desk User</span>
+      </div>
+    </div>
+
+    <!-- ================= 3. CUSTOMER HEADER CARD (Frappe DocType Header) ================= -->
+    <div class="bg-white border border-slate-200 rounded-xl p-5 mb-5 shadow-sm">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+        <!-- Identity & Badges -->
+        <div class="flex items-start gap-4">
+          <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-amber-500 to-[#D70018] text-white flex items-center justify-center font-bold text-2xl shadow-md shadow-rose-100 shrink-0">
+            LT
+          </div>
+          <div>
+            <div class="flex flex-wrap items-center gap-2.5 mb-1.5">
+              <h1 class="text-2xl font-bold font-headline text-slate-900 tracking-tight">LÊ THỊ BÍCH TRÂM</h1>
+              <!-- Badge 4 Hạng & Nhóm Giáo dục theo D03 -->
+              <span class="inline-flex items-center gap-1 bg-amber-100 border border-amber-300 text-amber-900 px-3 py-0.5 rounded-full text-xs font-bold shadow-2xs">
+                <span class="material-symbols-outlined text-amber-600 text-[16px]">stars</span>
+                <span>⭐ S-MEM (Chi tiêu năm: 18,500,000 đ)</span>
+              </span>
+              <span class="inline-flex items-center gap-1 bg-purple-100 text-purple-900 border border-purple-300 text-xs px-2.5 py-0.5 rounded-full font-semibold">
+                <span>🎓 S-Student (Đã duyệt - Hạn: 30/06/2027)</span>
+              </span>
+              <span class="inline-flex items-center gap-1 bg-slate-100 text-slate-700 border border-slate-200 text-xs px-2 py-0.5 rounded-md font-medium">
+                <span class="material-symbols-outlined text-[14px] text-emerald-600">verified</span>
+                <span>CCCD: 079195005678</span>
+              </span>
             </div>
-<div>
-<div class="flex flex-wrap items-center gap-2.5 mb-1.5">
-<h1 class="text-2xl font-bold font-headline text-slate-900 tracking-tight">NGUYỄN VĂN AN</h1>
-<!-- Gold-Red VIP Crown Badge -->
-<span class="inline-flex items-center gap-1.5 bg-amber-50 border border-amber-300 text-amber-900 px-3 py-1 rounded-full text-xs font-bold shadow-2xs">
-<span class="material-symbols-outlined text-amber-500 text-[16px] fill">crown</span>
-<span>⭐ S-VIP (Hội viên Đặc quyền)</span>
-</span>
-<span class="inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs px-2.5 py-0.5 rounded-full font-medium">
-<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                  Đang hoạt động
-                </span>
-<span class="inline-flex items-center gap-1 bg-slate-100 text-slate-700 border border-slate-200 text-xs px-2 py-0.5 rounded-md font-medium">
-<span class="material-symbols-outlined text-[14px] text-emerald-600">verified_user</span>
-                  Hồ sơ đã xác minh CCCD
-                </span>
-</div>
-<p class="text-xs text-slate-500 flex items-center gap-3">
-<span>Mã thành viên: <strong class="text-slate-800 font-mono">MB-882910</strong></span>
-<span>•</span>
-<span>Ngày gia nhập: <strong>12/03/2019</strong></span>
-<span>•</span>
-<span>Phụ trách hiện tại: <strong>Trần Quang Huy</strong></span>
-</p>
-</div>
-</div>
-<!-- Action Buttons Bar (Frappe style buttons) -->
-<div class="flex flex-wrap items-center gap-2">
-<button class="inline-flex items-center gap-1.5 bg-[#D70018] hover:bg-[#b90014] text-white px-3.5 py-2 rounded-lg text-xs font-semibold transition-all shadow-sm cursor-pointer">
-<span class="material-symbols-outlined text-[16px]">add_task</span>
-<span>+ Tạo Phiếu Hỗ Trợ</span>
-</button>
-<button class="inline-flex items-center gap-1.5 bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 px-3 py-2 rounded-lg text-xs font-semibold transition-colors">
-<span class="material-symbols-outlined text-[16px] text-slate-500">post_add</span>
-<span>+ Ghi Nhận Tương Tác</span>
-</button>
-<button class="inline-flex items-center gap-1.5 bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 px-3 py-2 rounded-lg text-xs font-semibold transition-colors">
-<span class="material-symbols-outlined text-[16px] text-amber-600">merge_type</span>
-<span>⚡ Gộp Hồ Sơ (Merge)</span>
-</button>
-<button class="inline-flex items-center gap-1.5 bg-purple-50 hover:bg-purple-100 text-purple-800 border border-purple-300 px-3 py-2 rounded-lg text-xs font-semibold transition-colors">
-<span class="material-symbols-outlined text-[16px] text-purple-600">stars</span>
-<span>⭐ Điều Chỉnh Điểm Smember</span>
-</button>
-<button class="inline-flex items-center gap-1 bg-slate-100 hover:bg-slate-200 text-slate-600 px-3 py-2 rounded-lg text-xs font-semibold transition-colors">
-<span class="material-symbols-outlined text-[16px]">save</span>
-<span>Lưu Thay Đổi</span>
-</button>
-</div>
-</div>
-<!-- Key Details Grid -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 text-xs">
-<!-- SĐT + VoIP Call -->
-<div class="flex flex-col bg-slate-50 p-2.5 rounded-lg border border-slate-100">
-<span class="text-slate-400 font-medium mb-1">Số điện thoại liên hệ</span>
-<div class="flex items-center justify-between">
-<span class="text-sm font-bold text-slate-800 font-mono tracking-tight">0908123456</span>
-<div class="flex items-center gap-1">
-<button class="p-1 rounded bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors border border-blue-200 text-[11px] font-semibold px-1.5" title="Gọi nhanh Zalo Call">
-                  Zalo Call
-                </button>
-<button class="p-1 rounded bg-emerald-50 text-emerald-600 hover:bg-emerald-100 transition-colors border border-emerald-200 flex items-center" title="Gọi tổng đài VoIP nội bộ">
-<span class="material-symbols-outlined text-[14px]">call</span>
-</button>
-</div>
-</div>
-</div>
-<!-- Email -->
-<div class="flex flex-col bg-slate-50 p-2.5 rounded-lg border border-slate-100">
-<span class="text-slate-400 font-medium mb-1">Hòm thư điện tử (Email)</span>
-<div class="flex items-center justify-between">
-<span class="text-xs font-medium text-slate-800 truncate" title="an.nguyen@gmail.com">an.nguyen@gmail.com</span>
-<button class="text-slate-400 hover:text-slate-600">
-<span class="material-symbols-outlined text-[16px]">mail</span>
-</button>
-</div>
-</div>
-<!-- CCCD -->
-<div class="flex flex-col bg-slate-50 p-2.5 rounded-lg border border-slate-100">
-<span class="text-slate-400 font-medium mb-1">Căn cước công dân (CCCD)</span>
-<div class="flex items-center justify-between">
-<span class="text-xs font-bold text-slate-800 font-mono">079098001234</span>
-<span class="material-symbols-outlined text-emerald-600 text-[16px]" title="Đã khớp dữ liệu Bộ Công An">check_circle</span>
-</div>
-</div>
-<!-- Chi nhánh ưu tiên & Địa chỉ -->
-<div class="flex flex-col bg-slate-50 p-2.5 rounded-lg border border-slate-100">
-<span class="text-slate-400 font-medium mb-1">Chi nhánh mua hàng ưu tiên</span>
-<div class="flex items-center justify-between">
-<span class="text-xs font-semibold text-[#D70018] truncate">CellphoneS Lê Văn Việt</span>
-<span class="material-symbols-outlined text-slate-400 text-[16px]">storefront</span>
-</div>
-<span class="text-[11px] text-slate-500 mt-1 truncate" title="125 Lê Văn Việt, P. Hiệp Phú, TP. Thủ Đức, TP.HCM">
-              125 Lê Văn Việt, P. Hiệp Phú, TP. Thủ Đức, TP.HCM
-            </span>
-</div>
-</div>
-</div>
-<!-- ================= 3. SMEMBER VIP PRIVILEGE SUMMARY (4 KPI Bento Cards) ================= -->
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-<!-- Card 1: Hạng hội viên -->
-<div class="bg-gradient-to-br from-amber-50 to-white border border-amber-200/80 rounded-xl p-4 shadow-sm relative overflow-hidden">
-<div class="absolute -right-2 -bottom-2 opacity-10 text-amber-600">
-<span class="material-symbols-outlined text-[80px]">stars</span>
-</div>
-<div class="flex items-center justify-between mb-2">
-<span class="text-xs font-semibold text-amber-900 uppercase font-label">Hạng Hội Viên</span>
-<span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-full">Đạt chuẩn Platinum</span>
-</div>
-<div class="text-xl font-extrabold text-amber-800 flex items-center gap-1.5 mb-1">
-<span>⭐ S-VIP</span>
-</div>
-<div class="text-xs text-slate-600 space-y-0.5 border-t border-amber-200/60 pt-2 mt-2">
-<div class="flex items-center gap-1 text-[11px]">
-<span class="material-symbols-outlined text-amber-600 text-[14px]">bolt</span>
-<span>SLA xử lý đặc biệt: <strong>4H</strong></span>
-</div>
-<div class="flex items-center gap-1 text-[11px]">
-<span class="material-symbols-outlined text-amber-600 text-[14px]">sync_alt</span>
-<span>Đổi mới 1-1 trong <strong>30 ngày</strong></span>
-</div>
-</div>
-</div>
-<!-- Card 2: Điểm tích lũy -->
-<div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm relative overflow-hidden">
-<div class="flex items-center justify-between mb-2">
-<span class="text-xs font-semibold text-slate-500 uppercase font-label">Điểm Tích Lũy Khả Dụng</span>
-<span class="bg-emerald-50 text-emerald-700 text-[10px] font-semibold px-2 py-0.5 rounded-full">+120 pts tháng này</span>
-</div>
-<div class="text-2xl font-black text-slate-900 mb-1 flex items-baseline gap-1">
-<span>1,250</span>
-<span class="text-xs font-normal text-slate-500">pts</span>
-</div>
-<div class="border-t border-slate-100 pt-2 mt-2 flex items-center justify-between text-xs">
-<span class="text-slate-500">Giá trị quy đổi:</span>
-<span class="font-bold text-[#D70018]">1,250,000 đ</span>
-</div>
-</div>
-<!-- Card 3: Tổng chi tiêu lũy kế -->
-<div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm relative overflow-hidden">
-<div class="flex items-center justify-between mb-2">
-<span class="text-xs font-semibold text-slate-500 uppercase font-label">Tổng Chi Tiêu Lũy Kế</span>
-<span class="bg-slate-100 text-slate-700 text-[10px] font-medium px-2 py-0.5 rounded-full">14 đơn hoàn tất</span>
-</div>
-<div class="text-2xl font-black text-[#D70018] mb-1">
-            85,400,000 <span class="text-xs font-medium text-slate-600">đ</span>
-</div>
-<div class="border-t border-slate-100 pt-2 mt-2 flex items-center justify-between text-xs">
-<span class="text-slate-500">Đơn hàng gần nhất:</span>
-<span class="font-medium text-slate-700">20/09/2024</span>
-</div>
-</div>
-<!-- Card 4: Hạn duy trì hạng -->
-<div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm relative overflow-hidden">
-<div class="flex items-center justify-between mb-2">
-<span class="text-xs font-semibold text-slate-500 uppercase font-label">Hạn Duy Trì Hạng</span>
-<span class="bg-blue-50 text-blue-700 text-[10px] font-semibold px-2 py-0.5 rounded-full">Tiến độ 100%</span>
-</div>
-<div class="text-lg font-bold text-slate-800 mb-1 flex items-center gap-1.5">
-<span class="material-symbols-outlined text-blue-600 text-[20px]">calendar_month</span>
-<span>31/12/2026</span>
-</div>
-<div class="border-t border-slate-100 pt-2 mt-2 flex items-center justify-between text-xs">
-<span class="text-slate-500">Nâng hạng gần nhất:</span>
-<span class="font-medium text-slate-700">15/01/2026</span>
-</div>
-</div>
-</div>
-<!-- ================= 4. TABBED CONTENT VIEW (Frappe Desk Clean Tabs) & SIDEBAR NOTE ================= -->
-<div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
-<!-- Left 2 Cols: Main Tabs & Tables -->
-<div class="xl:col-span-2 space-y-6">
-<div class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
-<!-- Frappe Desk Navigation Tabs -->
-<div class="flex border-b border-slate-200 bg-slate-50/50 px-4 pt-2 overflow-x-auto">
-<button class="px-4 py-3 text-xs font-semibold text-[#D70018] border-b-2 border-[#D70018] flex items-center gap-1.5 whitespace-nowrap">
-<span class="material-symbols-outlined text-[16px]">devices</span>
-<span>Thiết bị sở hữu &amp; IMEI (3)</span>
-</button>
-<button class="px-4 py-3 text-xs font-medium text-slate-600 hover:text-slate-900 border-b-2 border-transparent flex items-center gap-1.5 whitespace-nowrap">
-<span class="material-symbols-outlined text-[16px]">support_agent</span>
-<span>Lịch sử Phiếu hỗ trợ (2)</span>
-</button>
-<button class="px-4 py-3 text-xs font-medium text-slate-600 hover:text-slate-900 border-b-2 border-transparent flex items-center gap-1.5 whitespace-nowrap">
-<span class="material-symbols-outlined text-[16px]">timeline</span>
-<span>Dòng thời gian Tương tác (4)</span>
-</button>
-<button class="px-4 py-3 text-xs font-medium text-slate-600 hover:text-slate-900 border-b-2 border-transparent flex items-center gap-1.5 whitespace-nowrap">
-<span class="material-symbols-outlined text-[16px]">edit_note</span>
-<span>Ghi chú CSKH &amp; Điều chỉnh điểm</span>
-</button>
-</div>
-<!-- Active Tab Content: Data Table 'Thiết bị & Tra cứu IMEI' -->
-<div class="p-4">
-<div class="flex items-center justify-between mb-3">
-<div class="flex items-center gap-2">
-<h3 class="text-sm font-bold text-slate-900">Danh mục Thiết Bị Đã Kích Hoạt</h3>
-<span class="text-xs text-slate-400">(Tự động đối soát hệ thống ERP Frappe)</span>
-</div>
-<div class="flex items-center gap-2">
-<button class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded border border-slate-200 flex items-center gap-1">
-<span class="material-symbols-outlined text-[14px]">filter_list</span>
-<span>Lọc trạng thái BH</span>
-</button>
-</div>
-</div>
-<!-- Data Table -->
-<div class="overflow-x-auto border border-slate-200 rounded-lg">
-<table class="w-full text-left text-xs border-collapse">
-<thead>
-<tr class="bg-slate-50 text-slate-500 font-semibold border-b border-slate-200">
-<th class="py-2.5 px-3">Thiết bị &amp; Thông số</th>
-<th class="py-2.5 px-3">Mã IMEI / SKU</th>
-<th class="py-2.5 px-3">Hóa đơn &amp; Mua hàng</th>
-<th class="py-2.5 px-3">Tình trạng Bảo hành</th>
-<th class="py-2.5 px-3 text-right">Thao tác nghiệp vụ</th>
-</tr>
-</thead>
-<tbody class="divide-y divide-slate-200 text-slate-700">
-<!-- Row 1: iPhone 15 Pro Max -->
-<tr class="hover:bg-slate-50/80 transition-colors">
-<td class="py-3 px-3">
-<div class="font-semibold text-slate-900 flex items-center gap-1.5">
-<span class="material-symbols-outlined text-slate-400 text-[18px]">smartphone</span>
-                          iPhone 15 Pro Max 256GB
-                        </div>
-<div class="text-[11px] text-slate-500 pl-6">Titan Tự Nhiên (VN/A)</div>
-</td>
-<td class="py-3 px-3">
-<div class="font-mono text-xs font-semibold text-slate-800">358941098234112</div>
-<span class="text-[10px] text-blue-600 cursor-pointer hover:underline">Check Apple GSX</span>
-</td>
-<td class="py-3 px-3">
-<div class="font-mono font-medium text-slate-800">INV-2024-08912</div>
-<div class="text-[11px] text-slate-500">20/09/2024 • CS Lê Văn Việt</div>
-</td>
-<td class="py-3 px-3">
-<span class="inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded-full font-medium text-[11px]">
-<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                          Còn 3 tháng (Apple Care VN/A)
-                        </span>
-</td>
-<td class="py-3 px-3 text-right whitespace-nowrap">
-<button class="bg-rose-50 hover:bg-rose-100 text-[#D70018] border border-rose-200 px-2.5 py-1 rounded text-[11px] font-semibold mr-1 transition-colors">
-                          Tạo phiếu BH
-                        </button>
-<button class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded text-[11px] font-medium transition-colors">
-                          Lịch sử sửa chữa
-                        </button>
-</td>
-</tr>
-<!-- Row 2: Apple Watch Ultra 2 -->
-<tr class="hover:bg-slate-50/80 transition-colors">
-<td class="py-3 px-3">
-<div class="font-semibold text-slate-900 flex items-center gap-1.5">
-<span class="material-symbols-outlined text-slate-400 text-[18px]">watch</span>
-                          Apple Watch Ultra 2
-                        </div>
-<div class="text-[11px] text-slate-500 pl-6">GPS + Cellular (Dây Trail Loop)</div>
-</td>
-<td class="py-3 px-3">
-<div class="font-mono text-xs font-semibold text-slate-800">356712098451201</div>
-<span class="text-[10px] text-emerald-600">Đã kích hoạt eSIM</span>
-</td>
-<td class="py-3 px-3">
-<div class="font-mono font-medium text-slate-800">INV-2024-11024</div>
-<div class="text-[11px] text-slate-500">15/11/2024 • CS Lê Văn Việt</div>
-</td>
-<td class="py-3 px-3">
-<span class="inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded-full font-medium text-[11px]">
-<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                          Còn 5 tháng chính hãng
-                        </span>
-</td>
-<td class="py-3 px-3 text-right whitespace-nowrap">
-<button class="bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 px-2.5 py-1 rounded text-[11px] font-semibold transition-colors">
-                          Kiểm tra bảo hành
-                        </button>
-</td>
-</tr>
-<!-- Row 3: Củ sạc Apple 20W -->
-<tr class="hover:bg-slate-50/80 transition-colors">
-<td class="py-3 px-3">
-<div class="font-semibold text-slate-900 flex items-center gap-1.5">
-<span class="material-symbols-outlined text-slate-400 text-[18px]">power</span>
-                          Củ sạc Apple 20W Type-C
-                        </div>
-<div class="text-[11px] text-slate-500 pl-6">Phụ kiện chính hãng Apple</div>
-</td>
-<td class="py-3 px-3">
-<div class="font-mono text-xs font-semibold text-slate-600">SKU: SP-APP-20W</div>
-<span class="text-[10px] text-slate-400">Barcode: 88590991204</span>
-</td>
-<td class="py-3 px-3">
-<div class="font-mono font-medium text-slate-800">INV-2024-08912</div>
-<div class="text-[11px] text-slate-500">20/09/2024 • CS Lê Văn Việt</div>
-</td>
-<td class="py-3 px-3">
-<span class="inline-flex items-center gap-1 bg-slate-100 text-slate-500 border border-slate-200 px-2 py-0.5 rounded-full font-medium text-[11px]">
-                          Hết hạn bảo hành
-                        </span>
-</td>
-<td class="py-3 px-3 text-right whitespace-nowrap">
-<button class="bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 px-2.5 py-1 rounded text-[11px] font-semibold transition-colors">
-                          Báo giá sửa
-                        </button>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<!-- Embedded Tab Section Preview: Lịch sử Phiếu hỗ trợ & Dòng thời gian -->
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-<!-- Support Tickets Preview Card -->
-<div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
-<div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-3">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-[#D70018] text-[20px]">confirmation_number</span>
-<h4 class="text-xs font-bold text-slate-900 uppercase font-label">Phiếu Hỗ Trợ Đang Theo Dõi</h4>
-</div>
-<span class="text-[11px] text-[#D70018] font-semibold hover:underline cursor-pointer">Xem tất cả (2)</span>
-</div>
-<!-- Ticket 1 -->
-<div class="p-3 rounded-lg border border-rose-200 bg-rose-50/40 mb-3">
-<div class="flex items-center justify-between mb-1">
-<span class="font-mono font-bold text-xs text-rose-900">TCK-2026-00155</span>
-<span class="bg-rose-100 text-[#D70018] border border-rose-300 text-[10px] font-bold px-2 py-0.5 rounded">
-                    Đang xử lý - In Progress
+            <p class="text-xs text-slate-500 flex flex-wrap items-center gap-3">
+              <span>Mã KH: <strong class="text-slate-800 font-mono font-bold">CUST-2026-00002</strong></span>
+              <span>•</span>
+              <span>SĐT: <strong class="text-slate-800 font-mono">0912345678</strong></span>
+              <span>•</span>
+              <span>Email: <strong class="text-slate-800">tram.le@yahoo.com</strong></span>
+              <span>•</span>
+              <span>Người cập nhật: <strong class="text-slate-800">HuyTV4 (Admin)</strong></span>
+            </p>
+          </div>
+        </div>
+
+        <!-- 3 Hành động chính (Actions - Mục 3 D03) -->
+        <div class="flex flex-wrap items-center gap-2">
+          <button class="inline-flex items-center gap-1.5 bg-[#D70018] hover:bg-[#b90014] text-white px-3.5 py-2 rounded-lg text-xs font-semibold transition-all shadow-sm cursor-pointer" onclick="window.location.href='screen5_ticket_detail.html'">
+            <span class="material-symbols-outlined text-[16px]">add_task</span>
+            <span>[+ Tạo Phiếu Hỗ Trợ]</span>
+          </button>
+          <button class="inline-flex items-center gap-1.5 bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 px-3 py-2 rounded-lg text-xs font-semibold transition-colors" onclick="window.location.href='screen2_lead_preorder.html'">
+            <span class="material-symbols-outlined text-[16px] text-slate-500">record_voice_over</span>
+            <span>[+ Tạo Cơ Hội Tư Vấn]</span>
+          </button>
+          <button class="inline-flex items-center gap-1.5 bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 px-3 py-2 rounded-lg text-xs font-semibold transition-colors" onclick="window.location.href='screen3_interaction_reminder.html'">
+            <span class="material-symbols-outlined text-[16px] text-slate-500">post_add</span>
+            <span>[+ Ghi Nhận Tương Tác]</span>
+          </button>
+          <button class="inline-flex items-center gap-1 bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-2 rounded-lg text-xs font-semibold transition-colors">
+            <span class="material-symbols-outlined text-[16px]">save</span>
+            <span>[Lưu Thay Đổi]</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Key Profile Details Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 text-xs">
+        <div class="flex flex-col bg-slate-50 p-2.5 rounded-lg border border-slate-100">
+          <span class="text-slate-400 font-medium mb-1">Số điện thoại liên hệ</span>
+          <div class="flex items-center justify-between">
+            <span class="text-sm font-bold text-slate-800 font-mono tracking-tight">0912345678</span>
+            <span class="text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200 px-1.5 py-0.5 rounded font-medium">Đã kích hoạt</span>
+          </div>
+        </div>
+
+        <div class="flex flex-col bg-slate-50 p-2.5 rounded-lg border border-slate-100">
+          <span class="text-slate-400 font-medium mb-1">Email liên hệ</span>
+          <span class="text-xs font-medium text-slate-800 truncate" title="tram.le@yahoo.com">tram.le@yahoo.com</span>
+        </div>
+
+        <div class="flex flex-col bg-slate-50 p-2.5 rounded-lg border border-slate-100">
+          <span class="text-slate-400 font-medium mb-1">CCCD / Định danh</span>
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-800 font-mono">079195005678</span>
+            <span class="material-symbols-outlined text-emerald-600 text-[16px]">check_circle</span>
+          </div>
+        </div>
+
+        <div class="flex flex-col bg-slate-50 p-2.5 rounded-lg border border-slate-100">
+          <span class="text-slate-400 font-medium mb-1">Địa chỉ mua hàng / Showroom</span>
+          <span class="text-[11px] font-semibold text-[#D70018] truncate" title="Showroom 125 Lê Văn Việt, P. Hiệp Phú, TP. Thủ Đức, TP.HCM">
+            Showroom 125 Lê Văn Việt, P. Hiệp Phú, TP. Thủ Đức
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= 4. SMEMBER & GIÁO DỤC 4 BENTO CARDS ================= -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+      <!-- Card 1: Hạng Smember -->
+      <div class="bg-gradient-to-br from-amber-50 to-white border border-amber-200/80 rounded-xl p-4 shadow-sm relative overflow-hidden">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-semibold text-amber-900 uppercase font-label">Hạng Smember (4 Hạng)</span>
+          <span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-full">S-MEM Active</span>
+        </div>
+        <div class="text-xl font-extrabold text-amber-800 flex items-center gap-1.5 mb-1">
+          <span>⭐ S-MEM</span>
+        </div>
+        <div class="text-xs text-slate-600 space-y-0.5 border-t border-amber-200/60 pt-2 mt-2">
+          <p class="text-[11px]">4 Hạng: S-NULL | S-NEW | <strong class="text-amber-800">S-MEM</strong> | S-VIP</p>
+          <p class="text-[11px] text-slate-500">Chi tiêu năm: <strong>18,500,000 đ</strong></p>
+        </div>
+      </div>
+
+      <!-- Card 2: Nhóm Giáo dục -->
+      <div class="bg-gradient-to-br from-purple-50 to-white border border-purple-200/80 rounded-xl p-4 shadow-sm relative overflow-hidden">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-semibold text-purple-900 uppercase font-label">Ưu Đãi Giáo Dục</span>
+          <span class="bg-purple-100 text-purple-800 text-[10px] font-bold px-2 py-0.5 rounded-full">Đã xác minh</span>
+        </div>
+        <div class="text-lg font-extrabold text-purple-900 mb-1 flex items-center gap-1">
+          <span>🎓 S-Student</span>
+        </div>
+        <div class="border-t border-purple-200/60 pt-2 mt-2 text-xs text-slate-600">
+          <p class="text-[11px]">Hạn hưởng: <strong class="text-purple-800">30/06/2027</strong></p>
+          <p class="text-[11px] text-slate-500">Duyệt bởi: <strong>HuyTV4 (Admin)</strong></p>
+        </div>
+      </div>
+
+      <!-- Card 3: Tổng chi tiêu tham chiếu -->
+      <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm relative overflow-hidden">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-semibold text-slate-500 uppercase font-label">Tổng Tích Lũy Tham Chiếu</span>
+          <span class="bg-slate-100 text-slate-700 text-[10px] font-medium px-2 py-0.5 rounded-full">total_spent</span>
+        </div>
+        <div class="text-2xl font-black text-[#D70018] mb-1">
+          18,500,000 <span class="text-xs font-medium text-slate-600">đ</span>
+        </div>
+        <div class="border-t border-slate-100 pt-2 mt-2 flex items-center justify-between text-xs">
+          <span class="text-slate-500">Điểm thưởng (reward_points):</span>
+          <span class="font-bold text-slate-800 font-mono">370 pts</span>
+        </div>
+      </div>
+
+      <!-- Card 4: Thông tin quản trị -->
+      <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm relative overflow-hidden">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-semibold text-slate-500 uppercase font-label">Quản Trị Hồ Sơ</span>
+          <span class="bg-blue-50 text-blue-700 text-[10px] font-semibold px-2 py-0.5 rounded-full">Admin Approved</span>
+        </div>
+        <div class="text-sm font-bold text-slate-800 mb-1 flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-blue-600 text-[18px]">verified</span>
+          <span>HuyTV4 (Admin)</span>
+        </div>
+        <div class="border-t border-slate-100 pt-2 mt-2 flex items-center justify-between text-xs">
+          <span class="text-slate-500">Showroom quản lý:</span>
+          <span class="font-medium text-[#D70018]">125 Lê Văn Việt</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= 5. TABBED CONTENT VIEW (4 TABS CHUẨN D03) ================= -->
+    <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+      
+      <!-- Left 2 Cols: 4 Tabs Container -->
+      <div class="xl:col-span-2 space-y-6">
+        <div class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+          
+          <!-- Tab Navigation Bar -->
+          <div class="flex border-b border-slate-200 bg-slate-50/50 px-4 pt-2 overflow-x-auto">
+            <button class="px-4 py-3 text-xs font-bold text-[#D70018] border-b-2 border-[#D70018] flex items-center gap-1.5 whitespace-nowrap">
+              <span class="material-symbols-outlined text-[16px]">laptop</span>
+              <span>TAB 1: Thiết bị sở hữu / IMEI (1)</span>
+            </button>
+            <button class="px-4 py-3 text-xs font-medium text-slate-600 hover:text-slate-900 border-b-2 border-transparent flex items-center gap-1.5 whitespace-nowrap">
+              <span class="material-symbols-outlined text-[16px]">record_voice_over</span>
+              <span>TAB 2: Cơ hội mở (1)</span>
+            </button>
+            <button class="px-4 py-3 text-xs font-medium text-slate-600 hover:text-slate-900 border-b-2 border-transparent flex items-center gap-1.5 whitespace-nowrap">
+              <span class="material-symbols-outlined text-[16px]">confirmation_number</span>
+              <span>TAB 3: Phiếu hỗ trợ (1)</span>
+            </button>
+            <button class="px-4 py-3 text-xs font-medium text-slate-600 hover:text-slate-900 border-b-2 border-transparent flex items-center gap-1.5 whitespace-nowrap">
+              <span class="material-symbols-outlined text-[16px]">history</span>
+              <span>TAB 4: Dòng thời gian Tương tác</span>
+            </button>
+          </div>
+
+          <!-- Tab 1: Content Table (Thiết bị sở hữu - Sales_Invoice_Reference) -->
+          <div class="p-4">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center gap-2">
+                <h3 class="text-xs font-bold text-slate-900 uppercase font-label">Thiết bị sở hữu / Lịch sử mua hàng (Sales_Invoice_Reference)</h3>
+              </div>
+              <span class="text-[11px] text-slate-500 font-mono">1 Thiết bị đã đăng ký</span>
+            </div>
+
+            <div class="overflow-x-auto border border-slate-200 rounded-lg">
+              <table class="w-full text-left text-xs border-collapse">
+                <thead>
+                  <tr class="bg-slate-50 text-slate-600 font-semibold border-b border-slate-200">
+                    <th class="py-2.5 px-3">Tên máy &amp; Mã SKU</th>
+                    <th class="py-2.5 px-3">Số Serial / IMEI</th>
+                    <th class="py-2.5 px-3">Hóa đơn &amp; Ngày mua</th>
+                    <th class="py-2.5 px-3">Showroom &amp; Hạn BH</th>
+                    <th class="py-2.5 px-3 text-right">Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-200 text-slate-700">
+                  <tr class="hover:bg-slate-50/80 transition-colors">
+                    <td class="py-3 px-3">
+                      <div class="font-bold text-slate-900 flex items-center gap-1.5">
+                        <span class="material-symbols-outlined text-[#D70018] text-[18px]">laptop_mac</span>
+                        Laptop Lenovo LOQ 15IAX9 83GS001RVN
+                      </div>
+                      <div class="text-[11px] text-slate-500 pl-6">i5-12450HX / 16GB / 512GB RTX 3050</div>
+                    </td>
+                    <td class="py-3 px-3">
+                      <div class="font-mono text-xs font-bold text-slate-800">83GS001RVNVN101</div>
+                      <span class="text-[10px] text-emerald-600 font-medium">Đã kích hoạt chính hãng</span>
+                    </td>
+                    <td class="py-3 px-3">
+                      <div class="font-mono font-semibold text-slate-800">INV-2025-01124</div>
+                      <div class="text-[11px] text-slate-500">15/01/2025</div>
+                    </td>
+                    <td class="py-3 px-3">
+                      <div class="text-[11px] font-medium text-slate-800">Showroom 125 Lê Văn Việt</div>
+                      <span class="inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded-full font-semibold text-[10px]">
+                        BH: 24 Tháng (Còn 15 tháng)
+                      </span>
+                    </td>
+                    <td class="py-3 px-3 text-right whitespace-nowrap">
+                      <button class="bg-rose-50 hover:bg-rose-100 text-[#D70018] border border-rose-200 px-2.5 py-1 rounded text-[11px] font-semibold transition-colors" onclick="window.location.href='screen5_ticket_detail.html'">
+                        Tạo Ticket BH
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Tab 2 & 3 Summary Cards Preview -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 pt-0">
+            <!-- Tab 3 Preview: Phiếu Hỗ Trợ Gần Nhất (TCK-2026-00150) -->
+            <div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5">
+              <div class="flex items-center justify-between pb-2 border-b border-slate-200 mb-2">
+                <div class="flex items-center gap-1.5 text-slate-800 font-bold text-xs">
+                  <span class="material-symbols-outlined text-[#D70018] text-[18px]">confirmation_number</span>
+                  <span>[TAB 3] LỊCH SỬ PHIẾU HỖ TRỢ GẦN NHẤT</span>
+                </div>
+                <span class="text-[10px] text-[#D70018] font-bold">1 Ticket</span>
+              </div>
+              <div class="p-3 bg-white rounded-lg border border-amber-200 shadow-2xs">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="font-mono font-bold text-xs text-slate-900">TCK-2026-00150</span>
+                  <span class="bg-amber-100 text-amber-800 border border-amber-300 text-[10px] font-bold px-2 py-0.5 rounded">
+                    🟡 In Progress
                   </span>
-</div>
-<p class="text-xs font-medium text-slate-800 mb-1">iPhone 15 Pro Max lỗi nguồn đột ngột</p>
-<div class="flex items-center justify-between text-[11px] text-slate-500 pt-1 border-t border-rose-100">
-<span class="flex items-center gap-1">
-<span class="material-symbols-outlined text-[14px] text-slate-400">home_repair_service</span>
-                    Đơn vị: <strong>Điện Thoại Vui Q9</strong>
-</span>
-<span class="text-[#D70018] font-bold flex items-center gap-0.5">
-                    ⏱️ Còn 3h15p (Urgent S-VIP)
+                </div>
+                <p class="text-xs font-semibold text-slate-800 mb-1">Lenovo LOQ quạt kêu to</p>
+                <div class="text-[11px] text-slate-600 border-t border-slate-100 pt-1.5 flex items-center justify-between">
+                  <span>Trạm: <strong>DTV Lê Văn Việt</strong> (KTV Tú)</span>
+                  <span class="text-[#D70018] font-semibold">Đang kiểm tra</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tab 2 Preview: Nhu cầu / Cơ hội mở (LEAD-2026-08912) -->
+            <div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5">
+              <div class="flex items-center justify-between pb-2 border-b border-slate-200 mb-2">
+                <div class="flex items-center gap-1.5 text-slate-800 font-bold text-xs">
+                  <span class="material-symbols-outlined text-purple-600 text-[18px]">record_voice_over</span>
+                  <span>[TAB 2] CƠ HỘI MỞ &amp; LỊCH CHĂM SÓC</span>
+                </div>
+                <span class="text-[10px] text-purple-700 font-bold">1 Cơ hội</span>
+              </div>
+              <div class="p-3 bg-white rounded-lg border border-purple-200 shadow-2xs">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="font-mono font-bold text-xs text-purple-900">LEAD-2026-08912</span>
+                  <span class="bg-blue-50 text-blue-800 border border-blue-200 text-[10px] font-bold px-2 py-0.5 rounded">
+                    🟡 Contacted
                   </span>
-</div>
-</div>
-<!-- Ticket 2 -->
-<div class="p-3 rounded-lg border border-slate-200 bg-slate-50/50">
-<div class="flex items-center justify-between mb-1">
-<span class="font-mono font-bold text-xs text-slate-700">TCK-2026-00089</span>
-<span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded">
-                    Đã giải quyết - Closed
-                  </span>
-</div>
-<p class="text-xs font-medium text-slate-700 mb-1">Củ sạc Apple 20W không vào điện</p>
-<div class="flex items-center justify-between text-[11px] text-slate-500 pt-1 border-t border-slate-200/60">
-<span>Đã đổi mới tại Showroom 125 Lê Văn Việt</span>
-<span class="text-amber-500 font-bold" title="5 sao đánh giá từ khách hàng">CSAT: ⭐⭐⭐⭐⭐</span>
-</div>
-</div>
-</div>
-<!-- Interaction Timeline Snippet Card -->
-<div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
-<div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-3">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-blue-600 text-[20px]">history</span>
-<h4 class="text-xs font-bold text-slate-900 uppercase font-label">Dòng Thời Gian Tương Tác Gần Nhất</h4>
-</div>
-<button class="text-xs text-slate-400 hover:text-slate-600">
-<span class="material-symbols-outlined text-[16px]">more_horiz</span>
-</button>
-</div>
-<div class="relative pl-6 space-y-4 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-200">
-<!-- Event 1 -->
-<div class="relative">
-<div class="absolute -left-6 top-0.5 w-4 h-4 rounded-full bg-rose-500 ring-4 ring-white flex items-center justify-center">
-<span class="w-1.5 h-1.5 rounded-full bg-white"></span>
-</div>
-<div class="text-[11px] font-bold text-slate-800 flex items-center gap-2">
-<span>03/10/2026 10:15</span>
-<span class="bg-rose-100 text-rose-800 px-1.5 py-0.2 rounded font-semibold text-[10px]">Hotline 1800.2097</span>
-</div>
-<p class="text-xs text-slate-600 mt-0.5">Khách báo sập nguồn khi sạc thiết bị → Đã tiếp nhận và tạo lịch hẹn kỹ thuật Điện Thoại Vui tiếp nhận tại nhà.</p>
-</div>
-<!-- Event 2 -->
-<div class="relative">
-<div class="absolute -left-6 top-0.5 w-4 h-4 rounded-full bg-blue-500 ring-4 ring-white flex items-center justify-center">
-<span class="w-1.5 h-1.5 rounded-full bg-white"></span>
-</div>
-<div class="text-[11px] font-bold text-slate-800 flex items-center gap-2">
-<span>15/08/2026 14:30</span>
-<span class="bg-blue-100 text-blue-800 px-1.5 py-0.2 rounded font-semibold text-[10px]">Zalo OA CSKH</span>
-</div>
-<p class="text-xs text-slate-600 mt-0.5">Tư vấn gói gia hạn Apple Care+ cho iPhone 15 Pro Max. Khách đã xác nhận quan tâm và yêu cầu gửi báo giá qua Zalo.</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Right 1 Col: Quick Note Box, Side Modal / Action Panel -->
-<div class="space-y-6">
-<!-- Quick Note Box (S-VIP Priority Warning) -->
-<div class="bg-amber-50/60 border border-amber-200 rounded-xl p-4 shadow-sm">
-<div class="flex items-center gap-2 text-amber-900 mb-2">
-<span class="material-symbols-outlined text-[20px] text-amber-600">push_pin</span>
-<h4 class="text-xs font-bold uppercase font-label">Lưu Ý Quan Trọng Từ Quản Lý CSKH</h4>
-</div>
-<div class="p-3 bg-white/90 border border-amber-200/80 rounded-lg text-xs text-slate-700 leading-relaxed shadow-2xs">
-<p class="font-medium text-amber-950 mb-1">
-                ⭐ <span class="underline">Khách hàng S-VIP ưu tiên cao</span>: Thường xuyên công tác nước ngoài. Ưu tiên giải quyết và hỗ trợ qua <strong>Zalo OA</strong> hoặc liên hệ điện thoại trực tiếp sau <strong>18h00</strong>.
-              </p>
-<div class="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400">
-<span>Cập nhật bởi: <strong>Trần Quang Huy</strong></span>
-<span>Hôm qua 17:42</span>
-</div>
-</div>
-</div>
-<!-- Slide-over / Modal Dialog Component Preview (Điều chỉnh Điểm Smember / Gộp hồ sơ) -->
-<div class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
-<div class="bg-slate-900 text-white px-4 py-3 flex items-center justify-between">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-amber-400 text-[18px]">manage_accounts</span>
-<span class="text-xs font-bold">Thao Tác Nhanh Nghiệp Vụ</span>
-</div>
-<span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded font-mono">Frappe Modal v15</span>
-</div>
-<div class="p-4 space-y-4">
-<!-- Sub-feature 1: Điều chỉnh điểm Smember -->
-<div class="border border-purple-200 bg-purple-50/30 rounded-lg p-3">
-<div class="flex items-center justify-between mb-2">
-<span class="text-xs font-bold text-purple-900">⭐ Điều Chỉnh Điểm Smember</span>
-<span class="text-[10px] text-purple-700 font-medium">Khả dụng: 1,250 pts</span>
-</div>
-<div class="space-y-2">
-<div>
-<label class="text-[10px] font-semibold text-slate-600 block mb-1">Hành động điều chỉnh</label>
-<select class="w-full text-xs py-1.5 px-2 bg-white border border-slate-200 rounded text-slate-700 focus:ring-1 focus:ring-purple-500">
-<option>+ Cộng điểm đền bù SLA trễ hẹn (CSKH)</option>
-<option>- Khấu trừ điểm do hoàn trả đơn hàng</option>
-<option>⭐ Nâng cấp đặc cách hạng Hội viên VIP</option>
-</select>
-</div>
-<div class="flex gap-2">
-<input class="w-1/2 text-xs py-1.5 px-2 bg-white border border-slate-200 rounded" placeholder="Số điểm (VD: 100)" type="number"/>
-<button class="w-1/2 bg-purple-700 hover:bg-purple-800 text-white text-xs font-semibold rounded py-1.5 transition-colors">
-                      Xác nhận duyệt
-                    </button>
-</div>
-</div>
-</div>
-<!-- Sub-feature 2: Gộp hồ sơ (Merge Customer) -->
-<div class="border border-amber-200 bg-amber-50/30 rounded-lg p-3">
-<div class="flex items-center justify-between mb-2">
-<span class="text-xs font-bold text-amber-900">⚡ Gộp Hồ Sơ Khách Hàng (Merge)</span>
-<span class="material-symbols-outlined text-amber-600 text-[16px]">call_merge</span>
-</div>
-<p class="text-[11px] text-slate-600 mb-2">Phát hiện số phụ <strong>0988123xxx</strong> trùng thông tin CMND/CCCD.</p>
-<div class="flex items-center gap-2">
-<input class="w-full text-xs py-1 px-2 bg-slate-100 border border-slate-200 rounded font-mono text-slate-600" readonly="" type="text" value="CUST-2026-00892 (SĐT 0988123xxx)"/>
-<button class="bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold px-3 py-1.5 rounded transition-colors whitespace-nowrap">
-                    Gộp ngay
-                  </button>
-</div>
-</div>
-<!-- Integration with Dien Thoai Vui -->
-<div class="border border-slate-200 rounded-lg p-3 bg-slate-50 flex items-center justify-between">
-<div class="flex items-center gap-2">
-<div class="w-6 h-6 rounded bg-[#D70018] text-white flex items-center justify-center font-bold text-xs">
-                    VUI
+                </div>
+                <p class="text-xs font-semibold text-slate-800 mb-1">Laptop Lenovo LOQ 15IAX9 (20-25 triệu)</p>
+                <div class="text-[11px] text-slate-600 border-t border-slate-100 pt-1.5 flex items-center justify-between">
+                  <span>Hạn chăm sóc (+3N): <strong>06/10/2026</strong></span>
+                  <span class="text-purple-700 font-semibold">Ưu đãi S-Student</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 4 Preview: Dòng Thời Gian Tương Tác (Timeline) -->
+          <div class="p-4 pt-0">
+            <div class="bg-white border border-slate-200 rounded-xl p-3.5">
+              <div class="flex items-center justify-between pb-2 border-b border-slate-100 mb-2">
+                <div class="flex items-center gap-1.5 text-slate-800 font-bold text-xs">
+                  <span class="material-symbols-outlined text-blue-600 text-[18px]">timeline</span>
+                  <span>[TAB 4] DÒNG THỜI GIAN TƯƠNG TÁC (TIMELINE)</span>
+                </div>
+                <span class="text-[10px] text-slate-400">Ghi nhận từ Hotline 1800 &amp; Zalo</span>
+              </div>
+              <div class="space-y-2 text-xs">
+                <div class="flex items-start gap-2.5 p-2 bg-slate-50 rounded-lg">
+                  <span class="material-symbols-outlined text-rose-500 text-[18px] shrink-0">call</span>
+                  <div>
+                    <div class="flex items-center gap-2">
+                      <span class="font-bold text-slate-800">Hotline 1800.2097</span>
+                      <span class="text-[10px] text-slate-400">03/10/2026 10:15</span>
+                    </div>
+                    <p class="text-slate-600 text-[11px]">Khách phản ánh quạt tản nhiệt Lenovo LOQ kêu to khi render. Đã tiếp nhận phiếu hỗ trợ TCK-2026-00150.</p>
                   </div>
-<div>
-<p class="text-xs font-bold text-slate-800">Điện Thoại Vui Repair Desk</p>
-<p class="text-[10px] text-slate-500">Đặt lịch hẹn kiểm tra trực tiếp</p>
+                </div>
+                <div class="flex items-start gap-2.5 p-2 bg-slate-50 rounded-lg">
+                  <span class="material-symbols-outlined text-blue-500 text-[18px] shrink-0">chat</span>
+                  <div>
+                    <div class="flex items-center gap-2">
+                      <span class="font-bold text-slate-800">Zalo OA CSKH</span>
+                      <span class="text-[10px] text-slate-400">15/08/2026 14:30</span>
+                    </div>
+                    <p class="text-slate-600 text-[11px]">Xác nhận giấy tờ thẻ sinh viên để duyệt chính sách ưu đãi giáo dục S-Student thời hạn đến 30/06/2027.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Right 1 Col: Dữ Liệu Thao Tác (Nhập - Mục 2 D03) & Form Cập Nhật -->
+      <div class="space-y-5">
+        
+        <!-- Form Cập Nhật Thông Tin Liên Hệ & Nhóm Giáo Dục (Mục 2 D03) -->
+        <div class="bg-white border border-slate-200 rounded-xl shadow-sm p-4">
+          <div class="flex items-center gap-2 text-slate-900 font-bold text-xs mb-3 pb-2 border-b border-slate-100">
+            <span class="material-symbols-outlined text-[#D70018] text-[18px]">edit_square</span>
+            <span>2. DỮ LIỆU THAO TÁC (NHẬP FORM)</span>
+          </div>
+
+          <form class="space-y-3 text-xs" onsubmit="event.preventDefault(); alert('Đã lưu dữ liệu hồ sơ khách hàng thành công!');">
+            <div>
+              <label class="block font-semibold text-slate-700 mb-1">Địa chỉ nhận hàng (*)</label>
+              <input class="w-full text-xs p-2 bg-slate-50 border border-slate-200 rounded-lg focus:bg-white focus:ring-1 focus:ring-[#D70018]" type="text" value="Showroom 125 Lê Văn Việt, P. Hiệp Phú, TP. Thủ Đức, TP.HCM"/>
+            </div>
+
+            <div>
+              <label class="block font-semibold text-slate-700 mb-1">Email liên hệ</label>
+              <input class="w-full text-xs p-2 bg-slate-50 border border-slate-200 rounded-lg focus:bg-white focus:ring-1 focus:ring-[#D70018]" type="email" value="tram.le@yahoo.com"/>
+            </div>
+
+            <div>
+              <label class="block font-semibold text-slate-700 mb-1">Tỉnh / Thành phố</label>
+              <select class="w-full text-xs p-2 bg-slate-50 border border-slate-200 rounded-lg focus:bg-white focus:ring-1 focus:ring-[#D70018]">
+                <option selected="">TP. Hồ Chí Minh (TP. Thủ Đức)</option>
+                <option>Hà Nội</option>
+                <option>Đà Nẵng</option>
+              </select>
+            </div>
+
+            <!-- Khối Nhóm Giáo Dục (Yêu cầu quyền Admin) -->
+            <div class="p-2.5 bg-purple-50/60 border border-purple-200 rounded-lg space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-purple-900 text-[11px]">🎓 Cập Nhật Nhóm Giáo Dục (Admin)</span>
+                <span class="text-[10px] text-purple-700 font-semibold">Quyền: HuyTV4</span>
+              </div>
+              <div class="grid grid-cols-2 gap-2">
+                <div>
+                  <label class="text-[10px] text-slate-600 block">Loại ưu đãi</label>
+                  <select class="w-full text-[11px] p-1.5 bg-white border border-slate-200 rounded">
+                    <option selected="">🎓 S-Student (HSSV)</option>
+                    <option>👨‍🏫 S-Teacher (Giảng viên)</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="text-[10px] text-slate-600 block">Trạng thái duyệt</label>
+                  <select class="w-full text-[11px] p-1.5 bg-white border border-slate-200 rounded text-emerald-700 font-bold">
+                    <option selected="">Đã duyệt</option>
+                    <option>Chờ xác minh</option>
+                  </select>
+                </div>
+              </div>
+              <div>
+                <label class="text-[10px] text-slate-600 block">Hạn hưởng chính sách</label>
+                <input class="w-full text-[11px] p-1.5 bg-white border border-slate-200 rounded font-mono" type="date" value="2027-06-30"/>
+              </div>
+            </div>
+
+            <!-- Ô nhập ghi chú CSKH -->
+            <div>
+              <label class="block font-semibold text-slate-700 mb-1">Ghi chú đặc điểm CSKH</label>
+              <textarea class="w-full text-xs p-2 bg-slate-50 border border-slate-200 rounded-lg focus:bg-white focus:ring-1 focus:ring-[#D70018]" rows="3">Khách là sinh viên ngành CNTT, mua laptop Lenovo LOQ để học lập trình. Cần ưu đãi giá giáo dục S-Student.</textarea>
+            </div>
+
+            <button class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2 rounded-lg text-xs transition-colors flex items-center justify-center gap-1.5" type="submit">
+              <span class="material-symbols-outlined text-[16px]">save</span>
+              <span>[Lưu Thay Đổi Form]</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Audit Log Trail (Frappe Footer) -->
+        <div class="text-[11px] text-slate-400 space-y-1 bg-white border border-slate-200 p-3 rounded-lg">
+          <div class="flex justify-between">
+            <span>DocType:</span>
+            <span class="font-mono text-slate-700 font-semibold">Customer (Frappe v15)</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Người cập nhật:</span>
+            <span class="font-medium text-slate-700">HuyTV4 (Admin)</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Thời gian cập nhật:</span>
+            <span class="font-medium text-slate-700">03/10/2026 10:30:00</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
 </div>
-</div>
-<button class="text-xs bg-white border border-slate-200 hover:bg-slate-100 text-slate-800 px-2 py-1 rounded font-medium">
-                  Đặt lịch
-                </button>
-</div>
-</div>
-</div>
-<!-- Audit Log Trail (Frappe standard footer component) -->
-<div class="text-[11px] text-slate-400 space-y-1 bg-white border border-slate-200 p-3 rounded-lg">
-<div class="flex justify-between">
-<span>Được tạo bởi:</span>
-<span class="font-medium text-slate-600">admin@cellphones.com.vn</span>
-</div>
-<div class="flex justify-between">
-<span>Thời gian tạo:</span>
-<span class="font-medium text-slate-600">12/03/2019 09:22:15</span>
-</div>
-<div class="flex justify-between">
-<span>Phiên bản DocType:</span>
-<span class="font-mono text-slate-600">DocType: Customer_v15.2</span>
-</div>
-</div>
-</div>
-</div>
-</main>
-</div>
-</body></html>
+
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CellphoneS CRM - Frappe Desk v15 UI Showcase Prototype</title>
+  <title>CellphoneS CRM - Frappe Desk v15 UI Showcase Prototype (D03 Standard)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -167,9 +167,9 @@
       background: white;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    /* Spec Drawer (Collapsible) */
+    /* Spec Drawer */
     .spec-drawer {
-      width: 380px;
+      width: 400px;
       background-color: var(--cps-dark-secondary);
       border-left: 1px solid var(--cps-border);
       display: flex;
@@ -179,7 +179,7 @@
       z-index: 40;
     }
     .spec-drawer.collapsed {
-      margin-right: -380px;
+      margin-right: -400px;
     }
     .drawer-header {
       padding: 16px;
@@ -288,30 +288,30 @@
         <span>📱</span> CellphoneS CRM
       </div>
       <div>
-        <div class="project-title">Frappe Desk v15 UI Suite</div>
-        <div class="project-subtitle">Dự án CRM Bán lẻ & Dịch vụ Sửa chữa Điện Thoại Vui</div>
+        <div class="project-title">Frappe Desk v15 UI Suite (D03 Standard)</div>
+        <div class="project-subtitle">Tác giả: Trần Quang Huy (System Analyst &amp; PM)</div>
       </div>
     </div>
 
     <!-- 6 Screen Tabs -->
     <nav class="screens-nav" id="screensNav">
       <button class="screen-tab active" onclick="loadScreen(0)">
-        <span class="tab-num">01</span> Hồ Sơ 360°
+        <span class="tab-num">01</span> Hồ Sơ KH 360°
       </button>
       <button class="screen-tab" onclick="loadScreen(1)">
-        <span class="tab-num">02</span> Cơ Hội & Pre-order
+        <span class="tab-num">02</span> Cơ Hội &amp; Nhu Cầu
       </button>
       <button class="screen-tab" onclick="loadScreen(2)">
-        <span class="tab-num">03</span> Tương Tác & CTI
+        <span class="tab-num">03</span> Tương Tác &amp; Nhắc Việc
       </button>
       <button class="screen-tab" onclick="loadScreen(3)">
         <span class="tab-num">04</span> Kanban Phiếu Hỗ Trợ
       </button>
       <button class="screen-tab" onclick="loadScreen(4)">
-        <span class="tab-num">05</span> Chi Tiết & Nghiệm Thu
+        <span class="tab-num">05</span> Chi Tiết &amp; Nghiệm Thu
       </button>
       <button class="screen-tab" onclick="loadScreen(5)">
-        <span class="tab-num">06</span> CSKH & SLA Dashboard
+        <span class="tab-num">06</span> CSKH Analytics Dashboard
       </button>
     </nav>
 
@@ -355,161 +355,152 @@
     const screensData = [
       {
         id: "SCREEN_01",
-        title: "Màn hình 1: Hồ sơ khách hàng 360° & Quản trị Smember VIP",
+        title: "Màn hình 1: Hồ sơ khách hàng 360° & Danh sách (CUST-2026-00002)",
         file: "screen1_customer_360.html",
-        doctype: "Customer (DocType CRM Chuẩn Frappe)",
-        useCase: "Quản trị vòng đời khách hàng, tra cứu lịch sử mua hàng theo IMEI, tích điểm Smember & kích hoạt quyền lợi S-VIP.",
+        doctype: "Customer (DocType CRM Frappe Desk v15)",
+        useCase: "Quản trị vòng đời khách hàng, quản trị 4 hạng Smember & Ưu đãi giáo dục (S-Student / S-Teacher), tra cứu thiết bị sở hữu theo IMEI và lịch sử Ticket.",
         views: [
-          "Header Profile: Mã CUST-2026-00001, Nguyễn Văn An, SĐT 0908123456, CCCD 079098001234.",
-          "Thẻ Smember VIP: ⭐ S-VIP, Điểm tích lũy 1,250 pts, Tổng chi tiêu 85.4 triệu, Hạn duy trì 31/12/2026.",
-          "Tab 1: Thiết bị sở hữu (iPhone 15 Pro Max, Apple Watch Ultra 2, Củ sạc Apple 20W).",
-          "Tab 2: Lịch sử Phiếu hỗ trợ TCK-2026-00155 (In Progress) & TCK-2026-00089 (Closed).",
-          "Tab 3: Dòng thời gian tương tác qua Hotline 1800, Chat Zalo OA và Showroom.",
-          "Tab 4: Ghi chú CSKH đặc quyền VIP."
+          "Header Profile: CUST-2026-00002, Lê Thị Bích Trâm, SĐT 0912345678, Email tram.le@yahoo.com, CCCD 079195005678, Showroom 125 Lê Văn Việt.",
+          "Thẻ Smember 4 Hạng & Giáo dục: ⭐ S-MEM (Chi tiêu năm: 18.5 triệu đ), 🎓 S-Student (Đã duyệt - Hạn: 30/06/2027), Điểm thưởng: 370 pts, Quản trị viên duyệt: HuyTV4.",
+          "Tab 1 - Thiết bị sở hữu / IMEI: Laptop Lenovo LOQ 15IAX9 83GS001RVN (SN: 83GS001RVNVN101, HĐ INV-2025-01124, Mua 15/01/2025, BH 24 Tháng).",
+          "Tab 2 - Cơ hội mở: LEAD-2026-08912 (Lenovo LOQ 20-25tr, Hạn chăm sóc 06/10/2026).",
+          "Tab 3 - Phiếu hỗ trợ: TCK-2026-00150 (Quạt kêu to -> 🟡 In Progress tại DTV Lê Văn Việt - KTV Tú).",
+          "Tab 4 - Dòng thời gian tương tác: Hotline 1800 & Zalo OA."
         ],
         actions: [
-          "[+ Tạo Phiếu Hỗ Trợ] - Tự động điền dữ liệu KH",
-          "[+ Ghi Nhận Tương Tác] - Mở CTI log",
-          "[⚡ Gộp Hồ Sơ (Merge)] - Hợp nhất hồ sơ trùng CCCD/SĐT",
-          "[⭐ Điều Chỉnh Điểm Smember] - Cộng/trừ điểm thưởng",
-          "[Lưu Thay Đổi]"
+          "[+ Tạo Phiếu Hỗ Trợ] - Tự động kế thừa thông tin KH",
+          "[+ Tạo Cơ Hội Tư Vấn] - Mở form ghi nhận nhu cầu",
+          "[+ Ghi Nhận Tương Tác] - Mở nhật ký cuộc gọi/chat",
+          "[Lưu Thay Đổi] - Cập nhật dữ liệu vào DB"
         ],
         validations: [
-          "Cảnh báo trùng SĐT nếu đã tồn tại hồ sơ khác",
-          "Ràng buộc quyền CSKH Manager khi chỉnh điểm Smember",
-          "Không thể gộp hồ sơ vào chính nó hoặc hồ sơ đã Merged"
+          "Cảnh báo trùng SĐT: Số điện thoại [0908123456] đã tồn tại trên hồ sơ CUST-2026-00001!",
+          "Lỗi quyền hạn: Bạn không có quyền chỉnh sửa thông tin Hạng thành viên hoặc Xác minh nhóm Giáo dục!"
         ]
       },
       {
         id: "SCREEN_02",
-        title: "Màn hình 2: Quản lý cơ hội tư vấn & Pre-order Flagship",
+        title: "Màn hình 2: Quản lý cơ hội tư vấn & Nhu cầu mua sắm (LEAD-2026-08912)",
         file: "screen2_lead_preorder.html",
-        doctype: "Lead & Opportunity (Nhu Cầu Tư Vấn)",
-        useCase: "Tiếp nhận cơ hội mua sắm đa kênh (Web Form, Zalo), quản lý hạn mức suất cọc Đợt 1 (Pre-order Quota), tư vấn Thu Cũ Đổi Mới và sinh mã VietQR cọc 1tr.",
+        doctype: "Lead & Opportunity (Frappe Desk Form View)",
+        useCase: "Quản lý cơ hội tư vấn bán hàng đa kênh, tư vấn chuyên sâu cấu hình laptop, nhu cầu thu cũ đổi mới trợ giá S-Student và đặt lịch nhắc việc chăm sóc (+3 ngày làm việc).",
         views: [
-          "Mã Lead: LEAD-2026-08912, KH: Trần Thị Mai Loan (0938112233).",
-          "Sản phẩm: iPhone 16 Pro Max 256GB Titan Sa Mạc (SP-IP16PM-256-DES).",
-          "Showroom nhận máy: CellphoneS 125 Lê Văn Việt, TP. Thủ Đức.",
-          "Thanh tiến độ Quota: Còn 12 / 50 Suất Đợt 1 tại chi nhánh.",
-          "Tiến trình Telesales: 1. Mới tạo -> 2. Đã liên hệ (Active) -> 3. Đủ điều kiện -> 4. Chốt cọc.",
-          "Phân hệ Thu Cũ Đổi Mới: iPhone 13 Pro Max trợ giá 14.5tr."
+          "Mã cơ hội: LEAD-2026-08912, KH: Trần Thị Mai Loan (0938112233), Kênh: Showroom 125 Lê Văn Việt.",
+          "Thông tin tư vấn: Laptop Lenovo LOQ 15IAX9 83GS001RVN, Ngân sách: 20 - 25 triệu đ.",
+          "Thiết bị đang dùng: Asus Vivobook cũ | Nhu cầu thu cũ: ☑ Có nhu cầu trợ giá SV (+1tr).",
+          "Yêu cầu cấu hình: Học CNTT, nâng cấp 16GB RAM, game nhẹ, màn hình chuẩn 100% sRGB.",
+          "Ngày dự kiến mua: 10/10/2026 | Hạn chăm sóc (+3 ngày LV): 06/10/2026 17:00 ⏰.",
+          "Tiến trình tư vấn (State): ( ) 1. Open -> (•) 2. Contacted -> ( ) 3. Qualified -> ( ) 4. Converted."
         ],
         actions: [
-          "[📞 Gọi Telesales (CTI Auto-dial)]",
-          "[⚡ Tạo VietQR Thanh Toán Cọc 1,000,000 đ]",
-          "[🎯 Chốt Cọc & Chuyển Đổi Đơn Hàng (Sales Order)]",
-          "[Hủy / Đóng Lead (Lost)]",
-          "[Lưu Ghi Chú]"
+          "[ 📞 Bắt đầu cuộc gọi Telesales / Gọi Telesales ]",
+          "[ ⏰ Đặt Lịch Chăm Sóc (+3 Ngày) ] - Tự động dời lịch follow-up",
+          "[ 🎯 Đã Mua Hàng (Converted) ] - Chốt mua, liên kết hồ sơ KH",
+          "[ Hủy / Đóng Cơ Hội (Lost) ]",
+          "[ Lưu ]"
         ],
         validations: [
-          "Báo hết suất nếu Quota chi nhánh = 0",
-          "Bắt buộc nhận xác nhận thanh toán cọc trước khi Convert",
-          "Yêu cầu liên kết hoặc tạo Customer profile có cùng SĐT"
+          "Thiếu thông tin tư vấn: Vui lòng nhập Ngân sách dự kiến hoặc Thiết bị quan tâm trước khi chuyển Qualified!",
+          "Trùng lặp cơ hội: Khách hàng đã có một cơ hội mở cho sản phẩm này tại Showroom 125 Lê Văn Việt!"
         ]
       },
       {
         id: "SCREEN_03",
-        title: "Màn hình 3: Tiếp nhận tương tác đa kênh & Nhắc việc",
+        title: "Màn hình 3: Ghi nhận tương tác đa kênh & Nhắc việc (INT-2026-00542)",
         file: "screen3_interaction_reminder.html",
-        doctype: "Customer Interaction (Tương Tác Đa Kênh)",
-        useCase: "Pop-up CTI Caller-ID tự động bắt số gọi đến Hotline 1800, tra cứu nhanh lịch sử liên hệ, lập lịch nhắc việc gọi lại chăm sóc và tạo nhanh Ticket.",
+        doctype: "Customer Interaction & Task (Frappe Interaction Pop-up)",
+        useCase: "Tiếp nhận cuộc gọi Hotline 1800 / Zalo, nhận diện tự động khách S-VIP, phân loại tương tác bảo hành/đổi trả, lập lịch hẹn gọi lại chăm sóc và tạo nhanh Ticket.",
         views: [
-          "CTI Live Call Bar: Cuộc gọi đến từ Hotline 1800.2097 (02:45 đàm thoại).",
-          "Tự động nhận diện: CUST-2026-00001 - Nguyễn Văn An (⭐ S-VIP).",
-          "Phân loại tương tác: Khiếu nại bảo hành - sửa chữa máy.",
-          "Tóm tắt nội dung trao đổi: Khách báo sập nguồn khi sạc, hướng dẫn qua DTV 125 Lê Văn Việt.",
-          "Quick Peek: Lịch sử 3 lần liên hệ gần nhất của khách.",
-          "Khối tạo lịch nhắc việc: Hẹn gọi lại 14:00 ngày 03/10/2026."
+          "Mã tương tác: INT-2026-00542, Thời gian: 03/10/2026 10:15, Kênh: Hotline 1800 (1800.2097).",
+          "Người gọi: Nguyễn Văn An (SĐT 0908123456) liên kết CUST-2026-00001 (⭐ S-VIP).",
+          "Nhân viên tiếp nhận (staff_agent): HuyTV4 (Trần Quang Huy).",
+          "Phân loại tương tác: (•) Tiếp nhận bảo hành / Đổi trả.",
+          "Tóm tắt trao đổi: Khách báo iPhone 15 Pro Max 256GB bị sập nguồn khi sạc, hướng dẫn qua Showroom 125 Lê Văn Việt kiểm tra AppleCare+.",
+          "Khối nhắc việc: Hẹn gọi lại lúc 04/10/2026 10:00 (Nội dung: Gọi lại xác nhận khách đã gửi máy tại Showroom 125)."
         ],
         actions: [
-          "[Lưu Tương Tác]",
-          "[⚡ Tạo Nhanh Phiếu Hỗ Trợ] - Kế thừa dữ liệu",
-          "[⏰ Lưu Lịch Hẹn Chăm Sóc]",
-          "[Hủy Bỏ / Đóng]"
+          "[ Lưu tương tác ]",
+          "[ ⚡ Tạo nhanh Ticket ] - Chuyển sang form Support Ticket",
+          "[ ⏰ Lưu Lịch Hẹn ] - Thêm nhiệm vụ nhắc việc",
+          "[ Hủy bỏ ]"
         ],
         validations: [
-          "Bắt buộc nhập tóm tắt trao đổi",
-          "Kiểm tra định dạng SĐT Việt Nam 10 số",
-          "Thời gian hẹn gọi lại phải lớn hơn thời điểm hiện tại"
+          "Thiếu nội dung: Vui lòng nhập Tóm tắt nội dung trao đổi trước khi lưu!",
+          "SĐT không hợp lệ: Số điện thoại phải gồm 10 chữ số!"
         ]
       },
       {
         id: "SCREEN_04",
-        title: "Màn hình 4: Kanban 5 Cột Phiếu hỗ trợ & Bảo hành DTV",
+        title: "Màn hình 4: Kanban 5 Cột Phiếu hỗ trợ & Bảo hành (5 Swimlanes)",
         file: "screen4_ticket_kanban.html",
-        doctype: "Support Ticket (Kanban Board View)",
-        useCase: "Giám sát trực quan vòng đời 5 trạng thái của Ticket, đếm ngược đồng hồ SLA, phân luồng trạm kỹ thuật Điện Thoại Vui và cứu vãn các ca khẩn cấp.",
+        doctype: "Support Ticket (Kanban Board View - State Diagram C03)",
+        useCase: "Điều phối và theo dõi tiến độ xử lý phiếu bảo hành - sửa chữa tại trạm Điện Thoại Vui và trung tâm ủy quyền theo chuẩn vòng đời 5 trạng thái.",
         views: [
-          "Cột 1: MỚI TẠO (Open - 3 phiếu) - TCK-2026-00155 (S-VIP SLA 4H, còn 3h15p).",
-          "Cột 2: ĐANG XỬ LÝ (In Progress - 5 phiếu) - Cảnh báo ĐỎ QUÁ HẠN 45P (Xiaomi 14 Ultra).",
-          "Cột 3: CHỜ HÃNG / LK (Pending Vendor - 2 phiếu) - Asus ROG Zephyrus chờ quạt.",
-          "Cột 4: ĐÃ XỬ LÝ (Resolved - 4 phiếu) - iPad Pro M4 đổi máy mới 1-1.",
-          "Cột 5: ĐÓNG PHIẾU (Closed - 18 phiếu) - Loa Marshall hoàn tất sửa chữa (CSAT 5/5).",
-          "Dải cảnh báo: 2 Phiếu quá hạn SLA & 4 Phiếu S-VIP."
+          "1. MỚI TẠO (Open - 2 Phiếu): TCK-2026-00155 ⭐ (Nguyễn Văn An, iPhone 15 Pro Max, Nóng sập nguồn), TCK-2026-00156 (AirPods Pro 2).",
+          "2. ĐANG XỬ LÝ (In Prog - 3 Phiếu): TCK-2026-00150 (Lê Thị Bích Trâm, Lenovo LOQ, Quạt kêu to - KTV Tú), TCK-2026-00151, TCK-2026-00152.",
+          "3. CHỜ HÃNG (Pending - 1 Phiếu): TCK-2026-00145 (Đỗ Mỹ Linh, Asus ROG Zephyrus, Lỗi màn hình OLED - Chuyển Asus Service).",
+          "4. ĐÃ XỬ LÝ (Resolved - 2 Phiếu): TCK-2026-00142 ⭐ (Hoàng Minh Quân, Củ sạc GaN Anker 65W, Đổi theo CS, Đã báo qua ĐT), TCK-2026-00140.",
+          "5. ĐÓNG (Closed - 12 Phiếu): TCK-2026-00130 (Bùi Anh Tuấn, Loa Marshall, Hoàn tất trả máy, CSAT 5 sao)."
         ],
         actions: [
           "[+ Tạo Phiếu Hỗ Trợ Mới]",
-          "[Chuyển Chế Độ Kanban / List View]",
-          "[Bộ Lọc Đơn Vị: DTV / Apple Care / Store]",
-          "[Gán Việc Nhanh Trực Tiếp Trên Thẻ]",
-          "[Lọc Phiếu Của Tôi]"
+          "[Chuyển Chế Độ List / Kanban]",
+          "[Phân Công Xử Lý / Gán Nhân Viên]",
+          "[Lọc Theo Chi Nhánh Showroom 125 Lê Văn Việt]"
         ],
         validations: [
-          "Chuyển trạng thái bắt buộc tuần tự Open -> In Progress -> Resolved/Closed",
-          "Không thể nhận xử lý In Progress nếu chưa gán KTV phụ trách"
+          "Vi phạm luồng trạng thái: Không thể chuyển trực tiếp từ Open sang Resolved mà chưa qua bước xử lý/xác minh!",
+          "Quyền truy cập: Bạn chỉ được thao tác trên các phiếu thuộc phạm vi Showroom của mình!"
         ]
       },
       {
         id: "SCREEN_05",
-        title: "Màn hình 5: Chi tiết phiếu hỗ trợ & Nghiệm thu kỹ thuật",
+        title: "Màn hình 5: Chi tiết phiếu hỗ trợ & Nghiệm thu kỹ thuật (TCK-2026-00155)",
         file: "screen5_ticket_detail.html",
-        doctype: "Support Ticket & Ticket_Repair_Item (Detail Form View)",
-        useCase: "Khám bệnh thiết bị tại quầy Điện Thoại Vui, kiểm tra linh kiện và ngoại quan máy, đối soát Apple Care, bắt buộc giải trình nghiệm thu và gửi Zalo ZNS bàn giao.",
+        doctype: "Support Ticket & Ticket_Repair_Item (Frappe Detail Form View)",
+        useCase: "Khám nghiệm kỹ thuật thiết bị, đối soát IMEI/AppleCare+, ghi nhận bảng con linh kiện lỗi, giải trình nghiệm thu bắt buộc và xác nhận thông báo cho khách hàng.",
         views: [
-          "Mã TCK-2026-00155, Trạng thái: [In Progress], SLA Còn 03h 45m (Ưu tiên S-VIP 4H).",
-          "Thiết bị: iPhone 15 Pro Max 256GB Titan (IMEI: 358941098234112 - Apple Care VN/A).",
-          "Đơn vị xử lý: Trung tâm Điện Thoại Vui 125 Lê Văn Việt - KTV DTV-Trần Văn Tú.",
-          "Bảng con linh kiện (Child Table): Mainboard Nguồn (VIP 1-Đổi-1 30N), Màn hình OLED.",
-          "Nghiệm thu kỹ thuật: Đổi máy mới 100%, Nguyên nhân chập IC nguồn, Cấp IMEI mới 358941098999888.",
-          "Timeline quy trình & Box gửi Zalo ZNS thông báo nhận máy."
+          "Header: TCK-2026-00155, Trạng thái: [🟡 IN PROGRESS], Badge: ⭐ S-VIP.",
+          "Thông tin: Nguyễn Văn An (0908123456), Showroom 125 Lê Văn Việt, iPhone 15 Pro Max 256GB Titan Tự Nhiên, CSKH_NguyenVanThuan, IMEI: 358941098234112, HĐ: INV-2024-08912, AppleCare+ CareS Q9.",
+          "Bảng con linh kiện (Ticket_Repair_Item): Nguồn/Pin | Máy không cấn móp | Thân máy, Không hộp | Bảo hành hãng | Chi phí: 0 đ.",
+          "Nghiệm thu: resolution_result = Đổi theo chính sách (Đổi thân máy bảo hành), resolution_notes = Trung tâm bảo hành xác nhận đổi thân máy mới IMEI: 358941098999888.",
+          "Thông báo khách: notify_customer_status = Đã thông báo qua điện thoại | customer_notified_at = 03/10/2026 16:30 📅.",
+          "Timeline 3 mốc: 10:15 Open -> 11:00 In Progress (CareS) -> 15:30 Đổi thân máy & hẹn 04/10."
         ],
         actions: [
-          "[HOÀN TẤT / RESOLVE] - Nút đỏ phê duyệt giải pháp",
-          "[Bàn Giao & Đóng Phiếu (Close)]",
-          "[In Phiếu Tiếp Nhận (PDF)]",
-          "[Gửi Zalo ZNS Thông Báo Nhận Máy]",
-          "[+ Thêm Dòng Linh Kiện Kiểm Tra]"
+          "[ Nhận Xử Lý (In Progress) ]",
+          "[ Chuyển Hãng / Đơn vị Bảo hành (Pending Vendor) ]",
+          "[ HOÀN TẤT / RESOLVE ] - Duyệt kết quả xử lý",
+          "[ Bàn Giao & Đóng Phiếu (Close) ]",
+          "[ In Biên Nhận Tiếp Nhận / Trả Máy ]"
         ],
         validations: [
-          "Bắt buộc chọn Resolution Type và nhập Root Cause trước khi Resolve",
-          "Bắt buộc nhập Ghi chú khắc phục & bàn giao trước khi Close",
-          "Kiểm tra bắt buộc thoát iCloud / Find My trước khi đổi máy mới",
-          "Máy vào nước/rơi vỡ từ chối đổi 1-1, chuyển sửa dịch vụ"
+          "Thiếu kết quả xử lý: Bắt buộc phải chọn Kết quả giải quyết (resolution_result) và nhập Ghi chú xử lý trước khi đánh dấu Hoàn tất (Resolved)!",
+          "Chưa ghi nhận thông báo khách: Vui lòng xác nhận đã thông báo cho khách hàng trước khi Đóng phiếu (Closed)!",
+          "Chính sách đổi trả: Thời hạn 30 ngày không mặc định đổi mới nguyên seal cho mọi trường hợp."
         ]
       },
       {
         id: "SCREEN_06",
-        title: "Màn hình 6: CSKH Analytics & Real-Time SLA Dashboard",
+        title: "Màn hình 6: CSKH Analytics & Hiệu suất Dịch vụ Dashboard",
         file: "screen6_cskh_dashboard.html",
-        doctype: "CSKH Analytics Dashboard (Frappe Workspace View)",
-        useCase: "Báo cáo giám sát thời gian thực chỉ số cam kết SLA (Mục tiêu >= 95%), điểm đánh giá CSAT (Mục tiêu >= 4.8), cơ cấu kênh tiếp nhận và danh sách ca cứu vãn SLA.",
+        doctype: "CSKH Analytics Dashboard (Frappe Workspace Analytics)",
+        useCase: "Giám sát thời gian thực các chỉ số KPI theo Mục 5.1 BA (Tỷ lệ thắng cơ hội, Khách hàng mới, Tổng ticket giải quyết, Ca nhắc việc quá hạn 3 ngày) và biểu đồ phân bổ kết quả.",
         views: [
-          "4 Thẻ KPI: SLA Đúng Hạn 96.4%, CSAT 4.85/5.0 ⭐, Tổng 1,420 phiếu, Đổi mới VIP 68 máy.",
-          "Biểu đồ 1: Phân bổ kênh (Hotline 45%, Showroom 32%, Zalo OA 18%, Web 5%).",
-          "Biểu đồ 2: Top 5 sản phẩm khiếu nại nhiều nhất (iPhone 15 Pro Max: 120 vé, Galaxy S24 Ultra: 85 vé...).",
-          "Bảng cứu vãn 5 Ticket quá hạn SLA khẩn cấp.",
-          "Bộ lọc thời gian (Tháng 10/2026), Khu vực (Toàn quốc), Ngành hàng (Điện thoại)."
+          "4 Thẻ KPI: 1. TỶ LỆ THẮNG CƠ HỘI = 68.5% (Thắng: 54 / Đóng: 79), 2. KHÁCH HÀNG MỚI = 142 Khách (Unique), 3. TỔNG PHIẾU TICKET = 85 Phiếu (Xử lý 78/85), 4. NHẮC VIỆC CẦN CHĂM = 12 Cơ hội (Quá hạn 3 ngày LV).",
+          "Biểu đồ 1: Kết quả xử lý phiếu hỗ trợ (Đổi theo CS 40%, BH chính hãng 30%, Sửa có phí 18%, Không đủ ĐK 8%, Rút 4%).",
+          "Biểu đồ 2: Cơ hội bán hàng theo Showroom (125 Lê Văn Việt: 48 Đơn vs 213 Trần Quang Khải: 31 Đơn).",
+          "Bảng danh sách cơ hội quá hạn 3 ngày LV: LEAD-2026-08912 (Trần Thị Mai Loan - Lenovo LOQ, Quá hạn 1 ngày - CSKH_Thuận), LEAD-2026-08905 (Hoàng Minh Quân - Sạc GaN - CSKH_Linh)."
         ],
         actions: [
-          "[📊 Xuất Báo Cáo PDF / Excel]",
-          "[🔄 Làm Mới Dữ Liệu Real-time]",
-          "[⚡ Điều Phối Gấp Trạm Kỹ Thuật]",
-          "[⚡ Đôn Đốc Hãng Apple Care]",
-          "[⚡ Can Thiệp Quản Lý CSKH]"
+          "[ Xuất Báo Cáo PDF / Excel ]",
+          "[ Làm Mới Dữ Liệu (Refresh) ]",
+          "[ Lọc Khoảng Thời Gian: Tháng này / Tuần này / Hôm nay ]",
+          "[ Lọc Chi Nhánh: Showroom 125 Lê Văn Việt / 213 Trần Quang Khải ]"
         ],
         validations: [
-          "Kiểm tra ngày bắt đầu <= ngày kết thúc",
-          "Cảnh báo vượt ngưỡng xuất báo cáo nếu truy vấn > 50,000 dòng"
+          "Lỗi chọn khoảng ngày: Ngày bắt đầu không được lớn hơn Ngày kết thúc trong bộ lọc thời gian!",
+          "Chưa có dữ liệu: Chưa phát sinh cơ hội đóng trong kỳ để tính tỷ lệ thắng (Mẫu số = 0)."
         ]
       }
     ];
@@ -543,7 +534,7 @@
       
       let html = `
         <div class="spec-card">
-          <h4>📌 THÔNG TIN MÀN HÌNH</h4>
+          <h4>📌 THÔNG TIN MÀN HÌNH (D03)</h4>
           <p style="font-weight: 600; color: #FFFFFF; margin-bottom: 4px;">${screen.title}</p>
           <p style="margin-bottom: 8px;"><span class="spec-badge">${screen.doctype}</span></p>
           <p style="color: #9CA3AF; font-size: 12px;">${screen.useCase}</p>
@@ -564,7 +555,7 @@
         </div>
 
         <div class="spec-card">
-          <h4>⚠️ 3. RÀNG BUỘC & CẢNH BÁO LỖI</h4>
+          <h4>⚠️ 3. RÀNG BUỘC & CẢNH BÁO LỖI (ALERTS)</h4>
           <ul>
             ${screen.validations.map(val => `<li style="color:#FCA5A5;">${val}</li>`).join('')}
           </ul>
