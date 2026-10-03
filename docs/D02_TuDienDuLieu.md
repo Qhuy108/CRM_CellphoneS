@@ -12,78 +12,85 @@
 ## PHẦN 1: BẢNG TỪ ĐIỂN DỮ LIỆU CHI TIẾT (8 CỘT CHUẨN ĐẦU RA)
 
 ### 1. Bảng Khách hàng (`Customer` / `tabCustomer`)
-Quản lý thông tin định danh cá nhân, phân loại và trạng thái tài khoản khách hàng CellphoneS.
+Quản lý mã định danh duy nhất, thông tin liên hệ và nhóm ưu đãi giáo dục của khách hàng CellphoneS.
 
 | Tên logic | Tên vật lý (Fieldname) | Ý nghĩa nghiệp vụ | Kiểu dữ liệu (Frappe/SQL) | Bắt buộc | Duy nhất | Giá trị hợp lệ / Enum | Nguồn dữ liệu & Quy tắc kiểm tra |
 | :--- | :--- | :--- | :---: | :---: | :---: | :--- | :--- |
 | **Mã khách hàng** | `name` / `customer_id` | Mã định danh duy nhất của khách | Data / VARCHAR(140) | Yes | Yes | Format: `CUST-.YYYY.-.#####` | Hệ thống tự sinh tự động tăng theo năm |
-| **Số điện thoại** | `phone_number` | SĐT chính liên hệ và tích điểm | Data / VARCHAR(20) | Yes | Yes | Chuỗi 10 số (03x, 05x, 07x, 08x, 09x) | Người dùng nhập; Regex VN 10 chữ số |
-| **Họ và tên** | `customer_name` | Họ tên khách hàng | Data / VARCHAR(140) | Yes | No | Chuỗi ký tự, tối đa 140 ký tự | Người dùng nhập; Không chứa ký tự số |
-| **Email** | `email_id` | Thư điện tử nhận hóa đơn VAT | Data / VARCHAR(140) | No | No | Chuỗi định dạng email RFC 5322 | Người dùng nhập; Validate email format |
+| **Số điện thoại** | `phone_number` | SĐT chính liên hệ và tìm kiếm | Data / VARCHAR(20) | Yes | Yes | Chuỗi 10 số (03x, 05x, 07x, 08x, 09x) | Người dùng nhập; Cảnh báo trùng, không tự gộp |
+| **Họ và tên** | `customer_name` | Họ tên khách hàng cá nhân | Data / VARCHAR(140) | Yes | No | Chuỗi ký tự, tối đa 140 ký tự | Người dùng nhập; Không chứa ký tự số |
+| **Email** | `email_id` | Thư điện tử nhận thông tin/hóa đơn | Data / VARCHAR(140) | No | No | Chuỗi định dạng email RFC 5322 | Người dùng nhập; Validate email format |
 | **Số CCCD / CMND** | `identity_card` | Căn cước công dân | Data / VARCHAR(20) | No | No | Chuỗi 9 hoặc 12 chữ số | Người dùng nhập; Regex: `^[0-9]{9,12}$` |
-| **Ngày sinh** | `date_of_birth` | Ngày sinh để gửi quà sinh nhật | Date / DATE | No | No | Ngày hợp lệ trong quá khứ | Người dùng chọn; $\text{date\_of\_birth} \le \text{today}$ |
+| **Ngày sinh** | `date_of_birth` | Ngày sinh để chăm sóc khách hàng | Date / DATE | No | No | Ngày hợp lệ trong quá khứ | Người dùng chọn; $\text{date\_of\_birth} \le \text{today}$ |
 | **Giới tính** | `gender` | Giới tính xưng hô | Select / VARCHAR(20) | No | No | `Nam`, `Nữ`, `Khác` | Người dùng chọn từ Dropdown |
-| **Địa chỉ** | `primary_address` | Địa chỉ nhà / giao hàng | Small Text / TEXT | No | No | Văn bản tự do tối đa 500 ký tự | Người dùng nhập |
+| **Địa chỉ** | `primary_address` | Địa chỉ nhà / liên hệ | Small Text / TEXT | No | No | Văn bản tự do tối đa 500 ký tự | Người dùng nhập |
 | **Tỉnh / Thành phố** | `province_city` | Tỉnh thành phố cư trú | Select / VARCHAR(100) | No | No | 63 tỉnh thành Việt Nam | Người dùng chọn danh mục chuẩn |
-| **Phân loại KH** | `customer_type` | Loại đối tượng khách hàng | Select / VARCHAR(50) | Yes | No | `Individual`, `Corporate`, `Anonymous` | Mặc định: `Individual` (Vãng lai: `Anonymous`) |
-| **Trạng thái hồ sơ** | `status` | Tình trạng hoạt động hồ sơ | Select / VARCHAR(50) | Yes | No | `Active`, `Inactive`, `Merged` | Mặc định: `Active` (`Merged` khi đã gộp) |
+| **Phân loại KH** | `customer_type` | Loại đối tượng khách hàng | Select / VARCHAR(50) | Yes | No | `Individual`, `Anonymous` | Mặc định: `Individual` (Vãng lai: `Anonymous`) |
+| **Trạng thái hồ sơ** | `status` | Tình trạng hoạt động hồ sơ | Select / VARCHAR(50) | Yes | No | `Active`, `Inactive`, `Merged` | Mặc định: `Active` (`Merged` khi đã duyệt gộp) |
 | **Ngày khởi tạo** | `creation` | Thời điểm tạo hồ sơ vào CRM | Datetime / DATETIME(6) | Yes | No | Timestamp hệ thống | Hệ thống tự ghi nhận lúc Insert |
 
 ---
 
 ### 2. Bảng Hồ sơ Hội viên Smember (`Smember_Profile` / `tabSmember Profile`)
-Quản lý chính sách thăng hạng, tích lũy doanh số mua hàng và điểm thưởng chiết khấu của CellphoneS.
+Lưu trữ 4 hạng hội viên mẫu và nhóm ưu đãi giáo dục (nhập tay/CSV bởi người có quyền, chưa tính chi tiêu thăng hạng tự động trong MVP).
 
 | Tên logic | Tên vật lý (Fieldname) | Ý nghĩa nghiệp vụ | Kiểu dữ liệu (Frappe/SQL) | Bắt buộc | Duy nhất | Giá trị hợp lệ / Enum | Nguồn dữ liệu & Quy tắc kiểm tra |
 | :--- | :--- | :--- | :---: | :---: | :---: | :--- | :--- |
 | **Mã hồ sơ Smember**| `name` / `profile_id` | Mã hồ sơ hội viên | Data / VARCHAR(140) | Yes | Yes | Format: `SMB-.#####` | Hệ thống tự sinh tự động tăng |
 | **Khách hàng** | `customer` | Khách hàng sở hữu hồ sơ | Link / VARCHAR(140) | Yes | Yes | Link tới `Customer` (Quan hệ 1-1) | Hệ thống gán; Ràng buộc Unique Foreign Key |
-| **Hạng hội viên** | `member_tier` | Hạng mức thẻ Smember | Select / VARCHAR(50) | Yes | No | `Smember` (Chuẩn), `S-VIP` (Hạng VIP) | Hệ thống tự thăng hạng khi tích lũy $\ge 50$tr |
-| **Tổng tích lũy chi tiêu**| `total_spent` | Tổng tiền mua hàng lũy kế | Currency / DECIMAL(18,2) | Yes | No | Số dương $\ge 0$ (VND) | Tự động cộng dồn từ Hóa đơn bán hàng |
-| **Điểm thưởng khả dụng**| `reward_points` | Điểm tích lũy đổi voucher/quà | Int / INT | Yes | No | Số nguyên $\ge 0$ | Tích $1\%$ giá trị đơn hàng; trừ khi đổi quà |
-| **Hạn duy trì hạng** | `tier_expiry_date` | Hạn chót giữ quyền lợi VIP | Date / DATE | No | No | Ngày trong tương lai | Tự động gia hạn 12 tháng kể từ ngày nâng hạng |
-| **Ngày thăng hạng gần nhất**| `last_upgrade_date`| Thời điểm lên hạng S-VIP | Datetime / DATETIME | No | No | Timestamp | Hệ thống tự ghi nhận khi vượt ngưỡng chi tiêu |
+| **Hạng hội viên mẫu**| `member_tier` | 4 Hạng mẫu CellphoneS | Select / VARCHAR(50) | Yes | No | `S-NULL`, `S-NEW`, `S-MEM`, `S-VIP` | Nhập tay/CSV bởi người có quyền (chưa tự tính) |
+| **Nhóm giáo dục** | `edu_type` | Ưu đãi Học sinh-SV / Giáo viên | Select / VARCHAR(50) | Yes | No | `None`, `S-Student`, `S-Teacher` | Mặc định: `None` |
+| **Trạng thái xác minh GD**| `edu_status` | Tiến độ duyệt hồ sơ giáo dục | Select / VARCHAR(50) | Yes | No | `Chua_xac_minh`, `Da_xac_minh`, `Tu_choi` | Cập nhật bởi nhân viên có thẩm quyền |
+| **Thời hạn nhóm GD** | `edu_expiry_date` | Thời hạn ưu đãi giáo dục | Date / DATE | No | No | Ngày trong tương lai | Ghi nhận khi đã xác minh thành công |
+| **Người duyệt xác minh**| `edu_verified_by` | Nhân viên xác nhận hồ sơ GD | Link / VARCHAR(140) | No | No | Link tới `User` | Ghi nhận User thực hiện duyệt |
+| **Ghi chú quyền lợi** | `tier_note` | Ghi chú chính sách áp dụng | Small Text / TEXT | No | No | Văn bản ghi chú chính sách | Người dùng nhập |
 
 ---
 
 ### 3. Bảng Chi nhánh / Cửa hàng (`Branch_Store` / `tabBranch Store`)
-Quản lý mạng lưới Showroom CellphoneS và Trung tâm sửa chữa - bảo hành Điện Thoại Vui toàn quốc.
+Quản lý mạng lưới Showroom CellphoneS (mô phỏng thử nghiệm cấp chuỗi bằng 2 cửa hàng).
 
 | Tên logic | Tên vật lý (Fieldname) | Ý nghĩa nghiệp vụ | Kiểu dữ liệu (Frappe/SQL) | Bắt buộc | Duy nhất | Giá trị hợp lệ / Enum | Nguồn dữ liệu & Quy tắc kiểm tra |
 | :--- | :--- | :--- | :---: | :---: | :---: | :--- | :--- |
-| **Mã chi nhánh** | `name` / `branch_id` | Mã định danh cửa hàng | Data / VARCHAR(140) | Yes | Yes | Format: `BR-.#####` (VD: `BR-00101`) | Hệ thống tự sinh / Master Data nhập ban đầu |
-| **Tên chi nhánh** | `branch_name` | Tên Showroom / Trung tâm DTV | Data / VARCHAR(255) | Yes | No | Tối đa 255 ký tự | Master Data; VD: "Showroom 125 Lê Văn Việt" |
-| **Loại cơ sở** | `branch_type` | Loại hình địa điểm kinh doanh | Select / VARCHAR(50) | Yes | No | `Showroom_Store`, `Dien_Thoai_Vui_Center` | Người dùng chọn; Phân biệt bán lẻ hay sửa chữa |
+| **Mã chi nhánh** | `name` / `branch_id` | Mã định danh cửa hàng | Data / VARCHAR(140) | Yes | Yes | Format: `BR-.#####` (VD: `BR-00101`, `BR-00102`) | Master Data nhập ban đầu |
+| **Tên chi nhánh** | `branch_name` | Tên Showroom cửa hàng | Data / VARCHAR(255) | Yes | No | Tối đa 255 ký tự | Master Data; VD: "Showroom 125 Lê Văn Việt" |
+| **Loại cơ sở** | `branch_type` | Phân loại cơ sở | Select / VARCHAR(50) | Yes | No | `Showroom_Store`, `Dien_Thoai_Vui_Center` | Người dùng chọn; Showroom bán lẻ hoặc TT bảo hành |
 | **Địa chỉ chi tiết** | `address` | Số nhà, tên đường, phường xã | Small Text / TEXT | Yes | No | Văn bản địa chỉ đầy đủ | Người dùng nhập |
-| **Tỉnh / Thành phố** | `province_city` | Tỉnh thành trực thuộc | Select / VARCHAR(100) | Yes | No | `TP. Hồ Chí Minh`, `Hà Nội`, `Đà Nẵng`... | Người dùng chọn từ danh mục tỉnh thành |
+| **Tỉnh / Thành phố** | `province_city` | Tỉnh thành trực thuộc | Select / VARCHAR(100) | Yes | No | `TP. Hồ Chí Minh`, `Hà Nội`... | Người dùng chọn từ danh mục tỉnh thành |
 | **Hotline chi nhánh**| `hotline` | Số điện thoại liên hệ cửa hàng | Data / VARCHAR(20) | No | No | Đầu số cố định hoặc di động | Regex số điện thoại hợp lệ |
-| **Quản lý chi nhánh**| `manager_user` | Nhân sự chịu trách nhiệm ca/shop | Link / VARCHAR(140) | No | No | Link tới `User` (Role Store Manager) | Chọn từ danh sách User nội bộ |
+| **Quản lý chi nhánh**| `manager_user` | Nhân sự chịu trách nhiệm Shop | Link / VARCHAR(140) | No | No | Link tới `User` (Role Store Manager) | Chọn từ danh sách User nội bộ |
 | **Đang hoạt động** | `is_active` | Trạng thái mở cửa hoạt động | Check / INT(1) | Yes | No | `1` (Active), `0` (Closed) | Mặc định: `1` |
 
 ---
 
 ### 4. Bảng Nhu cầu Tư vấn / Cơ hội (`Lead_Opportunity` / `tabLead`)
-Quản lý khách đăng ký đặt trước máy (Pre-order iPhone/Samsung Flagship) hoặc tư vấn trả góp từ Telesales.
+Quản lý nhu cầu tư vấn khách hàng: điện thoại (iPhone 15 Pro Max), laptop (Lenovo LOQ 83GS001RVN), phụ kiện (Sạc GaN), đặt trước (Pre-order) và lịch chăm sóc 3 ngày.
 
 | Tên logic | Tên vật lý (Fieldname) | Ý nghĩa nghiệp vụ | Kiểu dữ liệu (Frappe/SQL) | Bắt buộc | Duy nhất | Giá trị hợp lệ / Enum | Nguồn dữ liệu & Quy tắc kiểm tra |
 | :--- | :--- | :--- | :---: | :---: | :---: | :--- | :--- |
-| **Mã cơ hội tư vấn**| `name` / `lead_id` | Mã định danh Lead | Data / VARCHAR(140) | Yes | Yes | Format: `LEAD-.YYYY.-.#####` | Hệ thống tự sinh tự động tăng |
+| **Mã cơ hội tư vấn**| `name` / `lead_id` | Mã định danh cơ hội | Data / VARCHAR(140) | Yes | Yes | Format: `LEAD-.YYYY.-.#####` | Hệ thống tự sinh tự động tăng |
 | **Họ tên khách** | `lead_name` | Tên khách để lại thông tin | Data / VARCHAR(140) | Yes | No | Tối đa 140 ký tự | Khách đăng ký Web Landing / Agent nhập |
 | **Số điện thoại** | `mobile_no` | SĐT nhận cuộc gọi tư vấn | Data / VARCHAR(20) | Yes | No | Chuỗi 10 số (Regex VN) | Bắt buộc; Validate 10 chữ số |
 | **Email** | `email_id` | Thư điện tử nhận báo giá cọc | Data / VARCHAR(140) | No | No | Email RFC 5322 hợp lệ | Web Landing Page / Form tư vấn |
 | **Kênh tiếp nhận** | `source_channel` | Nguồn phát sinh nhu cầu | Select / VARCHAR(50) | Yes | No | `Website_Preorder`, `Facebook_Ads`, `Zalo`, `Hotline`, `Direct_Store` | Web API / Agent chọn |
-| **Sản phẩm quan tâm**| `interested_item` | Thiết bị khách muốn mua | Link / VARCHAR(140) | Yes | No | Link tới `Item_Reference` | Chọn từ danh mục SKU sản phẩm |
-| **Chi nhánh nhận máy**| `preferred_branch` | Showroom khách muốn ghé nhận | Link / VARCHAR(140) | No | No | Link tới `Branch_Store` | Khách chọn khi Pre-order |
-| **Loại nhu cầu** | `lead_type` | Phân loại mục đích của khách | Select / VARCHAR(50) | Yes | No | `Pre_Order`, `Tra_Gop`, `Tu_Van_Ky_Thuat` | Mặc định: `Pre_Order` |
-| **Trạng thái Lead** | `status` | Tiến trình Telesales (C03) | Select / VARCHAR(50) | Yes | No | `Open`, `Contacted`, `Qualified`, `Converted`, `Lost` | Đồng bộ 100% với State Diagram của Nhật |
-| **Nhân viên phụ trách**| `lead_owner` | Telesales Agent được phân công | Link / VARCHAR(140) | No | No | Link tới `User` (Role CSKH/Telesales) | Auto-routing tự động chia đều Lead |
-| **Khách hàng sau chuyển**| `converted_customer`| Khách hàng tạo sau khi cọc | Link / VARCHAR(140) | No | No | Link tới `Customer` (Nullable) | Bắt buộc có giá trị khi `status = 'Converted'` |
-| **Ghi chú tư vấn** | `notes` | Màu sắc, dung lượng, lưu ý cọc | Text / TEXT | No | No | Văn bản ghi chú tự do | Telesales cập nhật sau mỗi cuộc gọi |
+| **Sản phẩm quan tâm**| `interested_item` | Thiết bị khách muốn mua | Link / VARCHAR(140) | Yes | No | Link tới `Item_Reference` | Chọn từ danh mục SKU (iPhone 15 PM, LOQ...) |
+| **Ngân sách dự kiến**| `budget` | Khoảng tiền khách dự định chi | Currency / DECIMAL(18,2)| No | No | Số dương $\ge 0$ (VND) | Người dùng nhập sau phỏng vấn tư vấn |
+| **Thời điểm dự kiến mua**| `expected_buy_date`| Ngày dự định mua máy | Date / DATE | No | No | Ngày trong tương lai | Người dùng chọn |
+| **Thiết bị đang dùng**| `device_in_use` | Dòng máy khách đang sử dụng | Data / VARCHAR(140) | No | No | Tối đa 140 ký tự | Ghi nhận máy hiện tại để tư vấn lên đời |
+| **Nhu cầu thu cũ** | `trade_in_demand` | Khách có muốn bán máy cũ | Select / VARCHAR(20) | Yes | No | `Khong`, `Co_Nhu_Cau` | Ghi nhận nhu cầu (định giá ngoài CRM) |
+| **Cấu hình mong muốn**| `desired_specs` | RAM, SSD, Màu sắc, Dung lượng| Data / VARCHAR(255) | No | No | Tối đa 255 ký tự | Ghi nhận cấu hình/nhu cầu phần mềm |
+| **Cửa hàng tư vấn** | `preferred_branch` | Cửa hàng khách ghé trải nghiệm | Link / VARCHAR(140) | No | No | Link tới `Branch_Store` | Phân bổ cơ hội theo chi nhánh |
+| **Loại nhu cầu** | `lead_type` | Phân loại mục đích của khách | Select / VARCHAR(50) | Yes | No | `Pre_Order`, `Tra_Gop`, `Tu_Van_Ky_Thuat` | Mặc định: `Tu_Van_Ky_Thuat` |
+| **Trạng thái cơ hội** | `status` | Tiến trình tư vấn | Select / VARCHAR(50) | Yes | No | `Open`, `Contacted`, `Qualified`, `Converted`, `Lost` | Đồng bộ 100% với State Diagram của Nhật |
+| **Lịch nhắc chăm sóc**| `follow_up_due` | Hạn nhắc việc gọi lại | Datetime / DATETIME | No | No | $\text{creation} + 3\text{ ngày làm việc}$ | Tự động đặt lịch nhắc việc 3 ngày |
+| **Nhân viên phụ trách**| `lead_owner` | Nhân viên tư vấn được phân công | Link / VARCHAR(140) | No | No | Link tới `User` | Phân công theo cửa hàng hoặc điều chuyển |
+| **Khách sau chuyển** | `converted_customer`| Khách hàng tạo sau khi chốt mua | Link / VARCHAR(140) | No | No | Link tới `Customer` (Nullable) | Bắt buộc có giá trị khi `status = 'Converted'` |
+| **Ghi chú tư vấn** | `notes` | Lưu ý chi tiết trao đổi | Text / TEXT | No | No | Văn bản ghi chú tự do | Nhân viên cập nhật sau mỗi lần liên hệ |
 
 ---
 
 ### 5. Bảng Tương tác Khách hàng (`Customer_Interaction` / `tabCustomer Interaction`)
-Ghi nhận nhật ký tiếp xúc đa kênh qua Hotline 1800, Zalo OA, Fanpage, Web Chat hoặc Showroom.
+Ghi nhận nhật ký tiếp xúc đa kênh qua Hotline 1800, Zalo OA, Fanpage, Web Chat hoặc tại Cửa hàng (thời gian, kênh, người thực hiện, kết quả).
 
 | Tên logic | Tên vật lý (Fieldname) | Ý nghĩa nghiệp vụ | Kiểu dữ liệu (Frappe/SQL) | Bắt buộc | Duy nhất | Giá trị hợp lệ / Enum | Nguồn dữ liệu & Quy tắc kiểm tra |
 | :--- | :--- | :--- | :---: | :---: | :---: | :--- | :--- |
@@ -92,18 +99,18 @@ Ghi nhận nhật ký tiếp xúc đa kênh qua Hotline 1800, Zalo OA, Fanpage, 
 | **SĐT người liên hệ**| `contact_phone` | Số điện thoại gọi đến / chat | Data / VARCHAR(20) | Yes | No | Chuỗi 10 số (Regex VN) | Tự động lấy từ CTI Tổng đài hoặc nhập |
 | **Tên người liên hệ**| `contact_name` | Tên người gọi / chat | Data / VARCHAR(140) | No | No | Tối đa 140 ký tự | Lấy từ hồ sơ khách hoặc khách xưng tên |
 | **Kênh tiếp xúc** | `channel` | Kênh diễn ra trao đổi | Select / VARCHAR(50) | Yes | No | `Hotline_1800`, `Zalo_OA`, `Fanpage`, `Showroom_Store`, `Website_Chat` | Tự động nhận diện từ Webhook / Chọn |
-| **Chi nhánh tiếp nhận**| `branch` | Cửa hàng diễn ra giao tiếp | Link / VARCHAR(140) | No | No | Link tới `Branch_Store` | Nullable nếu gọi lên tổng đài trung tâm |
-| **Phân loại giao dịch**| `interaction_type` | Mục đích của khách hàng | Select / VARCHAR(50) | Yes | No | `Tu_van_mua_hang`, `Tra_cuu_don_hang`, `Bao_hanh_sua_chua`, `Khieu_nai_dich_vu` | Agent phân loại |
-| **Tóm tắt nội dung** | `summary` | Biên bản tóm tắt trao đổi | Small Text / TEXT | Yes | No | Văn bản mô tả tối đa 1000 ký tự | Agent nhập sau cuộc tiếp xúc |
-| **Điểm hài lòng CSAT**| `satisfaction_rating`| Mức độ hài lòng tức thời | Select / VARCHAR(20) | No | No | `1_Sao`, `2_Sao`, `3_Sao`, `4_Sao`, `5_Sao` | Khách chấm qua IVR/ZNS |
-| **Nhân viên tiếp nhận**| `staff_agent` | Agent trực tiếp xử lý | Link / VARCHAR(140) | Yes | No | Link tới `User` | Mặc định lấy User đang đăng nhập hệ thống |
+| **Cửa hàng tiếp nhận**| `branch` | Cửa hàng diễn ra giao tiếp | Link / VARCHAR(140) | No | No | Link tới `Branch_Store` | Nullable nếu gọi lên tổng đài trung tâm |
+| **Phân loại giao dịch**| `interaction_type` | Mục đích của khách hàng | Select / VARCHAR(50) | Yes | No | `Tu_van_mua_hang`, `Tra_cuu_don_hang`, `Bao_hanh_sua_chua`, `Khieu_nai_dich_vu` | Nhân viên phân loại |
+| **Tóm tắt nội dung** | `summary` | Biên bản tóm tắt trao đổi | Small Text / TEXT | Yes | No | Văn bản mô tả tối đa 1000 ký tự | Nhân viên nhập sau cuộc tiếp xúc |
+| **Kết quả tương tác** | `interaction_result` | Kết quả cuộc liên hệ | Select / VARCHAR(50) | Yes | No | `Thanh_cong`, `Hen_goi_lai`, `Khong_nghe_may` | Nhân viên chọn |
+| **Nhân viên tiếp nhận**| `staff_agent` | Nhân viên trực tiếp xử lý | Link / VARCHAR(140) | Yes | No | Link tới `User` | Mặc định lấy User đang đăng nhập |
 | **Thời điểm tương tác**| `interaction_time` | Giờ phát sinh cuộc gọi/chat | Datetime / DATETIME | Yes | No | Timestamp | Hệ thống tự ghi |
 | **Ticket phát sinh** | `escalated_ticket` | Mã phiếu hỗ trợ nếu có khiếu nại| Link / VARCHAR(140) | No | No | Link tới `Support_Ticket` (Nullable) | Tự động điền khi bấm nút "Tạo nhanh Ticket" |
 
 ---
 
 ### 6. Bảng Phiếu Hỗ Trợ (`Support_Ticket` / `tabSupport Ticket`)
-Quản lý vòng đời khiếu nại, bảo hành, đổi trả 1-đổi-1 30 ngày và sửa chữa tại Điện Thoại Vui.
+Quản lý vòng đời tiếp nhận, xác minh, xử lý bảo hành, đổi trả theo chính sách và theo dõi tiến độ SLA.
 
 | Tên logic | Tên vật lý (Fieldname) | Ý nghĩa nghiệp vụ | Kiểu dữ liệu (Frappe/SQL) | Bắt buộc | Duy nhất | Giá trị hợp lệ / Enum | Nguồn dữ liệu & Quy tắc kiểm tra |
 | :--- | :--- | :--- | :---: | :---: | :---: | :--- | :--- |
@@ -112,84 +119,84 @@ Quản lý vòng đời khiếu nại, bảo hành, đổi trả 1-đổi-1 30 n
 | **SĐT liên hệ** | `contact_phone` | Số nhận thông báo xử lý | Data / VARCHAR(20) | Yes | No | Chuỗi 10 số (Regex VN) | Bắt buộc; Validate 10 chữ số |
 | **Tên người liên hệ** | `contact_name` | Tên người nhận kết quả | Data / VARCHAR(140) | Yes | No | Tối đa 140 ký tự | Lấy từ KH hoặc người mang máy tới quầy |
 | **Kênh tiếp nhận** | `channel` | Nguồn mở yêu cầu | Select / VARCHAR(50) | Yes | No | `Hotline`, `Showroom`, `Zalo_OA`, `Website` | Mặc định: `Showroom` |
-| **Chi nhánh tiếp nhận**| `branch` | Cửa hàng nhận máy ban đầu | Link / VARCHAR(140) | Yes | No | Link tới `Branch_Store` | Bắt buộc chọn cửa hàng tiếp nhận |
-| **Mã sản phẩm lỗi** | `item_code` | SKU thiết bị bảo hành | Link / VARCHAR(140) | Yes | No | Link tới `Item_Reference` | Agent chọn từ danh mục sản phẩm |
+| **Cửa hàng tiếp nhận**| `branch` | Cửa hàng nhận máy ban đầu | Link / VARCHAR(140) | Yes | No | Link tới `Branch_Store` | Bắt buộc chọn cửa hàng tiếp nhận |
+| **Mã sản phẩm tiếp nhận**| `item_code` | SKU thiết bị bảo hành/đổi trả | Link / VARCHAR(140) | Yes | No | Link tới `Item_Reference` | Chọn từ danh mục SKU sản phẩm |
 | **Số Serial / IMEI** | `serial_imei` | Mã định danh phần cứng máy | Data / VARCHAR(50) | Yes | No | 15 số (IMEI GSMA) hoặc Serial chuẩn | Regex 15 số; Kiểm tra thuật toán Luhn |
-| **Hóa đơn mua cũ** | `sales_invoice` | Hóa đơn xuất bán thiết bị | Link / VARCHAR(140) | No | No | Link tới `Sales_Invoice_Reference` | Dùng đối soát thời hạn 30 ngày đổi 1-1 |
-| **Nhóm vấn đề** | `issue_category` | Phân loại lỗi khiếu nại | Select / VARCHAR(50) | Yes | No | `Loi_phan_cung_NSX`, `Doi_tra_30_ngay_VIP`, `Khieu_nai_thai_do`, `Ho_tro_phan_mem` | Quyết định điều phối phòng ban xử lý |
-| **Mức độ ưu tiên** | `priority` | Mức độ khẩn cấp xử lý | Select / VARCHAR(20) | Yes | No | `Low`, `Medium`, `High`, `Critical` | Tự động set `Critical` nếu khách là S-VIP |
-| **Trạng thái phiếu** | `status` | Tiến trình xử lý (C03 State) | Select / VARCHAR(50) | Yes | No | `Open`, `In_Progress`, `Pending_Vendor`, `Resolved`, `Closed` | Điều khiển bởi Workflow Engine 5 trạng thái |
-| **Nhân viên phụ trách**| `allocated_to` | Agent / Kỹ thuật viên chính | Link / VARCHAR(140) | No | No | Link tới `User` | Auto-routing hoặc phân công thủ công |
-| **Đơn vị xử lý** | `assigned_dept` | Phòng ban chịu trách nhiệm | Select / VARCHAR(50) | Yes | No | `CSKH_Showroom`, `Trung_tam_Dien_Thoai_Vui`, `Hang_Apple_Care`, `Hang_Samsung` | Mặc định: `CSKH_Showroom` |
+| **Đơn mua tham chiếu**| `sales_invoice` | Đơn hàng mua cũ đối soát | Link / VARCHAR(140) | No | No | Link tới `Sales_Invoice_Reference` | Dùng đối soát thời hạn chính sách đổi/bảo hành |
+| **Loại yêu cầu** | `issue_type` | Phân loại yêu cầu hậu mãi | Select / VARCHAR(50) | Yes | No | `Tiep_nhan_bao_hanh`, `Doi_tra_theo_chinh_sach`, `Khieu_nai_dich_vu` | Theo chính sách từng dòng sản phẩm |
+| **Mức độ ưu tiên** | `priority` | Mức độ khẩn cấp xử lý | Select / VARCHAR(20) | Yes | No | `Low`, `Medium`, `High`, `Critical` | Tự động nâng `Critical` nếu khách là S-VIP |
+| **Trạng thái phiếu** | `status` | 5 Trạng thái vòng đời cốt lõi | Select / VARCHAR(50) | Yes | No | `Open`, `In_Progress`, `Pending_Vendor`, `Resolved`, `Closed` | Điều khiển bởi Workflow Engine 5 trạng thái |
+| **Nhân viên phụ trách**| `allocated_to` | Nhân viên xử lý tiến độ | Link / VARCHAR(140) | No | No | Link tới `User` | Phân công hoặc điều chuyển theo quyền |
+| **Đơn vị phối hợp** | `assigned_dept` | Bộ phận chịu trách nhiệm | Select / VARCHAR(50) | Yes | No | `CSKH_Cua_Hang`, `Trung_Tam_Bao_Hanh`, `Doi_Tac_Hang` | Mặc định: `CSKH_Cua_Hang` |
 | **Hạn chót SLA** | `sla_deadline` | Thời hạn tối đa giải quyết | Datetime / DATETIME | Yes | No | Ngày giờ tương lai $> \text{creation}$ | Tự động tính: S-VIP (4h), Thường (24h) |
-| **Thời điểm giải quyết**| `resolved_time` | Lúc xong sửa chữa / duyệt đổi | Datetime / DATETIME | No | No | Timestamp | Ghi tự động khi chuyển `Resolved` |
-| **Thời điểm đóng phiếu**| `closed_time` | Lúc khách nhận máy & CSAT | Datetime / DATETIME | No | No | $\text{closed\_time} \ge \text{resolved\_time}$ | Ghi tự động khi chuyển `Closed` |
-| **Phương án xử lý** | `resolution_type` | Kết luận phương án khắc phục | Select / VARCHAR(50) | No | No | `Doi_may_moi_100`, `Sua_chua_thay_linh_kien`, `Bao_hanh_hang`, `Hoan_tien`, `Tu_choi_do_roi_vo` | Bắt buộc nhập khi trạng thái là `Resolved` |
-| **Nguyên nhân lỗi** | `root_cause` | Chẩn đoán nguyên nhân kỹ thuật | Small Text / TEXT | No | No | Văn bản giải trình kỹ thuật | Bắt buộc nhập khi chuyển `Resolved` |
-| **Ghi chú khắc phục** | `resolution_notes` | Nội dung chi tiết đã xử lý | Small Text / TEXT | No | No | Văn bản bàn giao giao nhận | Bắt buộc nhập khi chuyển `Closed` |
-| **Đánh giá CSAT** | `csat_score` | Điểm hài lòng sau đóng phiếu | Select / VARCHAR(20) | No | No | `1_Sao`, `2_Sao`, `3_Sao`, `4_Sao`, `5_Sao` | Ghi nhận từ Webhook Zalo ZNS phản hồi |
+| **Thời điểm giải quyết**| `resolved_time` | Lúc hoàn tất phương án | Datetime / DATETIME | No | No | Timestamp | Ghi tự động khi chuyển `Resolved` |
+| **Thời điểm đóng phiếu**| `closed_time` | Lúc bàn giao và hoàn tất | Datetime / DATETIME | No | No | $\text{closed\_time} \ge \text{resolved\_time}$ | Ghi tự động khi chuyển `Closed` |
+| **Kết quả xử lý** | `resolution_result` | Kết luận phương án giải quyết | Select / VARCHAR(50) | No | No | `Bao_hanh_chinh_hang`, `Doi_theo_chinh_sach`, `Sua_chua_co_phi`, `Khong_du_dieu_kien`, `Khach_rut_yeu_cau` | Bắt buộc nhập khi trạng thái là `Resolved` |
+| **Báo cáo nguyên nhân** | `root_cause` | Chẩn đoán nguyên nhân kỹ thuật | Small Text / TEXT | No | No | Văn bản giải trình kỹ thuật | Bắt buộc nhập khi chuyển `Resolved` |
+| **Ghi chú bàn giao** | `resolution_notes` | Nội dung bàn giao kết quả | Small Text / TEXT | No | No | Văn bản bàn giao giao nhận | Bắt buộc nhập khi chuyển `Closed` |
+| **Ghi nhận thông báo** | `notify_customer_status`| Trạng thái đã báo cho khách | Select / VARCHAR(50) | Yes | No | `Chua_thong_bao`, `Da_thong_bao_qua_dien_thoai`, `Da_thong_bao_tai_quay` | Mặc định: `Chua_thong_bao` (nhân viên ghi nhận) |
+| **Đánh giá CSAT** | `csat_score` | Điểm hài lòng sau đóng phiếu | Select / VARCHAR(20) | No | No | `1_Sao`, `2_Sao`, `3_Sao`, `4_Sao`, `5_Sao` | Ghi nhận phản hồi của khách hàng |
 
 ---
 
-### 7. Bảng Dữ Liệu Mua Hàng / Hóa Đơn (`Sales_Invoice_Reference` / `tabSales Invoice Reference`)
-Lưu trữ thông tin tham chiếu lịch sử đơn hàng bán ra phục vụ kiểm tra bảo hành và chiết khấu Smember.
+### 7. Bảng Đơn Hàng Mua Tham Chiếu (`Sales_Invoice_Reference` / `tabSales Invoice Reference`)
+Lưu trữ thông tin tham chiếu lịch sử mua hàng từ tệp CSV nạp vào phục vụ kiểm tra điều kiện bảo hành và đổi trả.
 
 | Tên logic | Tên vật lý (Fieldname) | Ý nghĩa nghiệp vụ | Kiểu dữ liệu (Frappe/SQL) | Bắt buộc | Duy nhất | Giá trị hợp lệ / Enum | Nguồn dữ liệu & Quy tắc kiểm tra |
 | :--- | :--- | :--- | :---: | :---: | :---: | :--- | :--- |
-| **Mã hóa đơn** | `name` / `invoice_id` | Số hóa đơn VAT bán hàng | Data / VARCHAR(140) | Yes | Yes | Format: `INV-.YYYY.-.#####` | Master Data POS đồng bộ sang CRM |
-| **Khách hàng mua** | `customer` | Khách hàng đứng tên mua | Link / VARCHAR(140) | Yes | No | Link tới `Customer` | POS đồng bộ |
-| **Chi nhánh xuất bán**| `branch` | Cửa hàng xuất hóa đơn | Link / VARCHAR(140) | Yes | No | Link tới `Branch_Store` | POS đồng bộ |
-| **Mã sản phẩm** | `item_code` | SKU thiết bị đã bán | Link / VARCHAR(140) | Yes | No | Link tới `Item_Reference` | POS đồng bộ |
-| **Số Serial / IMEI** | `serial_imei` | Serial / IMEI thiết bị xuất bán | Data / VARCHAR(50) | Yes | No | 15 số (IMEI) hoặc Serial chuẩn | POS quét xuất kho |
-| **Ngày giờ mua hàng**| `purchase_date` | Thời điểm thanh toán đơn hàng | Datetime / DATETIME | Yes | No | Timestamp quá khứ $\le \text{today}$ | POS ghi nhận |
-| **Tổng tiền thanh toán**| `grand_total` | Giá trị thực trả sau giảm giá | Currency / DECIMAL(18,2) | Yes | No | Số dương $> 0$ (VND) | POS tính toán; Cộng dồn vào `total_spent` |
-| **Hạn bảo hành gốc** | `warranty_expiry_date`| Ngày hết hạn bảo hành chính hãng| Date / DATE | Yes | No | $\text{purchase\_date} + \text{warranty\_months}$ | Hệ thống tự tính toán theo chính sách hãng |
-| **Phương thức trả tiền**| `payment_method` | Hình thức giao dịch | Select / VARCHAR(50) | Yes | No | `Tien_mat`, `Chuyen_khoan`, `Tra_gop_0%`, `The_tin_dung` | POS đồng bộ |
-| **Trạng thái hóa đơn**| `invoice_status` | Tình trạng hiệu lực hóa đơn | Select / VARCHAR(50) | Yes | No | `Paid`, `Returned`, `Cancelled` | Mặc định: `Paid` (`Returned` khi đã đổi trả) |
+| **Mã đơn tham chiếu**| `name` / `invoice_id` | Mã đơn hàng / hóa đơn mua | Data / VARCHAR(140) | Yes | Yes | Format: `INV-.YYYY.-.#####` | Dữ liệu CSV nạp vào CRM |
+| **Khách hàng mua** | `customer` | Khách hàng đứng tên mua | Link / VARCHAR(140) | Yes | No | Link tới `Customer` | Dữ liệu CSV nạp vào |
+| **Cửa hàng xuất bán**| `branch` | Cửa hàng xuất bán | Link / VARCHAR(140) | Yes | No | Link tới `Branch_Store` | Dữ liệu CSV nạp vào |
+| **Mã sản phẩm** | `item_code` | SKU thiết bị đã bán | Link / VARCHAR(140) | Yes | No | Link tới `Item_Reference` | Dữ liệu CSV nạp vào |
+| **Số Serial / IMEI** | `serial_imei` | Serial / IMEI thiết bị xuất bán | Data / VARCHAR(50) | No | No | 15 số (IMEI) hoặc Serial chuẩn | Dữ liệu CSV nạp vào (nếu có) |
+| **Ngày mua / nhận hàng**| `purchase_date` | Thời điểm giao dịch mua | Datetime / DATETIME | Yes | No | Timestamp quá khứ $\le \text{today}$ | Dữ liệu CSV nạp vào |
+| **Tổng tiền thanh toán**| `grand_total` | Giá trị thực trả | Currency / DECIMAL(18,2) | Yes | No | Số dương $> 0$ (VND) | Dữ liệu CSV nạp vào |
+| **Hạn bảo hành theo mã**| `warranty_expiry_date`| Ngày hết hạn bảo hành | Date / DATE | Yes | No | $\text{purchase\_date} + \text{warranty\_months}$ | Tính theo chính sách từng mã hàng |
+| **Trạng thái đơn** | `invoice_status` | Tình trạng hiệu lực đơn | Select / VARCHAR(50) | Yes | No | `Paid`, `Exchanged`, `Cancelled` | Mặc định: `Paid` |
 
 ---
 
-### 8. Bảng Chi Tiết Linh Kiện & Ngoại Quan (`Ticket_Repair_Item` - Child Table)
-Bảng con nhúng trong `Support_Ticket` để ghi nhận tình trạng máy khi gửi thẩm định/sửa chữa tại Điện Thoại Vui.
+### 8. Bảng Chi Tiết Ngoại Quan & Phụ Kiện Tiếp Nhận (`Ticket_Item_Condition` - Child Table)
+Bảng con nhúng trong `Support_Ticket` để ghi nhận tình trạng máy lúc tiếp nhận (tránh tự cam kết đổi máy nguyên seal khi chưa thẩm định).
 
 | Tên logic | Tên vật lý (Fieldname) | Ý nghĩa nghiệp vụ | Kiểu dữ liệu (Frappe/SQL) | Bắt buộc | Duy nhất | Giá trị hợp lệ / Enum | Nguồn dữ liệu & Quy tắc kiểm tra |
 | :--- | :--- | :--- | :---: | :---: | :---: | :--- | :--- |
 | **Mã dòng chi tiết** | `name` | ID dòng con | Data / VARCHAR(140) | Yes | Yes | Frappe Hash ID tự sinh | Hệ thống tự sinh |
 | **Phiếu hỗ trợ cha** | `parent` | Liên kết phiếu cha | Data / VARCHAR(140) | Yes | No | Link tới `Support_Ticket` | Hệ thống tự động gán Cascade |
-| **Linh kiện phát hiện lỗi**| `fault_component`| Bộ phận phần cứng lỗi | Select / VARCHAR(50) | Yes | No | `Man_hinh_OLED`, `Pin_Chai_Phong`, `Mainboard_Nguon`, `Camera_Loi_Net`, `Vo_May_Suon` | Kỹ thuật viên DTV chọn |
-| **Tình trạng ngoại quan**| `initial_condition` | Ngoại quan máy lúc nhận | Select / VARCHAR(50) | Yes | No | `May_dep_nhu_moi`, `Tray_xuoc_nhe`, `Can_mop_goc`, `Vo_kinh_lung` | Kỹ thuật viên DTV chọn |
-| **Phụ kiện giữ lại** | `accessories` | Đồ đính kèm khách bàn giao | Data / VARCHAR(255) | No | No | Chuỗi mô tả (VD: Củ sạc 20W, Hộp máy) | Agent / KTV ghi nhận lúc nhận máy |
-| **Chi phí phát sinh** | `estimated_cost` | Báo giá ngoài bảo hành | Currency / DECIMAL(18,2) | No | No | Số dương $\ge 0$ (0đ nếu bảo hành miễn phí) | Kỹ thuật DTV báo giá cho khách duyệt |
-| **Diện bảo hành** | `warranty_status` | Chế độ bảo hành áp dụng | Select / VARCHAR(50) | Yes | No | `Bao_hanh_Chinh_hang`, `Bao_hanh_VIP_1_doi_1`, `Sua_chua_Co_phi` | Kỹ thuật viên chọn theo chính sách |
+| **Hiện tượng lỗi mô tả**| `reported_issue` | Mô tả lỗi khách phản ánh | Small Text / TEXT | Yes | No | Văn bản mô tả hiện tượng | Nhân viên tiếp nhận nhập |
+| **Hiện trạng ngoại quan**| `physical_condition` | Tình trạng thân vỏ máy | Select / VARCHAR(50) | Yes | No | `May_dep_nhu_moi`, `Tray_xuoc_nhe`, `Can_mop_goc`, `Nut_kinh_lung` | Nhân viên tiếp nhận kiểm tra |
+| **Phụ kiện giữ lại** | `accessories_included` | Đồ đính kèm khách bàn giao | Data / VARCHAR(255) | No | No | Chuỗi mô tả (VD: Củ sạc, Cáp, Hộp) | Nhân viên ghi nhận lúc nhận máy |
+| **Điều kiện tiếp nhận** | `warranty_eligibility` | Đánh giá sơ bộ ban đầu | Select / VARCHAR(50) | Yes | No | `Du_dieu_kien_kiem_dinh`, `Nghi_ngo_roi_nuoc`, `Can_chuyen_hang_kiem_tra`| Nhân viên chọn theo chính sách |
 
 ---
 
 ### 9. Bảng Nhật Ký Xử Lý Phiếu (`Ticket_Activity_Log` - Child Table)
-Bảng con lưu vết toàn bộ trao đổi nội bộ, ghi chú kỹ thuật và chuyển trạng thái giữa Showroom và Điện Thoại Vui.
+Bảng con lưu vết toàn bộ trao đổi nội bộ, ghi chú kỹ thuật, chuyển trạng thái trước/sau, bước xác minh, chờ khách và ghi nhận thông báo.
 
 | Tên logic | Tên vật lý (Fieldname) | Ý nghĩa nghiệp vụ | Kiểu dữ liệu (Frappe/SQL) | Bắt buộc | Duy nhất | Giá trị hợp lệ / Enum | Nguồn dữ liệu & Quy tắc kiểm tra |
 | :--- | :--- | :--- | :---: | :---: | :---: | :--- | :--- |
 | **Mã nhật ký** | `name` | ID dòng nhật ký | Data / VARCHAR(140) | Yes | Yes | Frappe Hash ID tự sinh | Hệ thống tự sinh |
 | **Phiếu hỗ trợ cha** | `parent` | Liên kết phiếu cha | Data / VARCHAR(140) | Yes | No | Link tới `Support_Ticket` | Hệ thống tự động gán Cascade |
 | **Người thực hiện** | `staff_user` | Nhân sự tác động bản ghi | Link / VARCHAR(140) | Yes | No | Link tới `User` | Hệ thống lấy User đang thao tác |
-| **Loại hành động** | `action_type` | Bản chất thao tác | Select / VARCHAR(50) | Yes | No | `Chuyen_trang_thai`, `Dieu_phoi_DTV`, `Cap_nhat_ghi_chu`, `Gui_thong_bao_khach` | Tự động nhận diện |
+| **Loại hành động** | `action_type` | Bản chất thao tác | Select / VARCHAR(50) | Yes | No | `Cap_nhat_tien_do`, `Chuyen_trang_thai`, `Xac_minh_dieu_kien`, `Cho_phan_hoi_khach`, `Cho_don_vi_bao_hanh`, `Ghi_nhan_thong_bao` | Nhân sự chọn / Tự động |
 | **Trạng thái trước** | `from_status` | Trạng thái cũ | Data / VARCHAR(50) | No | No | Trạng thái trước khi đổi | Hệ thống tự điền |
 | **Trạng thái sau** | `to_status` | Trạng thái mới | Data / VARCHAR(50) | No | No | Trạng thái sau khi đổi | Hệ thống tự điền |
-| **Ghi chú nội bộ** | `comments` | Nội dung trao đổi kỹ thuật | Small Text / TEXT | Yes | No | Văn bản ghi chú chi tiết | Nhân sự nhập |
+| **Ghi chú tiến độ** | `progress_notes` | Nội dung chi tiết | Small Text / TEXT | Yes | No | Văn bản ghi chú chi tiết | Nhân sự nhập |
 | **Thời điểm ghi nhận**| `logged_at` | Giờ thao tác | Datetime / DATETIME | Yes | No | Timestamp | Hệ thống tự ghi |
 
 ---
 
 ### 10. Bảng Sản Phẩm Tham Chiếu (`Item_Reference` / `tabItem`)
-Danh mục sản phẩm điện thoại, máy tính bảng, phụ kiện CellphoneS kinh doanh phục vụ tra cứu bảo hành.
+Danh mục sản phẩm tham chiếu 3 ngành hàng (iPhone 15 Pro Max, Lenovo LOQ 15IAX9 83GS001RVN, Củ sạc GaN) kèm chính sách bảo hành đúng theo từng mã hàng.
 
 | Tên logic | Tên vật lý (Fieldname) | Ý nghĩa nghiệp vụ | Kiểu dữ liệu (Frappe/SQL) | Bắt buộc | Duy nhất | Giá trị hợp lệ / Enum | Nguồn dữ liệu & Quy tắc kiểm tra |
 | :--- | :--- | :--- | :---: | :---: | :---: | :--- | :--- |
-| **Mã sản phẩm (SKU)** | `item_code` | Mã SKU sản phẩm | Data / VARCHAR(140) | Yes | Yes | Format: `SP-XXXXX` | Master Data đồng bộ |
-| **Tên sản phẩm** | `item_name` | Tên thương mại sản phẩm | Data / VARCHAR(255) | Yes | No | Tối đa 255 ký tự | Master Data đồng bộ |
-| **Thương hiệu** | `brand` | Hãng sản xuất | Select / VARCHAR(100) | Yes | No | `Apple`, `Samsung`, `Xiaomi`, `Asus`, `Sony` | Master Data |
-| **Nhóm ngành hàng** | `item_group` | Phân loại thiết bị | Select / VARCHAR(100) | Yes | No | `Điện thoại`, `Máy tính bảng`, `Laptop`, `Phụ kiện` | Master Data |
-| **Thời gian bảo hành** | `standard_warranty_months`| Số tháng bảo hành tiêu chuẩn | Int / INT | Yes | No | Giá trị: $12, 24, 36$ (Tháng) | Master Data |
+| **Mã sản phẩm (SKU)** | `item_code` | Mã SKU sản phẩm chính xác | Data / VARCHAR(140) | Yes | Yes | `SP-IP15PM`, `SP-LOQ-83GS001RVN`, `SP-GAN-65W` | Master Data đồng bộ |
+| **Tên sản phẩm** | `item_name` | Tên thương mại sản phẩm | Data / VARCHAR(255) | Yes | No | Tối đa 255 ký tự (Lenovo LOQ 15IAX9 83GS001RVN...) | Master Data đồng bộ |
+| **Thương hiệu** | `brand` | Hãng sản xuất | Select / VARCHAR(100) | Yes | No | `Apple`, `Lenovo`, `Anker`, `Samsung`, `Asus` | Master Data |
+| **Nhóm ngành hàng** | `item_group` | Phân loại thiết bị | Select / VARCHAR(100) | Yes | No | `Điện thoại`, `Laptop`, `Phụ kiện` | Master Data (3 ngành hàng nghiên cứu) |
+| **Thời gian bảo hành** | `standard_warranty_months`| Số tháng bảo hành chính hãng | Int / INT | Yes | No | Giá trị: $12, 24$ (LOQ: 24 tháng theo S06) | Master Data theo từng SKU |
+| **Ghi chú gói dịch vụ**| `warranty_policy_note`| Phân định AppleCare+/Gói mở rộng| Small Text / TEXT | No | No | Phân định AppleCare+ và CareS là riêng biệt | Master Data ghi chú chính sách |
 | **Đang kinh doanh** | `is_active` | Trạng thái mở bán sản phẩm | Check / INT(1) | Yes | No | `1` (Active), `0` (Discontinued) | Mặc định: `1` |
 
 ---
@@ -217,27 +224,36 @@ Lưu vết kiểm toán khi Quản lý CSKH thực thi gộp 2 hồ sơ khách h
 * **Trường áp dụng:** `Customer.phone_number`, `Lead.mobile_no`, `Support_Ticket.contact_phone`, `Customer_Interaction.contact_phone`.
 * **Biểu thức chính quy (Regex):** `^(0[3|5|7|8|9])[0-9]{8}$`
 * **Diễn giải:** Bắt đầu bằng chữ số `0`, theo sau bởi một trong các chữ số mạng viễn thông Việt Nam (`3`, `5`, `7`, `8`, `9`), và đúng 8 chữ số tiếp theo. Tổng chiều dài đúng 10 ký tự số.
+* **Cảnh báo trùng số:** Khi trùng số điện thoại trong hệ thống, CRM tạo cảnh báo để nhân viên kiểm tra xác minh, tuyệt đối **không tự động gộp hồ sơ**.
 * **Thông báo lỗi khi vi phạm:** *"Số điện thoại không hợp lệ! Vui lòng nhập đúng 10 chữ số thuộc các đầu mạng Việt Nam (03x, 05x, 07x, 08x, 09x)."*
 
 ### 2. Quy tắc Định dạng Số Serial / IMEI thiết bị di động
 * **Trường áp dụng:** `Support_Ticket.serial_imei`, `Sales_Invoice_Reference.serial_imei`.
-* **Biểu thức Regex:** `^[0-9]{15}$` (Đúng 15 chữ số theo chuẩn GSMA).
+* **Biểu thức Regex:** `^[0-9]{15}$` (Đúng 15 chữ số theo chuẩn GSMA) hoặc chuỗi Serial theo chuẩn nhà sản xuất.
 * **Kiểm tra thuật toán Luhn (Check Digit):** Chữ số thứ 15 được xác thực bằng thuật toán Modulo 10 của GSMA để loại bỏ số IMEI giả mạo.
-* **Thông báo lỗi khi vi phạm:** *"Số IMEI không hợp lệ! Vui lòng nhập chính xác dãy 15 chữ số chuẩn GSMA hoặc quét mã vạch trên thân máy."*
 
 ### 3. Quy tắc Ràng buộc Logic Thời gian & Trạng thái Ticket
-* **Quy tắc thời gian đóng phiếu:** `closed_time >= creation` và `closed_time >= resolved_time`.
-* **Quy tắc giải trình bắt buộc khi hoàn tất:** Khi chuyển `status` sang `Resolved`, 2 trường `resolution_type` và `root_cause` **bắt buộc không được để trống**.
+* **Quy tắc thời gian đóng phiếu:** $\text{closed\_time} \ge \text{creation}$ và $\text{closed\_time} \ge \text{resolved\_time}$.
+* **Quy tắc giải trình bắt buộc khi hoàn tất:** Khi chuyển `status` sang `Resolved`, 2 trường `resolution_result` và `root_cause` **bắt buộc không được để trống**. Không tự xác nhận sửa xong khi hết thời gian dự kiến.
 * **Quy tắc nghiệm thu đóng phiếu:** Khi chuyển `status` sang `Closed`, trường `resolution_notes` **bắt buộc không được để trống**.
-* **Quy tắc tính toán SLA tự động theo hạng Smember:**
+* **Quy tắc ghi nhận thông báo:** Trong MVP, nhân viên cập nhật `notify_customer_status = 'Da_thong_bao_qua_dien_thoai'` khi đã liên hệ báo khách.
+* **Quy tắc tính toán SLA theo hạng Smember:**
   * *Hạng S-VIP:* Cam kết xử lý trong vòng **4 giờ làm việc** ($\text{sla\_deadline} = \text{creation} + 4\text{h}$).
-  * *Hạng Smember Standard:* Cam kết xử lý trong vòng **24 giờ làm việc** ($\text{sla\_deadline} = \text{creation} + 24\text{h}$).
+  * *Hạng S-MEM / S-NEW / S-NULL:* Cam kết xử lý trong vòng **24 giờ làm việc** ($\text{sla\_deadline} = \text{creation} + 24\text{h}$).
   * *Khách vãng lai:* Cam kết xử lý trong vòng **48 giờ làm việc** ($\text{sla\_deadline} = \text{creation} + 48\text{h}$).
 
 ### 4. Quy tắc Ràng buộc Chuyển đổi Cơ hội (Lead Conversion Validation)
 * Khi `Lead_Opportunity.status` chuyển thành `'Converted'`:
   * Trường `converted_customer` **bắt buộc phải có giá trị**.
   * Khách hàng được liên kết phải có `phone_number` trùng khớp với `Lead.mobile_no`.
+
+### 5. Quy tắc Tính Báo cáo Tỷ lệ Thắng & Nhắc việc (Mục 5.1 Tài liệu BA)
+* **Công thức Tỷ lệ Thắng cơ hội:**
+  $$\text{Tỷ lệ thắng} = \frac{\text{Số cơ hội Thắng (Converted)}}{\text{Thắng (Converted)} + \text{Thua (Lost)}} \times 100\%$$
+  * *Điều kiện lọc:* Chỉ tính các cơ hội đã đóng trong kỳ (`Converted` hoặc `Lost`), lọc theo ngày đóng và gán cho nhân viên tại lúc đóng.
+  * *Xử lý mẫu số = 0:* Khi chưa phát sinh cơ hội đóng, hệ thống hiển thị: **"Chưa có dữ liệu"**.
+* **Quy tắc Nhắc việc chăm sóc (Task Reminder):**
+  * Tự động tính hạn nhắc việc $\text{follow\_up\_due} = \text{creation} + 3\text{ ngày làm việc}$ đối với các cơ hội đang mở (`Open`, `Contacted`).
 
 ---
 
@@ -247,50 +263,53 @@ Lưu vết kiểm toán khi Quản lý CSKH thực thi gộp 2 hồ sơ khách h
 
 | Trạng thái trong Từ điển CRM | Tên tiếng Việt hiển thị UI | Trạng thái State Diagram C03 (Nhật) | Ý nghĩa nghiệp vụ chi tiết tại CellphoneS |
 | :--- | :--- | :--- | :--- |
-| `Open` | **Mới tạo** | `State: Open (Initial)` | Phiếu hỗ trợ vừa được tiếp nhận từ Hotline/Showroom, đang chờ phân công kỹ thuật. |
-| `In_Progress` | **Đang xử lý** | `State: In Progress` | Nhân viên CSKH hoặc Kỹ thuật viên Điện Thoại Vui đang trực tiếp kiểm tra/thao tác trên máy. |
-| `Pending_Vendor` | **Chờ Hãng / Linh kiện** | `State: Pending Vendor` | Máy đã gửi sang Trung tâm bảo hành Apple/Samsung hoặc đang đợi điều phối linh kiện về trung tâm DTV. |
-| `Resolved` | **Đã giải quyết** | `State: Resolved` | Máy đã sửa xong, hoặc chính sách đổi mới 1-đổi-1 đã được duyệt hoàn tất; sẵn sàng giao khách. |
-| `Closed` | **Đóng phiếu** | `State: Closed (Final)` | Khách đã kiểm tra, ký nhận bàn giao thiết bị và hệ thống kích hoạt tin nhắn Zalo ZNS khảo sát CSAT. |
+| `Open` | **Mới tạo** | `State: Open (Initial)` | Phiếu hỗ trợ vừa tiếp nhận từ Hotline/Showroom; lưu bước tiếp nhận ban đầu. |
+| `In_Progress` | **Đang xử lý** | `State: In Progress` | Nhân viên CSKH cửa hàng hoặc kỹ thuật viên đang trực tiếp xác minh/kiểm tra máy. |
+| `Pending_Vendor` | **Chờ Hãng / Đối tác** | `State: Pending Vendor` | Thiết bị đã gửi sang đơn vị bảo hành (Apple Care, Samsung, CareS) hoặc chờ linh kiện. |
+| `Resolved` | **Đã giải quyết** | `State: Resolved` | Đã có phương án/kết quả giải quyết xác nhận do nhân viên nhập; sẵn sàng bàn giao. |
+| `Closed` | **Đóng phiếu** | `State: Closed (Final)` | Khách đã nhận bàn giao thiết bị, nhân viên ghi nhận đã thông báo và đóng phiếu. |
+
+*(Lưu ý: Các bước "Đang xác minh" và "Chờ khách" được ghi nhận linh hoạt thông qua trường `action_type` trong bảng con `Ticket_Activity_Log`).*
 
 ### 2. Đồng bộ Trạng thái Cơ hội Tư vấn / Pre-order (`Lead_Opportunity.status`)
 
 | Trạng thái trong Từ điển CRM | Tên tiếng Việt hiển thị UI | Trạng thái State Diagram C03 (Nhật) | Ý nghĩa nghiệp vụ chi tiết tại CellphoneS |
 | :--- | :--- | :--- | :--- |
-| `Open` | **Mới tiếp nhận** | `Lead: Open (New)` | Khách vừa đăng ký để lại thông tin đặt trước trên Website hoặc Fanpage. |
-| `Contacted` | **Đã liên hệ** | `Lead: Contacted` | Nhân viên Telesales đã gọi điện tư vấn sản phẩm/chương trình ưu đãi. |
-| `Qualified` | **Đủ điều kiện** | `Lead: Qualified` | Khách xác nhận chốt phiên bản/màu sắc và đồng ý nhận thông tin cọc. |
-| `Converted` | **Đã chốt cọc / Mua** | `Lead: Converted (Success)` | Khách đã thanh toán cọc thành công, tạo Đơn hàng và hồ sơ `Customer`. |
-| `Lost` | **Hủy / Không mua** | `Lead: Lost (Closed)` | Khách từ chối mua, đổi ý hoặc không liên lạc được sau 3 lần gọi. |
+| `Open` | **Mới tiếp nhận** | `Lead: Open (New)` | Khách vừa đăng ký để lại thông tin đặt trước hoặc cần tư vấn qua Web/Hotline. |
+| `Contacted` | **Đã liên hệ** | `Lead: Contacted` | Nhân viên tư vấn đã gọi điện hỏi nhu cầu, ngân sách, thiết bị đang dùng. |
+| `Qualified` | **Đủ điều kiện** | `Lead: Qualified` | Khách xác nhận chốt phiên bản/cấu hình/màu sắc mong muốn. |
+| `Converted` | **Đã chốt mua / Cọc** | `Lead: Converted (Success)` | Khách đã mua hàng/chốt cọc thành công, tạo đơn và hồ sơ `Customer`. |
+| `Lost` | **Hủy / Không mua** | `Lead: Lost (Closed)` | Khách từ chối mua, đổi ý hoặc không liên lạc được sau thời gian chăm sóc. |
 
 ---
 
 ## PHẦN 4: QUY ĐỊNH DỮ LIỆU MẪU (SAMPLE DATA SPECIFICATION)
 
-### 1. Dữ liệu Mẫu Bảng Khách hàng & Smember Profile
+### 1. Dữ liệu Mẫu Bảng Khách hàng & Smember Profile (4 Hạng chuẩn & Nhóm Giáo dục)
 
-| `customer_id` | `phone_number` | `customer_name` | `email_id` | `identity_card` | `province_city` | `customer_type` | `status` | `member_tier` | `total_spent` | `reward_points` |
+| `customer_id` | `phone_number` | `customer_name` | `email_id` | `identity_card` | `province_city` | `status` | `member_tier` | `edu_type` | `edu_status` | `edu_expiry_date` |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| `CUST-2026-00001` | `0908123456` | Nguyễn Văn An | an.nguyen@gmail.com | 079098001234 | TP. Hồ Chí Minh | Individual | Active | **S-VIP** | 85,400,000 đ | 1,250 pts |
-| `CUST-2026-00002` | `0912345678` | Lê Thị Bích Trâm | tram.le@yahoo.com | 079195005678 | TP. Hồ Chí Minh | Individual | Active | **Smember** | 12,800,000 đ | 320 pts |
-| `CUST-2026-00003` | `0987654321` | Hoàng Minh Quân | quan.hoang@fpt.com | 001099004321 | Hà Nội | Individual | Active | **S-VIP** | 142,000,000 đ | 2,100 pts |
-| `CUST-GUEST` | `0000000000` | Khách vãng lai | guest@cellphones.com.vn| — | TP. Hồ Chí Minh | Anonymous | Active | **Smember** | 0 đ | 0 pts |
+| `CUST-2026-00001` | `0908123456` | Nguyễn Văn An | an.nguyen@gmail.com | 079098001234 | TP. Hồ Chí Minh | Active | **S-VIP** | `None` | `None` | — |
+| `CUST-2026-00002` | `0912345678` | Lê Thị Bích Trâm | tram.le@yahoo.com | 079195005678 | TP. Hồ Chí Minh | Active | **S-MEM** | `S-Student` | `Da_xac_minh` | 2027-06-30 |
+| `CUST-2026-00003` | `0987654321` | Hoàng Minh Quân | quan.hoang@fpt.com | 001099004321 | Hà Nội | Active | **S-NEW** | `S-Teacher` | `Da_xac_minh` | 2027-10-31 |
+| `CUST-2026-00004` | `0933445566` | Phạm Thu Trang | trang.pham@gmail.com| 079201009876 | TP. Hồ Chí Minh | Active | **S-NULL** | `None` | `Chua_xac_minh` | — |
+| `CUST-GUEST` | `0000000000` | Khách vãng lai | guest@cellphones.com.vn| — | TP. Hồ Chí Minh | Active | **S-NULL** | `None` | `None` | — |
 
-### 2. Dữ liệu Mẫu Bảng Chi nhánh (`Branch_Store`)
+### 2. Dữ liệu Mẫu Bảng Chi nhánh (`Branch_Store` - Mô phỏng 2 Showroom)
 
 | `branch_id` | `branch_name` | `branch_type` | `address` | `province_city` | `hotline` | `manager_user` |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | `BR-00101` | Showroom 125 Lê Văn Việt | `Showroom_Store` | 125 Lê Văn Việt, P. Hiệp Phú, TP. Thủ Đức | TP. Hồ Chí Minh | 02871088125 | `thuan.cskh@cellphones.com.vn` |
 | `BR-00102` | Showroom 213 Trần Quang Khải | `Showroom_Store` | 213 Trần Quang Khải, P. Tân Định, Quận 1 | TP. Hồ Chí Minh | 02871088213 | `linh.manager@cellphones.com.vn` |
-| `BR-00201` | Trung tâm Điện Thoại Vui Q9 | `Dien_Thoai_Vui_Center` | 129 Lê Văn Việt, P. Hiệp Phú, TP. Thủ Đức | TP. Hồ Chí Minh | 02871010129 | `tu.dtv@cellphones.com.vn` |
+| `BR-00201` | Trung tâm Tiếp nhận Bảo hành Q9 | `Dien_Thoai_Vui_Center` | 129 Lê Văn Việt, P. Hiệp Phú, TP. Thủ Đức | TP. Hồ Chí Minh | 02871010129 | `tu.dtv@cellphones.com.vn` |
 
 ### 3. Dữ liệu Mẫu Bảng Phiếu Hỗ Trợ (`Support_Ticket`)
 
-| `ticket_id` | `customer` | `contact_phone` | `contact_name` | `item_code` | `serial_imei` | `issue_category` | `priority` | `status` | `assigned_dept` | `resolution_type` |
+| `ticket_id` | `customer` | `contact_phone` | `contact_name` | `item_code` | `serial_imei` | `issue_type` | `priority` | `status` | `resolution_result` | `notify_customer_status` |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| `TCK-2026-00155` | `CUST-2026-00001` | `0908123456` | Nguyễn Văn An | `SP-IP15PM-256` | `358941098234112` | `Doi_tra_30_ngay_VIP`| Critical | `In_Progress` | `Trung_tam_Dien_Thoai_Vui` | `Doi_may_moi_100` |
-| `TCK-2026-00150` | `CUST-2026-00002` | `0912345678` | Lê Thị Bích Trâm| `SP-SS-S24U` | `352109845120993` | `Loi_phan_cung_NSX` | High | `In_Progress` | `Trung_tam_Dien_Thoai_Vui` | `Sua_chua_thay_linh_kien` |
-| `TCK-2026-00142` | `CUST-2026-00003` | `0987654321` | Hoàng Minh Quân | `SP-IPAD-M4` | `359981023455102` | `Doi_tra_30_ngay_VIP`| Critical | `Resolved` | `CSKH_Showroom` | `Doi_may_moi_100` |
+| `TCK-2026-00155` | `CUST-2026-00001` | `0908123456` | Nguyễn Văn An | `SP-IP15PM-256` | `358941098234112` | `Doi_tra_theo_chinh_sach`| Critical | `In_Progress` | — | `Chua_thong_bao` |
+| `TCK-2026-00150` | `CUST-2026-00002` | `0912345678` | Lê Thị Bích Trâm| `SP-LOQ-83GS001RVN` | `83GS001RVNVN101` | `Tiep_nhan_bao_hanh` | High | `In_Progress` | — | `Chua_thong_bao` |
+| `TCK-2026-00142` | `CUST-2026-00003` | `0987654321` | Hoàng Minh Quân | `SP-GAN-65W` | `AN2024GAN65001` | `Doi_tra_theo_chinh_sach`| Medium | `Resolved` | `Doi_theo_chinh_sach` | `Da_thong_bao_qua_dien_thoai` |
 
 ---
 
@@ -299,26 +318,29 @@ Lưu vết kiểm toán khi Quản lý CSKH thực thi gộp 2 hồ sơ khách h
 Dưới đây là đặc tả chi tiết danh sách cột trong các file mẫu CSV phục vụ Import nạp dữ liệu ban đầu vào Frappe Framework:
 
 ### 1. File CSV Import Khách hàng (`Customer_Data_Import.csv`)
-* **Mục đích:** Nạp danh sách khách hàng ban đầu từ hệ thống POS cũ sang CRM Frappe.
+* **Mục đích:** Nạp danh sách khách hàng ban đầu từ hệ thống POS cũ/bộ mẫu thử nghiệm sang CRM Frappe.
 * **Quy định cột:**
 
 | Header Cột CSV | Fieldname Frappe tương ứng | Bắt buộc | Kiểu dữ liệu | Ví dụ giá trị | Ghi chú kiểm tra |
 | :--- | :--- | :---: | :--- | :--- | :--- |
-| `Phone Number` | `phone_number` | **BẮT BUỘC** | Text | `0908123456` | Khóa duy nhất (Unique), đúng 10 chữ số |
+| `Customer ID` | `name` | Tùy chọn | Text | `CUST-2026-00001` | Mã định danh nội bộ ổn định |
+| `Phone Number` | `phone_number` | **BẮT BUỘC** | Text | `0908123456` | Số điện thoại liên hệ & tìm kiếm (10 chữ số) |
 | `Full Name` | `customer_name` | **BẮT BUỘC** | Text | `Nguyễn Văn An` | Tên đầy đủ, không để trống |
 | `Email` | `email_id` | Tùy chọn | Text | `an.nguyen@gmail.com`| Validate email format |
 | `Identity Card` | `identity_card` | Tùy chọn | Text | `079098001234` | 9 hoặc 12 số CCCD |
 | `Gender` | `gender` | Tùy chọn | Enum | `Nam` | Chọn: `Nam`, `Nữ`, `Khác` |
 | `Province City` | `province_city` | Tùy chọn | Text | `TP. Hồ Chí Minh` | Tên tỉnh thành phố |
-| `Customer Type` | `customer_type` | **BẮT BUỘC** | Enum | `Individual` | `Individual`, `Corporate`, `Anonymous` |
-| `Smember Tier` | `custom_smember_tier` | **BẮT BUỘC** | Enum | `S-VIP` | `Smember`, `S-VIP` |
-| `Total Spent` | `custom_total_spent` | Tùy chọn | Number | `85400000` | Số tiền tích lũy cũ (VND) |
-| `Reward Points` | `custom_reward_points`| Tùy chọn | Number | `1250` | Điểm tích lũy cũ |
+| `Customer Type` | `customer_type` | **BẮT BUỘC** | Enum | `Individual` | `Individual`, `Educational`, `Corporate` |
+| `Smember Tier` | `custom_smember_tier` | **BẮT BUỘC** | Enum | `S-VIP` | `S-NULL`, `S-NEW`, `S-MEM`, `S-VIP` |
+| `Edu Type` | `custom_edu_type` | Tùy chọn | Enum | `S-Student` | `None`, `S-Student`, `S-Teacher` |
+| `Edu Status` | `custom_edu_status` | Tùy chọn | Enum | `Da_xac_minh` | `Chua_xac_minh`, `Da_xac_minh`, `Tu_choi` |
+| `Edu Expiry Date` | `custom_edu_expiry_date` | Tùy chọn | Date | `2027-06-30` | Thời hạn ưu đãi giáo dục (nếu đã duyệt) |
+| `Total Spent` | `custom_total_spent` | Tùy chọn | Number | `85400000` | Số tiền tích lũy tham chiếu (VND) |
 
 ---
 
 ### 2. File CSV Import Chi nhánh Cửa hàng (`Branch_Store_Import.csv`)
-* **Mục đích:** Nạp danh mục toàn bộ mạng lưới cửa hàng và trung tâm sửa chữa CellphoneS.
+* **Mục đích:** Nạp danh mục toàn bộ mạng lưới 2 Showroom mô phỏng và Trung tâm bảo hành/CareS.
 * **Quy định cột:**
 
 | Header Cột CSV | Fieldname Frappe tương ứng | Bắt buộc | Kiểu dữ liệu | Ví dụ giá trị | Ghi chú kiểm tra |
@@ -334,14 +356,14 @@ Dưới đây là đặc tả chi tiết danh sách cột trong các file mẫu 
 ---
 
 ### 3. File CSV Import Sản phẩm Tham chiếu (`Item_Reference_Import.csv`)
-* **Mục đích:** Đồng bộ danh mục SKU thiết bị từ hệ thống ERP/Kho sang CRM.
+* **Mục đích:** Đồng bộ danh mục SKU thiết bị đại diện nghiên cứu sang CRM.
 * **Quy định cột:**
 
 | Header Cột CSV | Fieldname Frappe tương ứng | Bắt buộc | Kiểu dữ liệu | Ví dụ giá trị | Ghi chú kiểm tra |
 | :--- | :--- | :---: | :--- | :--- | :--- |
-| `Item SKU` | `item_code` | **BẮT BUỘC** | Text | `SP-IP15PM-256` | Mã SKU sản phẩm duy nhất |
-| `Item Name` | `item_name` | **BẮT BUỘC** | Text | `iPhone 15 Pro Max 256GB Titan Tự Nhiên` | Tên thương mại |
-| `Brand` | `brand` | **BẮT BUỘC** | Enum | `Apple` | `Apple`, `Samsung`, `Xiaomi`, `Asus`... |
-| `Item Group` | `item_group` | **BẮT BUỘC** | Enum | `Điện thoại` | `Điện thoại`, `Laptop`, `Phụ kiện`... |
-| `Warranty Months`| `standard_warranty_months`| **BẮT BUỘC** | Int | `12` | Số tháng bảo hành ($12, 24, 36$) |
+| `Item SKU` | `item_code` | **BẮT BUỘC** | Text | `SP-LOQ-83GS001RVN` | Mã SKU sản phẩm duy nhất |
+| `Item Name` | `item_name` | **BẮT BUỘC** | Text | `Laptop Lenovo LOQ 15IAX9 83GS001RVN` | Tên thương mại chính xác |
+| `Brand` | `brand` | **BẮT BUỘC** | Enum | `Lenovo` | `Apple`, `Lenovo`, `Anker`, `Samsung`... |
+| `Item Group` | `item_group` | **BẮT BUỘC** | Enum | `Laptop` | `Điện thoại`, `Laptop`, `Phụ kiện` |
+| `Warranty Months`| `standard_warranty_months`| **BẮT BUỘC** | Int | `24` | Số tháng bảo hành chính hãng (24 tháng cho Lenovo LOQ) |
 | `Is Active` | `is_active` | **BẮT BUỘC** | Int | `1` | `1` (Mở bán), `0` (Ngừng kinh doanh) |

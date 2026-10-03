@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CellphoneS CRM - Frappe Desk v15 UI Showcase Prototype</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cps-red: #D70018;
+      --cps-red-dark: #B30012;
+      --cps-gold: #F59E0B;
+      --cps-green: #10B981;
+      --cps-dark: #111827;
+      --cps-dark-secondary: #1F2937;
+      --cps-border: #374151;
+      --cps-light-bg: #F8FAFC;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: var(--cps-dark);
+      color: #F3F4F6;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    /* Top Portal Header */
+    .portal-header {
+      background-color: var(--cps-dark);
+      border-bottom: 1px solid var(--cps-border);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 50;
+      gap: 16px;
+    }
+    .brand-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-badge {
+      background: linear-gradient(135deg, var(--cps-red), var(--cps-red-dark));
+      color: white;
+      font-weight: 800;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 10px rgba(215, 0, 24, 0.35);
+    }
+    .project-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #E5E7EB;
+    }
+    .project-subtitle {
+      font-size: 11px;
+      color: #9CA3AF;
+    }
+    /* Screen Tabs */
+    .screens-nav {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 4px 0;
+    }
+    .screen-tab {
+      background-color: var(--cps-dark-secondary);
+      border: 1px solid var(--cps-border);
+      color: #D1D5DB;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+    .screen-tab:hover {
+      background-color: #374151;
+      color: #FFFFFF;
+      border-color: #4B5563;
+    }
+    .screen-tab.active {
+      background-color: var(--cps-red);
+      color: #FFFFFF;
+      border-color: var(--cps-red-dark);
+      box-shadow: 0 2px 8px rgba(215, 0, 24, 0.4);
+      font-weight: 600;
+    }
+    .tab-num {
+      background: rgba(0,0,0,0.25);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+    }
+    /* Toolbar Right */
+    .portal-tools {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .tool-btn {
+      background-color: var(--cps-dark-secondary);
+      border: 1px solid var(--cps-border);
+      color: #D1D5DB;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+    .tool-btn:hover {
+      background-color: #374151;
+      color: white;
+    }
+    .tool-btn.primary {
+      background-color: var(--cps-red);
+      border-color: var(--cps-red);
+      color: white;
+    }
+    /* Workspace Area */
+    .workspace-wrapper {
+      flex: 1;
+      display: flex;
+      position: relative;
+      background-color: #0F172A;
+      overflow: hidden;
+    }
+    .preview-container {
+      flex: 1;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: #1E293B;
+      padding: 0;
+      position: relative;
+    }
+    .preview-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: white;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    /* Spec Drawer (Collapsible) */
+    .spec-drawer {
+      width: 380px;
+      background-color: var(--cps-dark-secondary);
+      border-left: 1px solid var(--cps-border);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      transition: transform 0.3s ease, margin-right 0.3s ease;
+      z-index: 40;
+    }
+    .spec-drawer.collapsed {
+      margin-right: -380px;
+    }
+    .drawer-header {
+      padding: 16px;
+      border-bottom: 1px solid var(--cps-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .drawer-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #F9FAFB;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .close-drawer-btn {
+      background: transparent;
+      border: none;
+      color: #9CA3AF;
+      font-size: 18px;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+    .close-drawer-btn:hover {
+      background-color: #374151;
+      color: white;
+    }
+    .drawer-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .spec-card {
+      background-color: var(--cps-dark);
+      border: 1px solid var(--cps-border);
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .spec-card h4 {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--cps-gold);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .spec-card ul {
+      padding-left: 18px;
+      color: #D1D5DB;
+    }
+    .spec-card li {
+      margin-bottom: 6px;
+    }
+    .spec-badge {
+      display: inline-block;
+      background-color: #374151;
+      color: #93C5FD;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+    }
+    /* Responsive viewport selector */
+    .viewport-selector {
+      display: flex;
+      background-color: var(--cps-dark);
+      border: 1px solid var(--cps-border);
+      border-radius: 6px;
+      padding: 2px;
+    }
+    .viewport-btn {
+      background: transparent;
+      border: none;
+      color: #9CA3AF;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .viewport-btn:hover {
+      color: white;
+    }
+    .viewport-btn.active {
+      background-color: #374151;
+      color: white;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Portal Header -->
+  <header class="portal-header">
+    <div class="brand-section">
+      <div class="brand-badge">
+        <span>📱</span> CellphoneS CRM
+      </div>
+      <div>
+        <div class="project-title">Frappe Desk v15 UI Suite</div>
+        <div class="project-subtitle">Dự án CRM Bán lẻ & Dịch vụ Sửa chữa Điện Thoại Vui</div>
+      </div>
+    </div>
+
+    <!-- 6 Screen Tabs -->
+    <nav class="screens-nav" id="screensNav">
+      <button class="screen-tab active" onclick="loadScreen(0)">
+        <span class="tab-num">01</span> Hồ Sơ 360°
+      </button>
+      <button class="screen-tab" onclick="loadScreen(1)">
+        <span class="tab-num">02</span> Cơ Hội & Pre-order
+      </button>
+      <button class="screen-tab" onclick="loadScreen(2)">
+        <span class="tab-num">03</span> Tương Tác & CTI
+      </button>
+      <button class="screen-tab" onclick="loadScreen(3)">
+        <span class="tab-num">04</span> Kanban Phiếu Hỗ Trợ
+      </button>
+      <button class="screen-tab" onclick="loadScreen(4)">
+        <span class="tab-num">05</span> Chi Tiết & Nghiệm Thu
+      </button>
+      <button class="screen-tab" onclick="loadScreen(5)">
+        <span class="tab-num">06</span> CSKH & SLA Dashboard
+      </button>
+    </nav>
+
+    <!-- Portal Tools -->
+    <div class="portal-tools">
+      <div class="viewport-selector">
+        <button class="viewport-btn active" onclick="setViewport('100%', this)" title="Toàn màn hình">Full</button>
+        <button class="viewport-btn" onclick="setViewport('1440px', this)" title="Chuẩn 1440px">1440px</button>
+        <button class="viewport-btn" onclick="setViewport('1280px', this)" title="Laptop 1280px">1280px</button>
+      </div>
+      <button class="tool-btn" onclick="toggleDrawer()" id="drawerToggleBtn" title="Xem đặc tả nghiệp vụ D03">
+        📋 Đặc tả D03
+      </button>
+      <a class="tool-btn primary" id="openDirectBtn" href="screen1_customer_360.html" target="_blank" title="Mở file HTML trực tiếp trong tab mới">
+        ↗ Mở Tab Mới
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Workspace -->
+  <div class="workspace-wrapper">
+    <div class="preview-container">
+      <iframe class="preview-iframe" id="previewIframe" src="screen1_customer_360.html"></iframe>
+    </div>
+
+    <!-- Specification Drawer -->
+    <aside class="spec-drawer" id="specDrawer">
+      <div class="drawer-header">
+        <div class="drawer-title" id="drawerTitle">
+          📋 Đặc tả Màn hình 1
+        </div>
+        <button class="close-drawer-btn" onclick="toggleDrawer()">✕</button>
+      </div>
+      <div class="drawer-content" id="drawerContent">
+        <!-- Dynamic content injected via JS -->
+      </div>
+    </aside>
+  </div>
+
+  <script>
+    const screensData = [
+      {
+        id: "SCREEN_01",
+        title: "Màn hình 1: Hồ sơ khách hàng 360° & Quản trị Smember VIP",
+        file: "screen1_customer_360.html",
+        doctype: "Customer (DocType CRM Chuẩn Frappe)",
+        useCase: "Quản trị vòng đời khách hàng, tra cứu lịch sử mua hàng theo IMEI, tích điểm Smember & kích hoạt quyền lợi S-VIP.",
+        views: [
+          "Header Profile: Mã CUST-2026-00001, Nguyễn Văn An, SĐT 0908123456, CCCD 079098001234.",
+          "Thẻ Smember VIP: ⭐ S-VIP, Điểm tích lũy 1,250 pts, Tổng chi tiêu 85.4 triệu, Hạn duy trì 31/12/2026.",
+          "Tab 1: Thiết bị sở hữu (iPhone 15 Pro Max, Apple Watch Ultra 2, Củ sạc Apple 20W).",
+          "Tab 2: Lịch sử Phiếu hỗ trợ TCK-2026-00155 (In Progress) & TCK-2026-00089 (Closed).",
+          "Tab 3: Dòng thời gian tương tác qua Hotline 1800, Chat Zalo OA và Showroom.",
+          "Tab 4: Ghi chú CSKH đặc quyền VIP."
+        ],
+        actions: [
+          "[+ Tạo Phiếu Hỗ Trợ] - Tự động điền dữ liệu KH",
+          "[+ Ghi Nhận Tương Tác] - Mở CTI log",
+          "[⚡ Gộp Hồ Sơ (Merge)] - Hợp nhất hồ sơ trùng CCCD/SĐT",
+          "[⭐ Điều Chỉnh Điểm Smember] - Cộng/trừ điểm thưởng",
+          "[Lưu Thay Đổi]"
+        ],
+        validations: [
+          "Cảnh báo trùng SĐT nếu đã tồn tại hồ sơ khác",
+          "Ràng buộc quyền CSKH Manager khi chỉnh điểm Smember",
+          "Không thể gộp hồ sơ vào chính nó hoặc hồ sơ đã Merged"
+        ]
+      },
+      {
+        id: "SCREEN_02",
+        title: "Màn hình 2: Quản lý cơ hội tư vấn & Pre-order Flagship",
+        file: "screen2_lead_preorder.html",
+        doctype: "Lead & Opportunity (Nhu Cầu Tư Vấn)",
+        useCase: "Tiếp nhận cơ hội mua sắm đa kênh (Web Form, Zalo), quản lý hạn mức suất cọc Đợt 1 (Pre-order Quota), tư vấn Thu Cũ Đổi Mới và sinh mã VietQR cọc 1tr.",
+        views: [
+          "Mã Lead: LEAD-2026-08912, KH: Trần Thị Mai Loan (0938112233).",
+          "Sản phẩm: iPhone 16 Pro Max 256GB Titan Sa Mạc (SP-IP16PM-256-DES).",
+          "Showroom nhận máy: CellphoneS 125 Lê Văn Việt, TP. Thủ Đức.",
+          "Thanh tiến độ Quota: Còn 12 / 50 Suất Đợt 1 tại chi nhánh.",
+          "Tiến trình Telesales: 1. Mới tạo -> 2. Đã liên hệ (Active) -> 3. Đủ điều kiện -> 4. Chốt cọc.",
+          "Phân hệ Thu Cũ Đổi Mới: iPhone 13 Pro Max trợ giá 14.5tr."
+        ],
+        actions: [
+          "[📞 Gọi Telesales (CTI Auto-dial)]",
+          "[⚡ Tạo VietQR Thanh Toán Cọc 1,000,000 đ]",
+          "[🎯 Chốt Cọc & Chuyển Đổi Đơn Hàng (Sales Order)]",
+          "[Hủy / Đóng Lead (Lost)]",
+          "[Lưu Ghi Chú]"
+        ],
+        validations: [
+          "Báo hết suất nếu Quota chi nhánh = 0",
+          "Bắt buộc nhận xác nhận thanh toán cọc trước khi Convert",
+          "Yêu cầu liên kết hoặc tạo Customer profile có cùng SĐT"
+        ]
+      },
+      {
+        id: "SCREEN_03",
+        title: "Màn hình 3: Tiếp nhận tương tác đa kênh & Nhắc việc",
+        file: "screen3_interaction_reminder.html",
+        doctype: "Customer Interaction (Tương Tác Đa Kênh)",
+        useCase: "Pop-up CTI Caller-ID tự động bắt số gọi đến Hotline 1800, tra cứu nhanh lịch sử liên hệ, lập lịch nhắc việc gọi lại chăm sóc và tạo nhanh Ticket.",
+        views: [
+          "CTI Live Call Bar: Cuộc gọi đến từ Hotline 1800.2097 (02:45 đàm thoại).",
+          "Tự động nhận diện: CUST-2026-00001 - Nguyễn Văn An (⭐ S-VIP).",
+          "Phân loại tương tác: Khiếu nại bảo hành - sửa chữa máy.",
+          "Tóm tắt nội dung trao đổi: Khách báo sập nguồn khi sạc, hướng dẫn qua DTV 125 Lê Văn Việt.",
+          "Quick Peek: Lịch sử 3 lần liên hệ gần nhất của khách.",
+          "Khối tạo lịch nhắc việc: Hẹn gọi lại 14:00 ngày 03/10/2026."
+        ],
+        actions: [
+          "[Lưu Tương Tác]",
+          "[⚡ Tạo Nhanh Phiếu Hỗ Trợ] - Kế thừa dữ liệu",
+          "[⏰ Lưu Lịch Hẹn Chăm Sóc]",
+          "[Hủy Bỏ / Đóng]"
+        ],
+        validations: [
+          "Bắt buộc nhập tóm tắt trao đổi",
+          "Kiểm tra định dạng SĐT Việt Nam 10 số",
+          "Thời gian hẹn gọi lại phải lớn hơn thời điểm hiện tại"
+        ]
+      },
+      {
+        id: "SCREEN_04",
+        title: "Màn hình 4: Kanban 5 Cột Phiếu hỗ trợ & Bảo hành DTV",
+        file: "screen4_ticket_kanban.html",
+        doctype: "Support Ticket (Kanban Board View)",
+        useCase: "Giám sát trực quan vòng đời 5 trạng thái của Ticket, đếm ngược đồng hồ SLA, phân luồng trạm kỹ thuật Điện Thoại Vui và cứu vãn các ca khẩn cấp.",
+        views: [
+          "Cột 1: MỚI TẠO (Open - 3 phiếu) - TCK-2026-00155 (S-VIP SLA 4H, còn 3h15p).",
+          "Cột 2: ĐANG XỬ LÝ (In Progress - 5 phiếu) - Cảnh báo ĐỎ QUÁ HẠN 45P (Xiaomi 14 Ultra).",
+          "Cột 3: CHỜ HÃNG / LK (Pending Vendor - 2 phiếu) - Asus ROG Zephyrus chờ quạt.",
+          "Cột 4: ĐÃ XỬ LÝ (Resolved - 4 phiếu) - iPad Pro M4 đổi máy mới 1-1.",
+          "Cột 5: ĐÓNG PHIẾU (Closed - 18 phiếu) - Loa Marshall hoàn tất sửa chữa (CSAT 5/5).",
+          "Dải cảnh báo: 2 Phiếu quá hạn SLA & 4 Phiếu S-VIP."
+        ],
+        actions: [
+          "[+ Tạo Phiếu Hỗ Trợ Mới]",
+          "[Chuyển Chế Độ Kanban / List View]",
+          "[Bộ Lọc Đơn Vị: DTV / Apple Care / Store]",
+          "[Gán Việc Nhanh Trực Tiếp Trên Thẻ]",
+          "[Lọc Phiếu Của Tôi]"
+        ],
+        validations: [
+          "Chuyển trạng thái bắt buộc tuần tự Open -> In Progress -> Resolved/Closed",
+          "Không thể nhận xử lý In Progress nếu chưa gán KTV phụ trách"
+        ]
+      },
+      {
+        id: "SCREEN_05",
+        title: "Màn hình 5: Chi tiết phiếu hỗ trợ & Nghiệm thu kỹ thuật",
+        file: "screen5_ticket_detail.html",
+        doctype: "Support Ticket & Ticket_Repair_Item (Detail Form View)",
+        useCase: "Khám bệnh thiết bị tại quầy Điện Thoại Vui, kiểm tra linh kiện và ngoại quan máy, đối soát Apple Care, bắt buộc giải trình nghiệm thu và gửi Zalo ZNS bàn giao.",
+        views: [
+          "Mã TCK-2026-00155, Trạng thái: [In Progress], SLA Còn 03h 45m (Ưu tiên S-VIP 4H).",
+          "Thiết bị: iPhone 15 Pro Max 256GB Titan (IMEI: 358941098234112 - Apple Care VN/A).",
+          "Đơn vị xử lý: Trung tâm Điện Thoại Vui 125 Lê Văn Việt - KTV DTV-Trần Văn Tú.",
+          "Bảng con linh kiện (Child Table): Mainboard Nguồn (VIP 1-Đổi-1 30N), Màn hình OLED.",
+          "Nghiệm thu kỹ thuật: Đổi máy mới 100%, Nguyên nhân chập IC nguồn, Cấp IMEI mới 358941098999888.",
+          "Timeline quy trình & Box gửi Zalo ZNS thông báo nhận máy."
+        ],
+        actions: [
+          "[HOÀN TẤT / RESOLVE] - Nút đỏ phê duyệt giải pháp",
+          "[Bàn Giao & Đóng Phiếu (Close)]",
+          "[In Phiếu Tiếp Nhận (PDF)]",
+          "[Gửi Zalo ZNS Thông Báo Nhận Máy]",
+          "[+ Thêm Dòng Linh Kiện Kiểm Tra]"
+        ],
+        validations: [
+          "Bắt buộc chọn Resolution Type và nhập Root Cause trước khi Resolve",
+          "Bắt buộc nhập Ghi chú khắc phục & bàn giao trước khi Close",
+          "Kiểm tra bắt buộc thoát iCloud / Find My trước khi đổi máy mới",
+          "Máy vào nước/rơi vỡ từ chối đổi 1-1, chuyển sửa dịch vụ"
+        ]
+      },
+      {
+        id: "SCREEN_06",
+        title: "Màn hình 6: CSKH Analytics & Real-Time SLA Dashboard",
+        file: "screen6_cskh_dashboard.html",
+        doctype: "CSKH Analytics Dashboard (Frappe Workspace View)",
+        useCase: "Báo cáo giám sát thời gian thực chỉ số cam kết SLA (Mục tiêu >= 95%), điểm đánh giá CSAT (Mục tiêu >= 4.8), cơ cấu kênh tiếp nhận và danh sách ca cứu vãn SLA.",
+        views: [
+          "4 Thẻ KPI: SLA Đúng Hạn 96.4%, CSAT 4.85/5.0 ⭐, Tổng 1,420 phiếu, Đổi mới VIP 68 máy.",
+          "Biểu đồ 1: Phân bổ kênh (Hotline 45%, Showroom 32%, Zalo OA 18%, Web 5%).",
+          "Biểu đồ 2: Top 5 sản phẩm khiếu nại nhiều nhất (iPhone 15 Pro Max: 120 vé, Galaxy S24 Ultra: 85 vé...).",
+          "Bảng cứu vãn 5 Ticket quá hạn SLA khẩn cấp.",
+          "Bộ lọc thời gian (Tháng 10/2026), Khu vực (Toàn quốc), Ngành hàng (Điện thoại)."
+        ],
+        actions: [
+          "[📊 Xuất Báo Cáo PDF / Excel]",
+          "[🔄 Làm Mới Dữ Liệu Real-time]",
+          "[⚡ Điều Phối Gấp Trạm Kỹ Thuật]",
+          "[⚡ Đôn Đốc Hãng Apple Care]",
+          "[⚡ Can Thiệp Quản Lý CSKH]"
+        ],
+        validations: [
+          "Kiểm tra ngày bắt đầu <= ngày kết thúc",
+          "Cảnh báo vượt ngưỡng xuất báo cáo nếu truy vấn > 50,000 dòng"
+        ]
+      }
+    ];
+
+    let currentScreenIndex = 0;
+
+    function loadScreen(index) {
+      currentScreenIndex = index;
+      const screen = screensData[index];
+
+      // Update active tab styling
+      const tabs = document.querySelectorAll('.screen-tab');
+      tabs.forEach((tab, i) => {
+        if (i === index) {
+          tab.classList.add('active');
+        } else {
+          tab.classList.remove('active');
+        }
+      });
+
+      // Update iframe source
+      document.getElementById('previewIframe').src = screen.file;
+      document.getElementById('openDirectBtn').href = screen.file;
+
+      // Update drawer specifications
+      updateDrawerContent(screen);
+    }
+
+    function updateDrawerContent(screen) {
+      document.getElementById('drawerTitle').innerHTML = `📋 Đặc tả: ${screen.id}`;
+      
+      let html = `
+        <div class="spec-card">
+          <h4>📌 THÔNG TIN MÀN HÌNH</h4>
+          <p style="font-weight: 600; color: #FFFFFF; margin-bottom: 4px;">${screen.title}</p>
+          <p style="margin-bottom: 8px;"><span class="spec-badge">${screen.doctype}</span></p>
+          <p style="color: #9CA3AF; font-size: 12px;">${screen.useCase}</p>
+        </div>
+
+        <div class="spec-card">
+          <h4>👁️ 1. THÔNG TIN HIỂN THỊ (XEM)</h4>
+          <ul>
+            ${screen.views.map(v => `<li>${v}</li>`).join('')}
+          </ul>
+        </div>
+
+        <div class="spec-card">
+          <h4>⚡ 2. HÀNH ĐỘNG CHÍNH (ACTIONS)</h4>
+          <ul>
+            ${screen.actions.map(a => `<li><span style="color:#60A5FA; font-weight:500;">${a}</span></li>`).join('')}
+          </ul>
+        </div>
+
+        <div class="spec-card">
+          <h4>⚠️ 3. RÀNG BUỘC & CẢNH BÁO LỖI</h4>
+          <ul>
+            ${screen.validations.map(val => `<li style="color:#FCA5A5;">${val}</li>`).join('')}
+          </ul>
+        </div>
+      `;
+      document.getElementById('drawerContent').innerHTML = html;
+    }
+
+    function toggleDrawer() {
+      const drawer = document.getElementById('specDrawer');
+      const btn = document.getElementById('drawerToggleBtn');
+      drawer.classList.toggle('collapsed');
+      if (drawer.classList.contains('collapsed')) {
+        btn.style.backgroundColor = 'var(--cps-dark-secondary)';
+      } else {
+        btn.style.backgroundColor = 'var(--cps-red)';
+      }
+    }
+
+    function setViewport(width, btn) {
+      const iframe = document.getElementById('previewIframe');
+      iframe.style.maxWidth = width;
+      if (width === '100%') {
+        iframe.style.boxShadow = 'none';
+      } else {
+        iframe.style.boxShadow = '0 10px 30px rgba(0,0,0,0.5)';
+      }
+
+      document.querySelectorAll('.viewport-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    // Initialize first screen
+    loadScreen(0);
+  </script>
+</body>
+</html>

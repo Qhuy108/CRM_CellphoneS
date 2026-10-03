@@ -4,7 +4,7 @@
 **Mã tài liệu:** TRACE-MATRIX  
 **Thuộc nhiệm vụ:** Nhiệm vụ 7 (Rà soát chéo và Đảm bảo tính nhất quán hệ thống)  
 **Tác giả:** Trần Quang Huy (System Analyst & Project Manager)  
-**Đối soát cùng:** Nhật (Process & State Analyst) & Mạnh (Domain Retail Expert)  
+**Đối soát cùng:** Nguyễn Vũ Quang Huy (BA Lead), Nhật (Process & State Analyst), Mạnh (Domain Retail Expert)  
 **Trạng thái:** Hoàn tất Mốc M4 (Final Deliverable Sign-off)
 
 ---
@@ -15,35 +15,34 @@
 
 | Màn hình (D03) | Thành phần trên Giao diện | Tên trường tương ứng trong Data Dictionary (D02) | Bảng / DocType (D01 / D04) | Kiểu dữ liệu | Kiểm tra tồn tại |
 | :--- | :--- | :--- | :--- | :---: | :---: |
-| **MH1: Hồ sơ 360° & Danh sách KH** | Mã khách hàng | `customer_id` / `name` | `Customer` | Data | ✅ Khớp 100% |
+| **MH1: Hồ sơ 360° & Danh sách KH** | Mã khách hàng nội bộ | `customer_id` / `name` | `Customer` | Data | ✅ Khớp 100% |
 | | Họ và tên khách hàng | `customer_name` | `Customer` | Data | ✅ Khớp 100% |
-| | Số điện thoại | `phone_number` | `Customer` | Data | ✅ Khớp 100% |
-| | Badge Hạng Smember | `member_tier` | `Smember_Profile` | Select | ✅ Khớp 100% |
-| | Điểm tích lũy khả dụng | `reward_points` | `Smember_Profile` | Int | ✅ Khớp 100% |
-| | Tổng chi tiêu tích lũy | `total_spent` | `Smember_Profile` | Currency | ✅ Khớp 100% |
-| | Thông tin CCCD, Ngày sinh, Địa chỉ | `identity_card`, `date_of_birth`, `primary_address` | `Customer` | Data/Date/Text | ✅ Khớp 100% |
-| | Tab Thiết bị & Lịch sử mua hàng | `invoice_id`, `serial_imei`, `item_code`, `purchase_date` | `Sales_Invoice_Reference` | Link / Data | ✅ Khớp 100% |
-| | Hạn duy trì hạng VIP | `tier_expiry_date`, `last_upgrade_date` | `Smember_Profile` | Date/Datetime | ✅ Khớp 100% |
+| | Số điện thoại liên hệ | `phone_number` | `Customer` | Data | ✅ Khớp 100% |
+| | Badge 4 Hạng Smember | `member_tier` (`S-NULL`, `S-NEW`, `S-MEM`, `S-VIP`) | `Customer` | Select | ✅ Khớp 100% |
+| | Badge Nhóm Giáo dục | `edu_type`, `edu_status`, `edu_expiry_date` | `Customer` | Select/Date | ✅ Khớp 100% |
+| | Điểm tích lũy & Tổng chi tiêu | `reward_points`, `total_spent` | `Customer` | Int/Currency | ✅ Khớp 100% |
+| | Thông tin CCCD, Địa chỉ | `identity_card`, `primary_address` | `Customer` | Data/Text | ✅ Khớp 100% |
+| | Tab Thiết bị & Đơn tham chiếu | `invoice_id`, `serial_imei`, `item_code`, `purchase_date` | `Sales_Invoice_Reference` | Link / Data | ✅ Khớp 100% |
 | **MH2: Cơ hội Tư vấn & Pre-order** | Mã cơ hội & Tên khách | `lead_id`, `lead_name` | `Lead_Opportunity` | Data | ✅ Khớp 100% |
 | | SĐT liên hệ & Kênh tiếp nhận | `mobile_no`, `source_channel` | `Lead_Opportunity` | Data / Select | ✅ Khớp 100% |
-| | Sản phẩm quan tâm & Chi nhánh cọc | `interested_item`, `preferred_branch` | `Lead_Opportunity` | Link | ✅ Khớp 100% |
-| | Trạng thái Telesales (5 States) | `status` | `Lead_Opportunity` | Select | ✅ Khớp 100% |
-| | Khách hàng chuyển đổi sau cọc | `converted_customer` | `Lead_Opportunity` | Link Customer | ✅ Khớp 100% |
+| | Sản phẩm quan tâm (LOQ/iPhone/GaN) | `interested_item`, `desired_specs` | `Lead_Opportunity` | Link/Text | ✅ Khớp 100% |
+| | Ngân sách, Thiết bị dùng, Thu cũ | `budget`, `device_in_use`, `trade_in_demand` | `Lead_Opportunity` | Data/Select | ✅ Khớp 100% |
+| | Hạn chăm sóc nhắc việc (+3 ngày) | `follow_up_due`, `expected_buy_date` | `Lead_Opportunity` | Datetime/Date | ✅ Khớp 100% |
+| | Trạng thái Cơ hội (5 States) | `status` (`Open`, `Contacted`, `Qualified`, `Converted`, `Lost`) | `Lead_Opportunity` | Select | ✅ Khớp 100% |
 | **MH3: Ghi nhận tương tác & Nhắc việc** | SĐT người gọi & Tên người gọi | `contact_phone`, `contact_name` | `Customer_Interaction` | Data | ✅ Khớp 100% |
 | | Kênh tiếp xúc (Hotline, Zalo, Showroom)| `channel`, `branch` | `Customer_Interaction` | Select / Link | ✅ Khớp 100% |
 | | Phân loại nhu cầu giao dịch | `interaction_type` | `Customer_Interaction` | Select | ✅ Khớp 100% |
-| | Tóm tắt trao đổi | `summary` | `Customer_Interaction` | Small Text | ✅ Khớp 100% |
-| | Đánh giá hài lòng CSAT tức thời | `satisfaction_rating` | `Customer_Interaction` | Select | ✅ Khớp 100% |
+| | Tóm tắt trao đổi & Nhắc việc | `summary`, `next_action_due` | `Customer_Interaction` | Text/Datetime | ✅ Khớp 100% |
 | **MH4: Kanban Ticket** | Thẻ Ticket & 5 Cột Kanban | `ticket_id`, `status` | `Support_Ticket` | Data / Select | ✅ Khớp 100% |
-| | Tag SLA đếm ngược | `sla_deadline` | `Support_Ticket` | Datetime | ✅ Khớp 100% |
 | | Nhãn ưu tiên (VIP, Critical) | `priority` | `Support_Ticket` | Select | ✅ Khớp 100% |
-| | Kỹ thuật viên phụ trách | `allocated_to` | `Support_Ticket` | Link User | ✅ Khớp 100% |
-| **MH5: Chi tiết Ticket & Nghiệm thu** | Bảng linh kiện lỗi & Ngoại quan | `fault_component`, `initial_condition`, `accessories` | `Ticket_Repair_Item` | Select / Data | ✅ Khớp 100% |
-| | Phương án giải quyết | `resolution_type` | `Support_Ticket` | Select | ✅ Khớp 100% |
-| | Báo cáo nguyên nhân & Khắc phục | `root_cause`, `resolution_notes` | `Support_Ticket` | Small Text | ✅ Khớp 100% |
+| | Nhân viên phụ trách & Chi nhánh | `allocated_to`, `branch` | `Support_Ticket` | Link User/Branch | ✅ Khớp 100% |
+| **MH5: Chi tiết Ticket & Tiếp nhận** | Bảng linh kiện & Ngoại quan | `fault_component`, `initial_condition`, `accessories` | `Ticket_Repair_Item` | Select / Data | ✅ Khớp 100% |
+| | Kết quả giải quyết | `resolution_result` | `Support_Ticket` | Select | ✅ Khớp 100% |
+| | Ghi chú xử lý | `resolution_notes` | `Support_Ticket` | Small Text | ✅ Khớp 100% |
+| | Trạng thái báo khách (MVP Rule) | `notify_customer_status`, `customer_notified_at` | `Support_Ticket` | Select/Datetime| ✅ Khớp 100% |
 | | Dòng thời gian trao đổi kỹ thuật | `comments`, `action_type`, `logged_at` | `Ticket_Activity_Log` | Text / Datetime | ✅ Khớp 100% |
-| **MH6: CSKH Dashboard & Báo cáo** | Tỷ lệ SLA, CSAT, Tổng phiếu | Tổng hợp từ `sla_deadline`, `csat_score`, `creation` | `Support_Ticket` | Aggregated | ✅ Khớp 100% |
-| | Top sản phẩm khiếu nại | Tổng hợp từ `item_code` | `Support_Ticket` | Aggregated | ✅ Khớp 100% |
+| **MH6: CSKH Dashboard & Báo cáo** | Tỷ lệ Thắng cơ hội (Win Rate) | Công thức: $\frac{\text{Won}}{\text{Won}+\text{Lost}} \times 100\%$ | `Lead_Opportunity` | Aggregated | ✅ Khớp 100% |
+| | Khách hàng mới, Tổng Ticket | Tổng hợp theo ngày tạo và chi nhánh | `Customer`, `Support_Ticket` | Aggregated | ✅ Khớp 100% |
 
 ---
 
@@ -53,39 +52,41 @@
 
 | Trạng thái nguồn | Sự kiện chuyển trạng thái (Nhật) | Trạng thái đích | Nút bấm thao tác trên Giao diện (D03) | Workflow Action trên Frappe (D04) | Điều kiện kiểm tra ràng buộc |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Open** | Phân công & Tiếp nhận | **In_Progress** | `[Nhận xử lý]` / `[Gán việc]` | `Assign / Start Work` | Bắt buộc đã chọn nhân viên `allocated_to`. |
-| **In_Progress** | Gửi Hãng / Điều phối linh kiện | **Pending_Vendor** | `[Chuyển Hãng Apple/Samsung]` | `Send to Vendor` | Bắt buộc có dữ liệu trong bảng `Ticket_Repair_Item`. |
-| **Pending_Vendor**| Nhận linh kiện / Nhận máy trả về | **In_Progress** | `[Linh kiện đã về / Nhận lại máy]`| `Receive from Vendor` | Ghi nhận thời điểm nhận máy tại trung tâm DTV. |
-| **In_Progress** | Kỹ thuật hoàn tất sửa/đổi | **Resolved** | `[Hoàn tất / Resolve]` | `Mark Resolved` | Bắt buộc nhập `resolution_type` và `root_cause`. |
-| **Resolved** | Khách nhận máy & Ký biên bản | **Closed** | `[Bàn giao & Đóng phiếu]` | `Customer Accept & Close` | Bắt buộc nhập `resolution_notes`. Kích hoạt Zalo ZNS. |
-| **Open / In_Prog**| Khách hủy yêu cầu / Sai sót | **Closed** | `[Hủy phiếu hỗ trợ]` | `Cancel Ticket` | Chỉ Quản lý (CSKH Manager), bắt buộc nhập lý do. |
+| **Open** | Tiếp nhận & Phân công | **In_Progress** | `[Nhận xử lý]` / `[Gán việc]` | `Start Processing` | Bắt buộc đã chọn nhân viên `allocated_to`. |
+| **In_Progress** | Gửi Hãng / Đơn vị phối hợp | **Pending_Vendor** | `[Chuyển Hãng Apple/CareS/Lenovo]` | `Send to Vendor` | Bắt buộc chọn Đơn vị phối hợp (`partner_unit`). |
+| **Pending_Vendor**| Nhận máy từ Hãng trả về | **In_Progress** | `[Nhận lại máy từ Hãng]`| `Receive from Vendor` | Ghi nhận máy về vào `Ticket_Activity_Log`. |
+| **In_Progress** | Xác nhận kết quả giải quyết | **Resolved** | `[Hoàn tất / Resolve]` | `Mark Resolved` | Bắt buộc chọn `resolution_result` và nhập `resolution_notes`. |
+| **Resolved** | Bàn giao & Thông báo khách | **Closed** | `[Bàn giao & Đóng phiếu]` | `Notify & Close` | Bắt buộc xác nhận `notify_customer_status` $\neq$ `Chua_thong_bao`. |
+| **Open / In_Prog**| Khách rút yêu cầu / Hủy phiếu | **Closed** | `[Hủy / Rút yêu cầu]` | `Cancel / Withdraw` | Bắt buộc ghi nhận lý do rút yêu cầu/hủy phiếu. |
 
 ---
 
-## 3. MA TRẬN ĐỐI SOÁT 3: PHÂN QUYỀN (D04) $\longleftrightarrow$ VAI TRÒ THỰC TẾ TRONG USE CASE
+## 3. MA TRẬN ĐỐI SOÁT 3: PHÂN QUYỀN (D04) $\longleftrightarrow$ 5 VAI TRÒ NỘI BỘ TRONG CHUỖI
 
-| Vai trò nghiệp vụ | Quyền trên Khách hàng (`Customer`) | Quyền trên Phiếu (`Support Ticket`) | Quyền trên Smember Profile | Quyền trên Nhật ký Tương tác | Đánh giá độ phủ Use Case |
-| :--- | :--- | :--- | :--- | :--- | :---: |
-| **CSKH Agent (Hotline/Online)** | Đọc, Tạo, Sửa | Đọc, Tạo, Sửa (Tiếp nhận & Đóng phiếu) | Chỉ đọc | Toàn quyền tạo và ghi nhận | ✅ Bao phủ 100% |
-| **CSKH Manager (Trưởng phòng)** | Toàn quyền + Gộp hồ sơ (Merge) | Toàn quyền + Duyệt đổi mới 1-1 | Toàn quyền + Điều chỉnh điểm | Toàn quyền giám sát CSAT | ✅ Bao phủ 100% |
-| **Kỹ thuật viên Điện Thoại Vui** | Chỉ đọc thông tin liên hệ | Sửa kết quả kiểm định & Bảng linh kiện | Chỉ đọc (Nhận diện VIP) | Xem lịch sử trao đổi | ✅ Bao phủ 100% |
-| **Nhân viên Showroom CellphoneS**| Đọc, Tạo nhanh lúc bán | Tạo phiếu tiếp nhận bảo hành tại quầy | Chỉ đọc (Chiết khấu) | Ghi nhận khách ghé quầy | ✅ Bao phủ 100% |
+| Vai trò nghiệp vụ trong chuỗi | Quyền trên Khách hàng (`Customer`) | Quyền trên Cơ hội (`Lead`) | Quyền trên Phiếu (`Support Ticket`) | Quyền trên Đơn tham chiếu | Phạm vi dữ liệu (`User Permissions`) |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Bán hàng và CSKH cửa hàng** | Xem/sửa liên hệ; tạo khách mới | Quản lý cơ hội được phân công | Mở phiếu, cập nhật xử lý tại Showroom | Tra cứu hóa đơn đối soát | Phạm vi Showroom được gán |
+| **Quản lý cửa hàng** | Quản lý khách hàng cửa hàng | Phân công/điều chuyển cơ hội cửa hàng | Phân công/điều chuyển ticket cửa hàng | Tra cứu hóa đơn đối soát | Phạm vi Showroom được gán |
+| **CSKH cấp chuỗi** | Xem khách hàng toàn chuỗi | Điều chuyển cơ hội giữa các Showroom | Điều chuyển ticket giữa các Showroom | Tra cứu hóa đơn toàn chuỗi | Xem toàn chuỗi; hỗ trợ điều phối |
+| **Quản lý chuỗi** | Xem khách hàng toàn chuỗi | Xem báo cáo tổng hợp cơ hội | Xem báo cáo tổng hợp ticket | Xem báo cáo đơn hàng | Toàn chuỗi (Read-only + Export) |
+| **Quản trị hệ thống** | Toàn quyền; sửa Hạng & Giáo dục | Toàn quyền cấu hình | Toàn quyền quản trị ticket | Toàn quyền nạp CSV | Toàn quyền hệ thống |
 
 ---
 
-## 4. MA TRẬN ĐỐI SOÁT 4: NGHIỆP VỤ BÁN LẺ THỰC TẾ (PHẢN BIỆN CÙNG MẠNH)
+## 4. MA TRẬN ĐỐI SOÁT 4: ĐẦU VÀO NGHIỆP VỤ & NGUYÊN TẮC BA (QUANG HUY TV1)
 
-| Điểm nghiệp vụ đặc thù CellphoneS | Yêu cầu thực tế (Mạnh đề xuất) | Giải pháp thiết kế trong hệ thống CRM | Vị trí tài liệu |
-| :--- | :--- | :--- | :--- |
-| **Quản lý Mạng lưới Chi nhánh** | Hơn 100 Showroom & Trung tâm DTV toàn quốc; phân quyền theo chi nhánh. | Thực thể riêng `BRANCH_STORE` liên kết nhân sự, hóa đơn bán và địa điểm mở phiếu. | [D01_ERD_ThuyetMinh.md](file:///d:/CRM_CellphoneS/docs/D01_ERD_ThuyetMinh.md) & [D02_TuDienDuLieu.md](file:///d:/CRM_CellphoneS/docs/D02_TuDienDuLieu.md) |
-| **Chính sách Hội viên Smember** | Phân cấp rõ rệt giữa khách thường và S-VIP; tích lũy chi tiêu đa kênh. | Thực thể riêng `SMEMBER_PROFILE` quan hệ 1-1, tự động tính tổng chi tiêu lũy kế và cấp hạn duy trì. | [D01_ERD_ThuyetMinh.md](file:///d:/CRM_CellphoneS/docs/D01_ERD_ThuyetMinh.md) & [D02_TuDienDuLieu.md](file:///d:/CRM_CellphoneS/docs/D02_TuDienDuLieu.md) |
-| **Lịch sử Mua hàng & IMEI** | Tra cứu nhanh thiết bị đã mua tại quầy để xác định hạn 30 ngày đổi mới. | Thực thể `SALES_INVOICE_REFERENCE` lưu mã hóa đơn, IMEI và ngày xuất kho. | [D01_ERD_ThuyetMinh.md](file:///d:/CRM_CellphoneS/docs/D01_ERD_ThuyetMinh.md) & [D03_Wireframe_GiaoDien.md](file:///d:/CRM_CellphoneS/docs/D03_Wireframe_GiaoDien.md) |
-| **Cam kết Thời gian SLA** | Khách S-VIP cam kết xử lý trong 4h; khách thường 24h - 48h. | Tự động tính toán `sla_deadline` khi mở phiếu; gắn thẻ đồng hồ đếm ngược trên Kanban và cảnh báo trễ hạn. | [D02_TuDienDuLieu.md](file:///d:/CRM_CellphoneS/docs/D02_TuDienDuLieu.md) & [D03_Wireframe_GiaoDien.md](file:///d:/CRM_CellphoneS/docs/D03_Wireframe_GiaoDien.md) |
-| **Tra cứu Số Serial / IMEI** | Chuẩn 15 số quốc tế, kiểm tra chính xác để xác thực bảo hành Apple Care/Hãng. | Áp dụng Regex 15 số, thuật toán Luhn, tích hợp nút tra cứu nhanh trạng thái bảo hành và khóa iCloud. | [D02_TuDienDuLieu.md](file:///d:/CRM_CellphoneS/docs/D02_TuDienDuLieu.md) & [D05_Sequence_Diagram.md](file:///d:/CRM_CellphoneS/docs/D05_Sequence_Diagram.md) |
-| **Hệ sinh thái Điện Thoại Vui** | Phối hợp sửa chữa phần cứng chuyên sâu giữa cửa hàng bán lẻ và trung tâm DTV. | Thiết kế Bảng con `Ticket_Repair_Item` và `Ticket_Activity_Log` hỗ trợ phân quyền riêng cho KTV DTV. | [D03_Wireframe_GiaoDien.md](file:///d:/CRM_CellphoneS/docs/D03_Wireframe_GiaoDien.md) & [D04_AnhXa_Frappe.md](file:///d:/CRM_CellphoneS/docs/D04_AnhXa_Frappe.md) |
-| **Đổi trả 1-đổi-1 30 ngày VIP** | Đổi thân máy mới nguyên seal tại quầy nếu lỗi nhà sản xuất trong tháng đầu. | Sequence Diagram Luồng 2 đặc tả chi tiết kiểm định linh kiện, duyệt đổi máy và thu hồi IMEI lỗi. | [D05_Sequence_Diagram.md](file:///d:/CRM_CellphoneS/docs/D05_Sequence_Diagram.md) |
+| Hạng mục BA (Quang Huy TV1) | Nguyên tắc nghiệp vụ đã chốt | Giải pháp chuẩn hóa trong Module CRM (D01 – D05) | Tình trạng đối soát |
+| :--- | :--- | :--- | :---: |
+| **Phạm vi hệ thống & Nền tảng** | Ứng dụng DocType độc lập trên Frappe v15; nghiên cứu mô phỏng cấp chuỗi (2 Showroom: 125 LVV & 213 TQK). | Thiết kế mô hình DocType độc lập `cellphones_crm` và thực thể `Branch_Store` quản lý 2 Showroom. | ✅ Đã đồng bộ 100% |
+| **4 Hạng Smember chuẩn** | `S-NULL`, `S-NEW`, `S-MEM`, `S-VIP` quản lý thủ công/CSV, không tự động tính thăng hạng trong MVP. | Enum 4 hạng chuẩn trong `Customer`, chỉ Quản trị hệ thống có quyền cập nhật. | ✅ Đã đồng bộ 100% |
+| **Nhóm ưu đãi Giáo dục** | `S-Student`, `S-Teacher` lưu riêng với Hạng, có trạng thái xác minh và thời hạn riêng; không mặc định hết hạn 31/10. | Bổ sung `edu_type`, `edu_status`, `edu_expiry_date` trên `Customer`. | ✅ Đã đồng bộ 100% |
+| **Trường thông tin Tư vấn** | Tư vấn iPhone 15 PM, Lenovo LOQ (`83GS001RVN`), Sạc GaN: lưu ngân sách, thiết bị đang dùng, thu cũ, cấu hình. | Bổ sung `budget`, `device_in_use`, `trade_in_demand`, `desired_specs`, `expected_buy_date` trên `Lead_Opportunity`. | ✅ Đã đồng bộ 100% |
+| **Quy tắc Nhắc việc chăm sóc** | Nhắc việc cơ hội mở sau 3 ngày làm việc; đo lường tỷ lệ thắng $\frac{\text{Won}}{\text{Won}+\text{Lost}} \times 100\%$. | Bổ sung `follow_up_due = creation + 3 working days` và công thức hiển thị trên Dashboard. | ✅ Đã đồng bộ 100% |
+| **Quy tắc Thông báo Khách hàng** | MVP chưa gửi SMS/Zalo tự động; nhân viên gọi điện/báo tại quầy và ghi nhận trên CRM trước khi đóng phiếu. | Bổ sung trường `notify_customer_status`, `customer_notified_at` trên `Support_Ticket`. | ✅ Đã đồng bộ 100% |
+| **Chính sách Đổi trả & Hậu mãi** | 30 ngày không mặc định đổi mới nguyên seal; phân biệt AppleCare+ và CareS; bảo hành chính hãng theo SKU. | Bổ sung `resolution_result`, liên kết SKU chính xác (`83GS001RVN` 24 tháng) và đối soát điều kiện. | ✅ Đã đồng bộ 100% |
 
 ---
 
 ## KẾT LUẬN & ĐÁNH GIÁ MỐC M4
-Hệ thống tài liệu thiết kế (D01 – D05) đạt mức độ nhất quán **100%**, đáp ứng toàn bộ các tiêu chí kỹ thuật và nghiệp vụ đề ra trong `Nhiemvu.md`, hoàn tất nghiệm thu chính thức **Mốc M4**.
+Hệ thống tài liệu thiết kế (D01 – D05) đạt mức độ nhất quán **100%** so với toàn bộ 14 trang tài liệu Phân tích BA của Nhóm trưởng (Quang Huy TV1) và yêu cầu kỹ thuật Frappe Framework v15, hoàn tất nghiệm thu chính thức **Mốc M4**.
+

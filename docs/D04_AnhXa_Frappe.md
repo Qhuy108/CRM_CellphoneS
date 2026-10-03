@@ -29,18 +29,16 @@ Dưới đây là bảng phân định chi tiết giữa thành phần sẵn có
 
 | Thực thể Logic (ERD) | DocType trong Frappe | Phân loại thành phần | Module Frappe | Naming Series / Sinh mã | Ý nghĩa nghiệp vụ trong hệ sinh thái CellphoneS |
 | :--- | :--- | :---: | :--- | :--- | :--- |
-| **Khách hàng** (`CUSTOMER`) | `Customer` | **SẴN CÓ**<br>*(Thêm Custom Fields)* | `CRM` / `Selling` | `CUST-.YYYY.-.#####` | Kế thừa DocType chuẩn của ERPNext, bổ sung Custom Fields liên kết thẻ Smember và điểm thưởng. |
-| **Hồ sơ Smember** (`SMEMBER_PROFILE`) | `Smember Profile` | **TỰ XÂY**<br>*(Custom DocType)* | `CellphoneS CRM` | `SMB-.#####` | Quản lý hạng thẻ Smember/S-VIP, dồn tích lũy chi tiêu và điều chỉnh điểm thưởng. Quan hệ 1-1 với `Customer`. |
-| **Chi nhánh Cửa hàng** (`BRANCH_STORE`) | `Branch` *(hoặc `Branch Store`)* | **SẴN CÓ / MỞ RỘNG** | `Core` / `CRM` | `BR-.#####` | Quản lý mạng lưới hơn 100 Showroom CellphoneS và Trung tâm Điện Thoại Vui toàn quốc. |
-| **Nhu cầu / Pre-order** (`LEAD_OPPORTUNITY`) | `Lead` | **SẴN CÓ**<br>*(Thêm Custom Fields)* | `CRM` | `LEAD-.YYYY.-.#####` | Tiếp nhận khách đặt trước iPhone/Samsung Flagship và nhu cầu trả góp từ Telesales. |
-| **Tương tác Đa kênh** (`CUSTOMER_INTERACTION`) | `Customer Interaction` | **TỰ XÂY**<br>*(Custom DocType)* | `CellphoneS CRM` | `INT-.YYYY.-.#####` | Ghi nhận nhật ký tiếp xúc từ Tổng đài Hotline 1800, Zalo OA, Fanpage, Web Chat và Showroom. |
-| **Phiếu hỗ trợ** (`SUPPORT_TICKET`) | `Support Ticket` *(hoặc `Issue`)* | **TỰ XÂY**<br>*(Custom DocType)* | `CellphoneS CRM` | `TCK-.YYYY.-.#####` | Tiếp nhận bảo hành, đổi trả 1-1 30 ngày S-VIP, điều phối sửa chữa Điện Thoại Vui, quản trị SLA. |
-| **Dữ liệu mua hàng** (`SALES_INVOICE_REF`) | `Sales Invoice Reference` | **TỰ XÂY**<br>*(Custom DocType)* | `CellphoneS CRM` | `INV-.YYYY.-.#####` | Tham chiếu hóa đơn POS bán ra, lưu IMEI/Serial và đối soát điều kiện bảo hành đổi mới 30 ngày. |
-| **Chi tiết linh kiện lỗi** (`TICKET_REPAIR_ITEM`) | `Ticket Repair Item` | **TỰ XÂY**<br>*(Child DocType)* | `CellphoneS CRM` | `autoincrement` | Bảng con (`istable = 1`) nhúng trong Ticket để ghi nhận linh kiện hỏng và ngoại quan máy. |
-| **Nhật ký xử lý phiếu** (`TICKET_ACTIVITY_LOG`) | `Ticket Activity Log` | **TỰ XÂY**<br>*(Child DocType)* | `CellphoneS CRM` | `autoincrement` | Bảng con (`istable = 1`) lưu vết trao đổi kỹ thuật nội bộ giữa Showroom và KTV Điện Thoại Vui. |
-| **Sản phẩm tham chiếu** (`ITEM_REFERENCE`) | `Item` | **SẴN CÓ**<br>*(CRM Reference)* | `Stock` | `SP-.#####` | Danh mục SKU, tên thiết bị, tra cứu thời hạn bảo hành gốc của Apple/Samsung. |
-| **Người dùng / Nhân sự** (`STAFF_USER`) | `User` | **SẴN CÓ** | `Core` | `user@cellphones.com.vn`| Định danh tài khoản CSKH Agent, Kỹ thuật DTV, Quản lý CSKH, Nhân viên Showroom. |
-| **Lịch sử gộp hồ sơ** (`CUSTOMER_MERGE_LOG`)| `Customer Merge Log` | **TỰ XÂY**<br>*(Custom DocType)* | `CellphoneS CRM` | `MRG-.YYYY.-.#####` | Lưu vết kiểm toán các phiên gộp hồ sơ trùng lặp: nguồn, đích, số lượng bản ghi và điểm đã dời. |
+| **Khách hàng** (`CUSTOMER`) | `Customer` | **SẴN CÓ**<br>*(Thêm Custom Fields)* | `CRM` / `Selling` | `CUST-.YYYY.-.#####` | Định danh khách hàng nội bộ duy nhất, lưu thông tin liên hệ (SĐT), 4 hạng Smember và nhóm giáo dục. |
+| **Chi nhánh Cửa hàng** (`BRANCH_STORE`) | `Branch` *(hoặc `Branch Store`)* | **SẴN CÓ / MỞ RỘNG** | `Core` / `CRM` | `BR-.#####` | Quản lý mạng lưới Showroom mô phỏng (`BR-00101`, `BR-00102`) và Trung tâm tiếp nhận bảo hành/CareS (`BR-00201`). |
+| **Cơ hội / Nhu cầu** (`LEAD_OPPORTUNITY`) | `Lead` *(hoặc `Opportunity`)* | **SẴN CÓ**<br>*(Thêm Custom Fields)* | `CRM` | `LEAD-.YYYY.-.#####` | Tiếp nhận nhu cầu tư vấn (Lenovo LOQ, iPhone 15 Pro Max, sạc GaN), ngân sách, cấu hình và lịch nhắc việc 3 ngày. |
+| **Tương tác Đa kênh** (`CUSTOMER_INTERACTION`) | `Customer Interaction` | **TỰ XÂY**<br>*(Custom DocType)* | `CellphoneS CRM` | `INT-.YYYY.-.#####` | Ghi nhận nhật ký tiếp xúc từ Tổng đài Hotline 1800, Zalo OA, Fanpage và Showroom. |
+| **Phiếu hỗ trợ** (`SUPPORT_TICKET`) | `Support Ticket` *(hoặc `Issue`)* | **TỰ XÂY**<br>*(Custom DocType)* | `CellphoneS CRM` | `TCK-.YYYY.-.#####` | Tiếp nhận bảo hành, đổi trả theo chính sách, điều phối xử lý, ghi nhận kết quả và trạng thái thông báo khách. |
+| **Đơn hàng tham chiếu** (`SALES_INVOICE_REF`) | `Sales Invoice Reference` | **TỰ XÂY**<br>*(Custom DocType)* | `CellphoneS CRM` | `INV-.YYYY.-.#####` | Tham chiếu đơn hàng/hóa đơn bán ra nạp từ CSV, lưu IMEI/Serial để đối chiếu chính sách hậu mãi. |
+| **Chi tiết linh kiện** (`TICKET_REPAIR_ITEM`) | `Ticket Repair Item` | **TỰ XÂY**<br>*(Child DocType)* | `CellphoneS CRM` | `autoincrement` | Bảng con (`istable = 1`) nhúng trong Ticket để ghi nhận linh kiện tiếp nhận và ngoại quan máy. |
+| **Nhật ký xử lý phiếu** (`TICKET_ACTIVITY_LOG`) | `Ticket Activity Log` | **TỰ XÂY**<br>*(Child DocType)* | `CellphoneS CRM` | `autoincrement` | Bảng con (`istable = 1`) lưu vết chuyển trạng thái, ghi chú xác minh và hành động chăm sóc. |
+| **Sản phẩm tham chiếu** (`ITEM_REFERENCE`) | `Item` | **SẴN CÓ**<br>*(CRM Reference)* | `Stock` | `SP-.#####` | Danh mục SKU đại diện nghiên cứu (`SP-LOQ-83GS001RVN`, `SP-IP15PM-256`, `SP-GAN-65W`) và thời hạn bảo hành. |
+| **Người dùng / Nhân sự** (`STAFF_USER`) | `User` | **SẴN CÓ** | `Core` | `user@cellphones.com.vn`| Định danh tài khoản phân quyền 5 nhóm vai trò nội bộ trong chuỗi. |
 
 ---
 
@@ -49,7 +47,7 @@ Dưới đây là bảng phân định chi tiết giữa thành phần sẵn có
 ### 1. Phân định Cơ chế Quan hệ Dữ liệu trên Frappe:
 * **Quan hệ 1 - N (One-to-Many):** Sử dụng kiểu trường `Link` trỏ tới Master DocType (Ví dụ: Trong `Support Ticket`, trường `customer` kiểu `Link` trỏ tới `Customer`).
 * **Quan hệ Bảng con (Master - Detail / Child Table):** Sử dụng kiểu trường `Table` trỏ tới `Child DocType` (có thuộc tính `Is Child Table = 1`). Khi xóa bản ghi cha, toàn bộ dòng con tự động bị xóa theo (Cascade Delete).
-* **Quan hệ 1 - 1 (One-to-One):** Sử dụng trường `Link` kết hợp thuộc tính `Unique = 1` (Ví dụ: `Smember Profile.customer` liên kết duy nhất với một `Customer`).
+* **Quan hệ 1 - 1 (One-to-One):** Sử dụng trường `Link` kết hợp thuộc tính `Unique = 1` hoặc lưu trực tiếp dưới dạng Custom Field trên Master DocType `Customer`.
 
 ### 2. Chi tiết Ánh xạ Trường trong DocType cốt lõi `Support Ticket`:
 
@@ -59,24 +57,24 @@ Dưới đây là bảng phân định chi tiết giữa thành phần sẵn có
 | **Khách hàng** | `customer` | `Link` | `Customer` | No | Nullable (Hỗ trợ Khách vãng lai `CUST-GUEST`) |
 | **Số điện thoại** | `contact_phone` | `Data` | Regex: `^(0[3\|5\|7\|8\|9])[0-9]{8}$` | Yes | Tự động điền nếu chọn Khách hàng |
 | **Họ tên người liên hệ**| `contact_name` | `Data` | — | Yes | Tự động điền nếu chọn Khách hàng |
-| **Hạng Smember** | `smember_tier` | `Data` | Fetch From: `customer.custom_smember_tier`| No | Read Only (Hiển thị Badge VIP) |
+| **Hạng Smember** | `smember_tier` | `Data` | Fetch From: `customer.custom_smember_tier`| No | Read Only (`S-NULL`, `S-NEW`, `S-MEM`, `S-VIP`) |
 | **Kênh tiếp nhận** | `channel` | `Select` | `Hotline\nShowroom\nZalo_OA\nWebsite` | Yes | Mặc định: `Showroom` |
 | **Chi nhánh tiếp nhận**| `branch` | `Link` | `Branch` | Yes | Mặc định lấy Showroom của nhân viên đăng nhập |
-| **Mã sản phẩm** | `item_code` | `Link` | `Item` | Yes | Lọc theo danh mục hàng hóa CellphoneS |
+| **Mã sản phẩm** | `item_code` | `Link` | `Item` | Yes | Lọc theo danh mục hàng hóa nghiên cứu |
 | **Tên sản phẩm** | `item_name` | `Data` | Fetch From: `item_code.item_name` | No | Read Only |
-| **Số Serial / IMEI** | `serial_imei` | `Data` | Regex: `^[0-9]{15}$` | Yes | 15 số chuẩn GSMA, kiểm tra Luhn |
-| **Hóa đơn mua cũ** | `sales_invoice` | `Link` | `Sales Invoice Reference` | No | Dùng đối soát thời hạn 30 ngày đổi 1-1 |
-| **Nhóm vấn đề** | `issue_category`| `Select` | `Loi_phan_cung_NSX\nDoi_tra_30_ngay_VIP\nKhieu_nai_thai_do\nHo_tro_phan_mem`| Yes | Quyết định điều phối phòng ban xử lý |
-| **Mức độ ưu tiên** | `priority` | `Select` | `Low\nMedium\nHigh\nCritical` | Yes | Tự động nâng lên `Critical` nếu khách là S-VIP |
-| **Trạng thái phiếu** | `workflow_state` | `Link` | `Workflow State` | Yes | Điều khiển bởi Workflow Engine 5 trạng thái |
-| **Nhân viên phụ trách**| `allocated_to` | `Link` | `User` | No | Phân công kỹ thuật viên xử lý |
-| **Đơn vị xử lý** | `assigned_dept` | `Select` | `CSKH_Showroom\nTrung_tam_Dien_Thoai_Vui\nHang_Apple_Care\nHang_Samsung` | Yes | Mặc định: `CSKH_Showroom` |
-| **Hạn chót SLA** | `sla_deadline` | `Datetime` | — | Yes | Server Script tự động tính theo Matrix SLA |
+| **Số Serial / IMEI** | `serial_imei` | `Data` | — | No | Bắt buộc đối với điện thoại/laptop có IMEI |
+| **Hóa đơn tham chiếu** | `sales_invoice` | `Link` | `Sales Invoice Reference` | No | Dùng đối soát thời hạn và chính sách đổi trả |
+| **Nhóm vấn đề** | `issue_category`| `Select` | `Tiep_nhan_bao_hanh\nDoi_tra_theo_chinh_sach\nKhieu_nai_dich_vu\nHo_tro_ky_thuat`| Yes | Quyết định điều phối xử lý |
+| **Mức độ ưu tiên** | `priority` | `Select` | `Low\nMedium\nHigh\nCritical` | Yes | Tự động nâng lên nếu khách là `S-VIP` |
+| **Trạng thái phiếu** | `status` | `Select` | `Open\nIn_Progress\nPending_Vendor\nResolved\nClosed` | Yes | 5 trạng thái đồng bộ State Diagram C03 |
+| **Người phụ trách** | `allocated_to` | `Link` | `User` | No | Phân công nhân viên tiếp nhận/xử lý |
+| **Đơn vị phối hợp** | `partner_unit` | `Select` | `CSKH_Showroom\nTrung_tam_Dien_Thoai_Vui\nTrung_tam_CareS\nHang_Apple\nHang_Lenovo` | Yes | Mặc định: `CSKH_Showroom` |
+| **Kết quả giải quyết** | `resolution_result`| `Select` | `Bao_hanh_chinh_hang\nDoi_theo_chinh_sach\nSua_chua_co_phi\nKhong_du_dieu_kien\nKhach_rut_yeu_cau` | No | Bắt buộc khi chuyển `Resolved` |
+| **Ghi chú xử lý** | `resolution_notes`| `Small Text` | — | No | Bắt buộc khi chuyển `Resolved`/`Closed` |
+| **Trạng thái báo khách**| `notify_customer_status`| `Select` | `Chua_thong_bao\nDa_thong_bao_qua_dien_thoai\nDa_thong_bao_tai_quay` | Yes | Ghi nhận thông báo khách (MVP Rule) |
+| **Thời điểm báo khách**| `customer_notified_at`| `Datetime` | — | No | Lưu thời gian hoàn tất thông báo |
 | **Bảng linh kiện lỗi** | `repair_items` | `Table` | `Ticket Repair Item` | No | Bảng con chi tiết tình trạng máy |
-| **Phương án giải quyết**| `resolution_type`| `Select` | `Doi_may_moi_100\nSua_chua_thay_linh_kien\nBao_hanh_hang\nHoan_tien\nTu_choi_do_roi_vo` | No | Bắt buộc khi chuyển trạng thái `Resolved` |
-| **Báo cáo nguyên nhân** | `root_cause` | `Small Text` | — | No | Bắt buộc khi chuyển trạng thái `Resolved` |
-| **Ghi chú khắc phục** | `resolution_notes`| `Small Text` | — | No | Bắt buộc khi chuyển trạng thái `Closed` |
-| **Điểm CSAT** | `csat_score` | `Select` | `1_Sao\n2_Sao\n3_Sao\n4_Sao\n5_Sao` | No | Ghi nhận tự động từ Webhook Zalo ZNS |
+| **Nhật ký hoạt động** | `activity_logs` | `Table` | `Ticket Activity Log` | No | Bảng con lưu vết trao đổi/chuyển trạng thái |
 
 ---
 
@@ -87,13 +85,13 @@ Quy trình xử lý Phiếu hỗ trợ được cấu hình thông qua **Frappe 
 ```mermaid
 stateDiagram-v2
     [*] --> Open: Tiếp nhận từ Hotline/Showroom
-    Open --> In_Progress: Nhận máy & Gán Kỹ thuật viên DTV
-    In_Progress --> Pending_Vendor: Gửi Hãng Apple/Samsung / Đợi linh kiện DTV
-    Pending_Vendor --> In_Progress: Linh kiện về / Nhận máy từ Hãng trả về
-    In_Progress --> Resolved: Sửa xong / Duyệt đổi máy mới 1-1 S-VIP
-    Resolved --> Closed: Khách nhận máy, ký biên bản & CSAT
-    Open --> Closed: Hủy phiếu (Chỉ Quản lý)
-    In_Progress --> Closed: Hủy phiếu (Chỉ Quản lý)
+    Open --> In_Progress: Tiếp nhận xác minh & Gán nhân viên phụ trách
+    In_Progress --> Pending_Vendor: Chuyển Hãng (Apple/CareS/Lenovo) / Chờ linh kiện
+    Pending_Vendor --> In_Progress: Nhận máy trả về từ Hãng / Đã có linh kiện
+    In_Progress --> Resolved: Xác nhận kết quả giải quyết (Đổi theo CS / Bảo hành...)
+    Resolved --> Closed: Khách nhận máy, xác nhận đã thông báo khách & Đóng
+    Open --> Closed: Khách rút yêu cầu / Hủy phiếu
+    In_Progress --> Closed: Khách rút yêu cầu / Hủy phiếu
     Closed --> [*]
 ```
 
@@ -101,83 +99,66 @@ stateDiagram-v2
 
 | Trạng thái hiện tại (`State`) | Hành động (`Action`) | Trạng thái kế tiếp (`Next State`) | Vai trò được phép (`Allowed Role`) | Điều kiện kiểm tra kỹ thuật (`Validation Condition`) |
 | :--- | :--- | :--- | :--- | :--- |
-| **Open** (Mới tạo) | `Assign / Start Work` | **In_Progress** | CSKH Agent, CSKH Manager, KTV Điện Thoại Vui | Đã gán `allocated_to` (Nhân viên phụ trách không được để trống). |
-| **In_Progress** (Đang xử lý) | `Send to Vendor` | **Pending_Vendor** | KTV Điện Thoại Vui, CSKH Manager | Bắt buộc nhập ít nhất 1 dòng trong bảng con `repair_items`. |
-| **Pending_Vendor** (Chờ hãng/LK)| `Receive from Vendor` | **In_Progress** | KTV Điện Thoại Vui, CSKH Manager | Ghi nhận thời điểm nhận linh kiện về trung tâm DTV. |
-| **In_Progress** (Đang xử lý) | `Mark Resolved` | **Resolved** | KTV Điện Thoại Vui, CSKH Manager | **Bắt buộc:** `resolution_type` và `root_cause` không được để trống. |
-| **Resolved** (Đã giải quyết) | `Customer Accept & Close`| **Closed** | CSKH Agent, CSKH Manager | **Bắt buộc:** `resolution_notes` không được trống. Kích hoạt Webhook Zalo ZNS. |
-| **Open / In_Progress** | `Cancel Ticket` | **Closed** | CSKH Manager | Chỉ Quản lý mới có quyền hủy phiếu (bắt buộc nhập lý do hủy). |
+| **Open** (Mới tạo) | `Start Processing` | **In_Progress** | Bán hàng và CSKH cửa hàng, Quản lý cửa hàng, CSKH cấp chuỗi | Đã gán `allocated_to` (Người phụ trách không được để trống). |
+| **In_Progress** (Đang xử lý) | `Send to Vendor` | **Pending_Vendor** | Bán hàng và CSKH cửa hàng, Quản lý cửa hàng, CSKH cấp chuỗi | Bắt buộc chọn Đơn vị phối hợp (`partner_unit`). |
+| **Pending_Vendor** (Chờ hãng/LK)| `Receive from Vendor` | **In_Progress** | Bán hàng và CSKH cửa hàng, Quản lý cửa hàng, CSKH cấp chuỗi | Ghi nhận máy trả về vào `Ticket_Activity_Log`. |
+| **In_Progress** (Đang xử lý) | `Mark Resolved` | **Resolved** | Bán hàng và CSKH cửa hàng, Quản lý cửa hàng, CSKH cấp chuỗi | **Bắt buộc:** `resolution_result` và `resolution_notes` không được để trống. |
+| **Resolved** (Đã giải quyết) | `Notify & Close` | **Closed** | Bán hàng và CSKH cửa hàng, Quản lý cửa hàng, CSKH cấp chuỗi | **Bắt buộc:** `notify_customer_status` $\neq$ `Chua_thong_bao`. |
+| **Open / In_Progress** | `Cancel / Withdraw` | **Closed** | Quản lý cửa hàng, Quản lý chuỗi, CSKH cấp chuỗi | Bắt buộc ghi nhận lý do rút yêu cầu hoặc hủy phiếu. |
 
 ---
 
-## PHẦN 5: MA TRẬN PHÂN QUYỀN (ROLE PERMISSION MANAGER)
+## PHẦN 5: MA TRẬN PHÂN QUYỀN (ROLE PERMISSION MATRIX & USER PERMISSIONS)
 
-Frappe Framework kiểm soát truy cập dựa trên **Roles** và **Permission Levels** (Cấp độ trường). Dưới đây là ma trận phân quyền chi tiết cho 4 nhóm người dùng trong hệ sinh thái CellphoneS:
+Frappe Framework kiểm soát truy cập dựa trên **5 Nhóm Vai trò Nội bộ** và cơ chế **User Permissions** theo Chi nhánh Cửa hàng:
 
 | DocType | Vai trò người dùng (`Role`) | Đọc (`Read`) | Tạo (`Create`) | Sửa (`Write`) | Xóa (`Delete`) | Xuất (`Export`) | Quyền đặc biệt / Phân vùng dữ liệu (`User Permissions`) |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :--- |
-| **`Customer`** | CSKH Agent | ✅ | ✅ | ✅ | ❌ | ❌ | Xem và sửa khách hàng trên toàn hệ thống. |
-| | CSKH Manager | ✅ | ✅ | ✅ | ✅ | ✅ | Toàn quyền, thực thi chức năng Gộp hồ sơ (Merge). |
-| | Kỹ thuật viên DTV | ✅ | ❌ | ❌ | ❌ | ❌ | Chỉ xem thông tin liên hệ và lịch sử máy. |
-| | Nhân viên Showroom | ✅ | ✅ | ✅ | ❌ | ❌ | Tạo khách mới và cập nhật địa chỉ lúc bán hàng. |
-| **`Smember Profile`**| CSKH Agent | ✅ | ❌ | ❌ | ❌ | ❌ | Chỉ đọc hạng thành viên và điểm tích lũy. |
-| | CSKH Manager | ✅ | ✅ | ✅ | ❌ | ✅ | Duyệt cộng/trừ điểm thưởng thủ công. |
-| | Kỹ thuật viên DTV | ✅ | ❌ | ❌ | ❌ | ❌ | Chỉ đọc để nhận biết khách VIP. |
-| | Nhân viên Showroom | ✅ | ❌ | ❌ | ❌ | ❌ | Chỉ đọc để áp dụng chiết khấu Smember. |
-| **`Support Ticket`**| CSKH Agent | ✅ | ✅ | ✅ | ❌ | ❌ | Tạo phiếu, cập nhật tiếp nhận, đóng phiếu khi giao máy. |
-| | CSKH Manager | ✅ | ✅ | ✅ | ✅ | ✅ | Toàn quyền, ghi đè trạng thái, duyệt đổi máy mới 1-1. |
-| | Kỹ thuật viên DTV | ✅ | ❌ | ✅ | ❌ | ❌ | Sửa các trường chẩn đoán lỗi và cập nhật bảng linh kiện. |
-| | Nhân viên Showroom | ✅ | ✅ | ❌ | ❌ | ❌ | Mở phiếu tiếp nhận máy tại quầy Showroom. |
-| **`Customer Interaction`**| CSKH Agent | ✅ | ✅ | ✅ | ❌ | ❌ | Ghi nhận nhật ký cuộc gọi Hotline / Zalo chat. |
-| | CSKH Manager | ✅ | ✅ | ✅ | ✅ | ✅ | Giám sát toàn bộ nhật ký tương tác và chỉ số CSAT. |
-| | Kỹ thuật viên DTV | ✅ | ❌ | ❌ | ❌ | ❌ | Xem lịch sử tương tác trước đó của khách. |
-| | Nhân viên Showroom | ✅ | ✅ | ❌ | ❌ | ❌ | Ghi nhận tương tác trực tiếp tại cửa hàng. |
-| **`Lead`** | CSKH Agent / Telesales| ✅ | ✅ | ✅ | ❌ | ❌ | Gọi điện tư vấn và chuyển đổi Lead thành Đơn hàng. |
-| | CSKH Manager | ✅ | ✅ | ✅ | ✅ | ✅ | Phân bổ danh sách Lead và quản lý hạn mức Quota cọc. |
+| **`Customer`** | Bán hàng và CSKH cửa hàng | ✅ | ✅ | ✅ | ❌ | ❌ | Xem/sửa thông tin liên hệ; không sửa Hạng & Giáo dục. |
+| | Quản lý cửa hàng | ✅ | ✅ | ✅ | ❌ | ❌ | Quản lý khách hàng thuộc phạm vi Showroom. |
+| | CSKH cấp chuỗi | ✅ | ✅ | ✅ | ❌ | ❌ | Xem khách hàng trên toàn chuỗi; hỗ trợ điều chuyển. |
+| | Quản lý chuỗi | ✅ | ❌ | ❌ | ❌ | ✅ | Xem toàn chuỗi phục vụ phân tích báo cáo. |
+| | Quản trị hệ thống | ✅ | ✅ | ✅ | ✅ | ✅ | Toàn quyền; được cập nhật Hạng & Nhóm giáo dục. |
+| **`Lead` (Cơ hội)** | Bán hàng và CSKH cửa hàng | ✅ | ✅ | ✅ | ❌ | ❌ | Quản lý cơ hội được phân công tại cửa hàng được cấp. |
+| | Quản lý cửa hàng | ✅ | ✅ | ✅ | ❌ | ❌ | Phân công và điều chuyển cơ hội trong phạm vi cửa hàng. |
+| | CSKH cấp chuỗi | ✅ | ✅ | ✅ | ❌ | ❌ | Điều chuyển cơ hội giữa các cửa hàng trên toàn chuỗi. |
+| | Quản lý chuỗi | ✅ | ❌ | ❌ | ❌ | ✅ | Xem báo cáo tổng hợp cơ hội và tỷ lệ thắng của chuỗi. |
+| | Quản trị hệ thống | ✅ | ✅ | ✅ | ✅ | ✅ | Toàn quyền cấu hình và quản trị cơ hội. |
+| **`Support Ticket`** | Bán hàng và CSKH cửa hàng | ✅ | ✅ | ✅ | ❌ | ❌ | Mở phiếu, cập nhật xử lý và thông báo khách tại cửa hàng. |
+| | Quản lý cửa hàng | ✅ | ✅ | ✅ | ❌ | ❌ | Phân công và điều chuyển ticket trong phạm vi cửa hàng. |
+| | CSKH cấp chuỗi | ✅ | ✅ | ✅ | ❌ | ❌ | Điều chuyển ticket giữa các Showroom và đơn vị bảo hành. |
+| | Quản lý chuỗi | ✅ | ❌ | ❌ | ❌ | ✅ | Xem báo cáo tổng hợp ticket và tiến độ toàn chuỗi. |
+| | Quản trị hệ thống | ✅ | ✅ | ✅ | ✅ | ✅ | Toàn quyền quản trị hệ thống phiếu hỗ trợ. |
+| **`Customer Interaction`**| Bán hàng và CSKH cửa hàng | ✅ | ✅ | ✅ | ❌ | ❌ | Ghi nhận tương tác tại quầy Showroom hoặc gọi điện. |
+| | Quản lý cửa hàng | ✅ | ✅ | ✅ | ❌ | ❌ | Giám sát lịch sử tương tác của cửa hàng. |
+| | CSKH cấp chuỗi | ✅ | ✅ | ✅ | ❌ | ❌ | Ghi nhận tương tác đa kênh (Hotline, Zalo, Web) toàn chuỗi. |
+| | Quản lý chuỗi | ✅ | ❌ | ❌ | ❌ | ✅ | Xem báo cáo thống kê tương tác theo kênh. |
+| | Quản trị hệ thống | ✅ | ✅ | ✅ | ✅ | ✅ | Toàn quyền nhật ký tương tác. |
+| **`Sales Invoice Reference`**| Bán hàng và CSKH cửa hàng| ✅ | ❌ | ❌ | ❌ | ❌ | Tra cứu hóa đơn/đơn hàng tham chiếu để đối soát. |
+| | Quản lý cửa hàng | ✅ | ❌ | ❌ | ❌ | ❌ | Tra cứu đơn hàng phục vụ xử lý khiếu nại tại quầy. |
+| | CSKH cấp chuỗi | ✅ | ❌ | ❌ | ❌ | ❌ | Tra cứu đơn hàng toàn chuỗi khi tiếp nhận bảo hành. |
+| | Quản lý chuỗi | ✅ | ❌ | ❌ | ❌ | ✅ | Xem dữ liệu đơn hàng tham chiếu phục vụ báo cáo. |
+| | Quản trị hệ thống | ✅ | ✅ | ✅ | ✅ | ✅ | Nạp dữ liệu CSV đơn hàng tham chiếu vào hệ thống. |
 
 ---
 
-## PHẦN 6: PHỐI HỢP A03: HỆ SINH THÁI, DỮ LIỆU NGOÀI & PHƯƠNG ÁN MÔ PHỎNG (INTEGRATION & SIMULATION)
+## PHẦN 6: DỮ LIỆU THAM CHIẾU NGOÀI & PHƯƠNG ÁN MÔ PHỎNG (INTEGRATION & SIMULATION)
 
-Nhằm đảm bảo hệ thống CRM CellphoneS hoạt động trơn tru trong môi trường đa kênh, tài liệu thiết lập mối quan hệ phối hợp cùng tài liệu A03 (Kiến trúc Hệ sinh thái & Tích hợp Ngoại vi):
+Nhằm đảm bảo hệ thống CRM CellphoneS hoạt động chuẩn xác trong phạm vi nghiên cứu mô phỏng cấp chuỗi (2 Showroom):
 
-### 1. Danh mục 4 Hệ thống Dữ liệu Ngoài trong Hệ sinh thái CellphoneS
+### 1. Phân định Phạm vi Xử lý Dữ liệu trong MVP
 
 ```mermaid
 graph TD
-    CTI[📞 Tổng đài CTI Call Center 1800.2097] -->|Webhook: Caller-ID & Call Event| CRM[🏢 Frappe CRM Core - cellphones_crm]
-    ZNS[📲 Cổng Zalo OA / ZNS Service] <-->|API: Gửi thông báo & Webhook CSAT| CRM
-    POS[🛒 Hệ thống POS Bán hàng Showroom] -->|Sync: Hóa đơn INV, IMEI & Doanh số| CRM
-    AppleAPI[🌐 Cổng Apple Care & GSMA IMEI DB] <-->|REST API: Tra cứu bảo hành & Khóa iCloud| CRM
+    CSV[📂 File CSV Dữ liệu Mẫu: Khách hàng & Đơn tham chiếu] -->|Import / Nhập tay| CRM[🏢 Frappe CRM Core - cellphones_crm]
+    Staff[👨‍💼 Nhân viên Bán hàng / CSKH Showroom] <-->|Giao diện Desk Form / Kanban| CRM
+    CRM -->|Báo cáo & Nhắc việc| Mgr[📊 Quản lý Cửa hàng & Quản lý Chuỗi]
 ```
 
-1. **Tổng đài CTI Call Center (Hotline 1800.2097):**
-   * *Giao thức:* Webhook REST API qua HTTP POST.
-   * *Nghiệp vụ:* Khi có cuộc gọi đến, CTI đẩy sự kiện kèm SĐT (`caller_phone`). Frappe CRM tự động bắt sự kiện, bật màn hình Pop-up Màn hình 3 hiển thị thông tin khách hàng và lịch sử tương tác.
-2. **Cổng Zalo Official Account & Zalo Notification Service (ZNS):**
-   * *Giao thức:* REST API (Outbound) và Webhook (Inbound).
-   * *Nghiệp vụ:* Khi Ticket chuyển sang `Closed`, CRM tự động gọi API gửi tin nhắn ZNS xác nhận và mời chấm điểm CSAT. Khi khách bấm chấm sao trên Zalo, Zalo Webhook đẩy kết quả về endpoint `/api/method/cellphones_crm.api.receive_csat_rating` để cập nhật `csat_score`.
-3. **Hệ thống POS / Bán hàng Showroom CellphoneS:**
-   * *Giao thức:* REST API đồng bộ hóa đơn (`Sales_Invoice_Reference`).
-   * *Nghiệp vụ:* Khi Showroom hoàn tất bán hàng, POS đẩy thông tin hóa đơn kèm số IMEI xuất kho. CRM tự động cập nhật tổng chi tiêu `total_spent` trong `Smember_Profile` và kích hoạt thăng hạng S-VIP nếu đạt ngưỡng 50 triệu đồng.
-4. **Cổng Tra cứu Apple Care / Samsung GSMA API:**
-   * *Giao thức:* REST API tra cứu bảo hành chính hãng.
-   * *Nghiệp vụ:* Khi nhập số IMEI trên Ticket, hệ thống tự động kiểm tra ngày kích hoạt gốc và trạng thái Khóa Find My / iCloud để phục vụ thẩm định đổi mới 1-1.
+1. **Dữ liệu Đơn hàng & Hóa đơn Tham chiếu:**
+   * Dữ liệu được nạp vào CRM thông qua file CSV định kỳ (`Sales_Invoice_Reference`) hoặc nhập tay khi tiếp nhận khách. CRM không can thiệp vào nghiệp vụ kế toán, xuất/nhập kho hay tạo Credit Note hoàn tiền thực tế.
+2. **Quy tắc Thông báo Khách hàng:**
+   * Trong giai đoạn thử nghiệm MVP, CRM chưa tích hợp cổng gửi tin nhắn tự động SMS/Zalo ZNS trực tiếp. Nhân viên CSKH trực tiếp thực hiện gọi điện/thông báo tại quầy và ghi nhận vào trường `notify_customer_status`.
+3. **Mô phỏng Dữ liệu Kiểm thử Nghiệp vụ:**
+   * Sử dụng bộ dữ liệu mẫu 500 khách hàng và 1.000 đơn tham chiếu nạp qua CSV để kiểm thử hiệu năng, ma trận phân quyền giữa 2 Showroom và quy tắc tính báo cáo tỷ lệ thắng.
 
----
-
-### 2. Phương án Mô phỏng Tích hợp (Integration Simulation Strategy & Mock Test Harness)
-
-Trong môi trường phát triển (Development / Staging) hoặc khi chưa kết nối Live API với các đối tác ngoài, hệ thống áp dụng chiến lược mô phỏng độc lập:
-
-1. **Mô phỏng Webhook CTI Tổng đài (Mock CTI Trigger):**
-   * Xây dựng Server Script Endpoint: `/api/method/cellphones_crm.mock.simulate_incoming_call`.
-   * Cho phép Tester gửi payload mẫu: `{"phone_number": "0908123456", "channel": "Hotline_1800"}` để kiểm thử tính năng tự động mở màn hình tương tác.
-2. **Mô phỏng Phản hồi CSAT từ Zalo ZNS (Mock ZNS Feedback):**
-   * Xây dựng Server Script Endpoint: `/api/method/cellphones_crm.mock.simulate_zns_csat_feedback`.
-   * Cho phép Tester giả lập phản hồi của khách hàng: `{"ticket_id": "TCK-2026-00155", "csat_score": "5_Sao", "feedback_text": "Xử lý rất nhanh"}`.
-3. **Mô phỏng Dữ liệu Hóa đơn POS (Mock POS Fixtures):**
-   * Tạo sẵn bộ dữ liệu Fixtures JSON (`fixtures/mock_sales_invoices.json`) chứa các hóa đơn mẫu đủ điều kiện (< 30 ngày) và quá hạn (> 30 ngày) để kiểm thử logic thẩm định quyền lợi S-VIP.
-4. **Mô phỏng API Tra cứu Apple Care / iCloud:**
-   * Cấu hình cờ `is_mock_mode = 1` trong `CRM Settings`.
-   * Nếu `serial_imei` kết thúc bằng số chẵn $\rightarrow$ Trả về kết quả: *Apple Care Active & iCloud Off*; nếu kết thúc bằng số lẻ $\rightarrow$ Trả về: *iCloud On (Cảnh báo)*.

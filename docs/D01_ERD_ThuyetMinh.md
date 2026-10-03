@@ -19,27 +19,25 @@ Dự án tập trung xây dựng phân hệ Quản lý Quan hệ Khách hàng (*
 
 2. **Ngành hàng và Sản phẩm nghiên cứu:**
    * Tập trung 3 nhóm ngành hàng bán lẻ cốt lõi của CellphoneS:
-     * **Điện thoại** (*Smartphones* - Apple iPhone, Samsung Galaxy, Xiaomi...).
-     * **Laptop** (*Máy tính xách tay* - MacBook, Asus, Dell, Lenovo...).
-     * **Phụ kiện** (*Accessories* - Tai nghe, Củ cáp sạc, Pin dự phòng, Ốp lưng, Chuột, Bàn phím...).
-
-3. **Nhóm người dùng hệ thống CRM (CRM Users):**
-   * **Nhân viên tư vấn (Sales / Telesales / Store Consultant):** Tiếp nhận khách tiềm năng (Lead), tư vấn cấu hình/giá bán, chốt cơ hội đơn hàng, tư vấn trả góp hoặc nhận đặt cọc trước (Pre-order).
-   * **Nhân viên CSKH (Customer Care / Support Agent):** Tiếp nhận tương tác đa kênh (Hotline, Chat, Showroom), ghi nhận khiếu nại, tạo và theo dõi tiến độ phiếu hỗ trợ/bảo hành.
-   * **Quản lý cửa hàng (Store Manager):** Giám sát tiếp nhận tại Showroom, phân công nhân sự, duyệt xử lý yêu cầu đổi trả đặc biệt và theo dõi SLA tại chi nhánh.
-   * **Quản trị viên (System Administrator):** Cấu hình hệ thống, phân quyền vai trò (Role Permission), giám sát dữ liệu và thực hiện kiểm toán gộp hồ sơ khách hàng.
-   * **Nhân viên phân tích (Data / Business Analyst):** Khai thác báo cáo hiệu quả bán hàng, tỷ lệ chuyển đổi cơ hội, phân tích thời gian xử lý SLA, tỷ lệ khiếu nại theo dòng sản phẩm.
+     * **Điện thoại** (*Smartphones* - Apple iPhone3. **Nhóm người dùng hệ thống CRM (5 Vai trò chuẩn hóa theo tài liệu BA):**
+   * **Bán hàng và CSKH cửa hàng (Store Sales & CSKH Agent):** Xem công việc, khách hàng và giao dịch trong phạm vi cửa hàng được cấp; tiếp nhận khách tiềm năng (Lead/Cơ hội), tư vấn bán hàng, tiếp nhận tương tác tại quầy và mở phiếu hỗ trợ bước đầu.
+   * **Quản lý cửa hàng (Store Manager):** Xem toàn bộ dữ liệu thuộc cửa hàng quản lý; phân công và điều chuyển cơ hội/phiếu hỗ trợ giữa các nhân viên trong cửa hàng; giám sát SLA tại chi nhánh.
+   * **CSKH cấp chuỗi (Chain CSKH Agent):** Tiếp nhận tương tác đa kênh tập trung (Hotline 1800, Fanpage, Zalo OA); điều chuyển cơ hội và ticket giữa các cửa hàng; phối hợp điều phối dịch vụ.
+   * **Quản lý chuỗi (Chain Manager / Head of CSKH):** Xem báo cáo tổng hợp toàn chuỗi (mô phỏng hai cửa hàng); giám sát KPI tỷ lệ thắng, SLA và chất lượng phục vụ.
+   * **Quản trị hệ thống (System Administrator):** Quản lý tài khoản, phân quyền vai trò (Role Permission), cấu hình hệ thống, cập nhật hạng hội viên mẫu và thực hiện gộp hồ sơ khách trùng.
+   *(Lưu ý: Khách hàng và đối tác bảo hành/hãng là stakeholder bên ngoài, không đăng nhập CRM trong MVP; vai trò kỹ thuật sửa chữa Điện Thoại Vui/CareS không gộp chung vào CSKH nội bộ).*
 
 4. **5 Nhóm nghiệp vụ chính:**
-   * **Nghiệp vụ 1: Quản lý khách hàng tiềm năng (Lead Management):** Thu thập, làm giàu và phân loại thông tin khách có nhu cầu mua sắm.
-   * **Nghiệp vụ 2: Tư vấn và quản lý cơ hội bán hàng (Opportunity & Sales Pipeline):** Quản lý tiến trình tư vấn theo từng ngành hàng (Điện thoại/Laptop/Phụ kiện), chính sách trả góp, đặt trước.
-   * **Nghiệp vụ 3: Chăm sóc và duy trì quan hệ khách hàng (Customer Care & Loyalty Profile):** Quản lý hồ sơ 360°, lịch sử tương tác đa kênh và lưu trữ thông tin hội viên Smember.
-   * **Nghiệp vụ 4: Hỗ trợ và xử lý hậu mãi (After-sales & Warranty Support):** Tiếp nhận yêu cầu bảo hành, 1-đổi-1 trong 30 ngày, theo dõi tiến độ xử lý và cam kết thời gian hoàn thành (SLA).
-   * **Nghiệp vụ 5: Quản lý hiệu quả hoạt động CRM (CRM Performance & Analytics):** Giám sát hiệu suất tư vấn, chỉ số hài lòng CSAT, SLA giải quyết khiếu nại và báo cáo tổng hợp.
+   * **Nghiệp vụ 1: Tư vấn trước mua & Quản lý cơ hội (Lead/Opportunity):** Ghi nhận đầu mối, sản phẩm quan tâm (iPhone 15 Pro Max, Lenovo LOQ 15IAX9 83GS001RVN, Sạc GaN), ngân sách, thiết bị đang dùng, nhu cầu thu cũ, cấu hình mong muốn và lịch chăm sóc (nhắc việc 3 ngày).
+   * **Nghiệp vụ 2: Hỗ trợ đơn hàng tham chiếu:** Tra cứu đơn hàng/hóa đơn CSV, thời điểm cập nhật; giải đáp hoặc lập ticket liên kết.
+   * **Nghiệp vụ 3: Tiếp nhận đổi trả & Hậu mãi:** Lập ticket theo chính sách từng dòng sản phẩm, ngày mua/nhận hàng, hiện trạng ngoại quan; theo dõi tiến độ giải quyết (không tự cam kết đổi máy nguyên seal khi chưa thẩm định).
+   * **Nghiệp vụ 4: Bảo hành và khiếu nại:** Tiếp nhận thiết bị, mô tả lỗi/phản ánh, giao dịch mua, ảnh chứng từ; theo dõi tiến độ xử lý và phối hợp kỹ thuật/hãng.
+   * **Nghiệp vụ 5: Quản lý hồ sơ & Báo cáo:** Hồ sơ 360°, hạng thành viên mẫu (S-NULL, S-NEW, S-MEM, S-VIP), nhóm ưu đãi giáo dục (S-Student, S-Teacher), báo cáo tỷ lệ thắng và SLA.
 
 5. **Ranh giới nghiệp vụ (Scope Boundaries):**
-   * **Về Bảo hành / Đổi trả:** Hệ thống CRM tập trung **quản lý yêu cầu, ghi nhận tình trạng máy lúc tiếp nhận và theo dõi tiến độ xử lý (SLA)** giữa Showroom và bộ phận liên quan; **CHƯA** quản lý chi tiết sửa chữa kỹ thuật/thay thế linh kiện chuyên sâu và **CHƯA** thực hiện hoàn tiền (nghiệp vụ tài chính/hoàn tiền thuộc hệ thống Kế toán - POS).
-   * **Về Hội viên SMember:** Hệ thống CRM trước mắt **lưu trữ và tra cứu hạng thành viên (Smember, S-VIP...)**, lịch sử hạng và ngày gia hạn; **CHƯA** tự động tính toán tích/trừ điểm thưởng phức tạp và **CHƯA** tự động chạy thuật toán xét nâng/hạ hạng (dữ liệu này được tiếp nhận và đồng bộ từ hệ thống Loyalty/POS trung tâm).
+   * **Về Bảo hành / Đổi trả:** CRM tập trung **quản lý yêu cầu, ghi nhận tình trạng máy lúc tiếp nhận, lưu lịch sử và theo dõi tiến độ xử lý**; **CHƯA** quản lý chi tiết sửa chữa kỹ thuật/kho linh kiện, **CHƯA** tạo Credit Note, hoàn tiền hay xuất/nhập kho.
+   * **Về Hội viên SMember & Ưu đãi Giáo dục:** CRM lưu trữ và tra cứu **hạng mẫu (S-NULL, S-NEW, S-MEM, S-VIP)** được nhập tay/CSV bởi người có quyền; lưu riêng nhóm giáo dục (**S-Student, S-Teacher**) kèm trạng thái xác minh và thời hạn; **CHƯA** tự động chạy thuật toán tính chi tiêu tích lũy, tự động nâng/hạ hạng hay tự động cộng dồn voucher.
+   * **Về Thông báo:** Trong MVP **CHƯA** gửi tin nhắn tự động qua Zalo/SMS; nhân viên ghi nhận thao tác thông báo trên hệ thống.
 
 ---
 
@@ -49,14 +47,18 @@ Dưới đây là bảng sàng lọc toàn bộ các thực thể dữ liệu đ
 
 | STT | Tên thực thể (Logical / Physical) | Mục đích sử dụng trong CRM CellphoneS | Quyết định | Lý do biện luận nghiệp vụ & kỹ thuật Frappe |
 | :---: | :--- | :--- | :---: | :--- |
-| **1** | **Chi nhánh / Cửa hàng**<br>`BRANCH_STORE` | Quản lý hệ thống các cửa hàng / Showroom CellphoneS trên toàn quốc. | **CHỌN (Cơ sở phân vùng)** | Đóng vai trò phân vùng địa lý, gắn địa điểm tiếp nhận Ticket, phân bổ cơ hội tư vấn theo khu vực và lưu dấu nơi phát sinh đơn mua hàng. |
-| **2** | **Khách hàng**<br>`CUSTOMER` | Quản lý thông tin định danh cá nhân khách hàng B2C: Họ tên, Số điện thoại (duy nhất), CCCD/CMND, Địa chỉ, Ngày sinh, Giới tính. | **CHỌN (Cốt lõi)** | Thực thể trung tâm của toàn bộ hệ thống CRM. Ánh xạ trực tiếp sang DocType `Customer` của Frappe Framework. Chỉ quản lý khách hàng cá nhân. |
-| **3** | **Hồ sơ Hội viên Smember**<br>`SMEMBER_PROFILE` | Lưu trữ và tra cứu thông tin hạng thành viên Smember (Smember Standard, S-VIP), ngày kích hoạt, ngày hết hạn hạng thẻ. | **CHỌN (Tra cứu / Lưu trữ)** | Tách biệt với thông tin cá nhân cơ bản để phục vụ tra cứu chính sách ưu đãi khách hàng mà không phá vỡ cấu trúc DocType `Customer`. Quan hệ 1-1 với `Customer`. |
-| **4** | **Khách tiềm năng & Cơ hội**<br>`LEAD_OPPORTUNITY` | Quản lý thông tin khách quan tâm Điện thoại, Laptop, Phụ kiện, đăng ký đặt trước (Pre-order), nhận tư vấn mua trả góp qua Web/Hotline/Showroom. | **CHỌN (Cốt lõi Tư vấn)** | Giữ vai trò then chốt cho đội ngũ Tư vấn/Telesales. Khi khách chốt mua máy, Lead được chuyển đổi (Convert) thành Khách hàng (`Customer`) và Đơn hàng. |
-| **5** | **Tương tác đa kênh**<br>`CUSTOMER_INTERACTION` | Ghi nhận nhật ký mỗi lần tiếp xúc qua Hotline 1800.2097, Chat Zalo OA/Fanpage, Website Chat hoặc trực tiếp tại quầy Showroom. | **CHỌN (Cốt lõi CSKH)** | Giúp nhân viên có cái nhìn 360 độ về lịch sử trao đổi của khách. Đóng vai trò làm nguồn gốc phát sinh Phiếu hỗ trợ khi có thắc mắc/khiếu nại. |
-| **6** | **Phiếu hỗ trợ / Bảo hành**<br>`SUPPORT_TICKET` | Tiếp nhận và theo dõi tiến độ xử lý yêu cầu bảo hành, đổi trả 1-đổi-1 trong 30 ngày, thắc mắc đơn hàng và cam kết thời gian SLA. | **CHỌN (Cốt lõi Hậu mãi)** | Quản lý vòng đời tiếp nhận & tiến độ xử lý hậu mãi. Ánh xạ sang Custom DocType `Support Ticket` với Workflow chuẩn hóa, không quản lý chi tiết sửa chữa hay hoàn tiền. |
-| **7** | **Chi tiết thiết bị tiếp nhận**<br>`TICKET_ITEM_CONDITION` | Ghi nhận tình trạng ngoại quan lúc nhận máy (máy đẹp, trầy xước, cấn móp, nứt vỡ) và phụ kiện đi kèm (hộp, sạc, cáp) khi lập phiếu hỗ trợ. | **CHỌN (Child Table)** | Thiết kế dưới dạng Bảng con (Child Table) gắn trực tiếp vào `SUPPORT_TICKET` nhằm lưu chứng cứ biên bản bàn giao máy, không quản lý kho linh kiện kỹ thuật. |
-| **8** | **Nhật ký tiến độ xử lý**<br>`TICKET_ACTIVITY_LOG` | Ghi nhận các bước xử lý nội bộ, chuyển ca tiếp nhận, cập nhật trạng thái phiếu hỗ trợ, ghi chú liên hệ khách hàng. | **CHỌN (Child Table / Timeline)** | Lưu tiến trình phân công và xử lý công việc giữa các bộ phận, phục vụ đo lường thời gian thực hiện theo cam kết SLA. |
+| **1** | **Chi nhánh / Cửa hàng**<br>`BRANCH_STORE` | Quản lý hệ thống Showroom CellphoneS (thử nghiệm mô phỏng 2 cửa hàng). | **CHỌN (Cơ sở phân vùng)** | Đóng vai trò phân vùng dữ liệu theo cửa hàng, làm căn cứ phân quyền cho nhân viên và phân bổ cơ hội/ticket theo O03. |
+| **2** | **Khách hàng**<br>`CUSTOMER` | Quản lý mã định danh khách duy nhất, ổn định; SĐT liên hệ/tìm kiếm; họ tên, email, CCCD, nhóm giáo dục. | **CHỌN (Cốt lõi)** | Thực thể trung tâm của CRM. Ánh xạ sang DocType `Customer`. Cảnh báo trùng SĐT, không tự ý gộp hồ sơ. |
+| **3** | **Hồ sơ Hội viên Smember**<br>`SMEMBER_PROFILE` | Lưu trữ 4 hạng mẫu (`S-NULL`, `S-NEW`, `S-MEM`, `S-VIP`) và nhóm giáo dục (`S-Student`, `S-Teacher`) kèm trạng thái xác minh. | **CHỌN (Tra cứu / Lưu trữ)** | Tách biệt với thông tin cá nhân cơ bản để phục vụ tra cứu chính sách ưu đãi khách hàng mà không phá vỡ cấu trúc DocType `Customer`. Quan hệ 1-1 với `Customer`. |
+| **4** | **Khách tiềm năng & Cơ hội**<br>`LEAD_OPPORTUNITY` | Quản lý nhu cầu tư vấn: sản phẩm quan tâm, ngân sách, thời điểm mua, thiết bị đang dùng, nhu cầu thu cũ, cấu hình mong muốn, lịch chăm sóc 3 ngày. | **CHỌN (Cốt lõi Tư vấn)** | Một khách có thể có nhiều cơ hội. Quản lý tiến trình tư vấn và tính tỷ lệ thắng cơ hội theo quy tắc đã duyệt. |
+| **5** | **Tương tác đa kênh**<br>`CUSTOMER_INTERACTION` | Ghi nhận nhật ký mỗi lần tiếp xúc qua Hotline, Chat Zalo/Fanpage, Web form hoặc trực tiếp tại cửa hàng (thời gian, kênh, người thực hiện, kết quả). | **CHỌN (Cốt lõi CSKH)** | Giúp nhân viên có cái nhìn 360 độ về lịch sử trao đổi của khách. Đóng vai trò làm nguồn gốc phát sinh Phiếu hỗ trợ khi có thắc mắc/khiếu nại. |
+| **6** | **Phiếu hỗ trợ / Hậu mãi**<br>`SUPPORT_TICKET` | Tiếp nhận và theo dõi tiến độ đổi trả, bảo hành, khiếu nại dịch vụ (kết quả: bảo hành, đổi theo chính sách, sửa có phí, từ chối, rút yêu cầu). | **CHỌN (Cốt lõi Hậu mãi)** | Quản lý vòng đời tiếp nhận & tiến độ xử lý hậu mãi. Ánh xạ sang Custom DocType `Support Ticket` với Workflow chuẩn hóa, không quản lý chi tiết sửa chữa hay hoàn tiền. |
+| **7** | **Chi tiết thiết bị tiếp nhận**<br>`TICKET_ITEM_CONDITION` | Ghi nhận tình trạng ngoại quan lúc nhận máy (máy đẹp, trầy xước, cấn móp, nứt vỡ) và phụ kiện đi kèm khi lập phiếu hỗ trợ. | **CHỌN (Child Table)** | Thiết kế dưới dạng Bảng con (Child Table) gắn trực tiếp vào `SUPPORT_TICKET` nhằm lưu chứng cứ biên bản bàn giao máy, không quản lý kho linh kiện kỹ thuật. |
+| **8** | **Nhật ký tiến độ xử lý**<br>`TICKET_ACTIVITY_LOG` | Ghi nhận các bước xử lý nội bộ, chuyển trạng thái trước/sau, phân công, ghi nhận thông báo khách và bước xác minh/chờ khách. | **CHỌN (Child Table / Timeline)** | Lưu tiến trình phân công và xử lý công việc giữa các bộ phận, phục vụ đo lường thời gian thực hiện theo cam kết SLA. |
+| **9** | **Dữ liệu đơn tham chiếu**<br>`SALES_INVOICE_REFERENCE` | Lưu đơn mua hàng tham chiếu (nhập CSV): Mã đơn, ngày mua, cửa hàng xuất, sản phẩm, IMEI/Serial, hạn bảo hành. | **CHỌN (Tham chiếu Mua hàng)** | Đơn hàng tham chiếu phục vụ tra cứu đối soát điều kiện bảo hành/đổi trả; dữ liệu không đồng bộ trực tiếp từ doanh nghiệp. |
+| **10** | **Sản phẩm tham chiếu**<br>`ITEM_REFERENCE` | Danh mục mẫu hàng 3 nhóm (Điện thoại iPhone 15 Pro Max, Laptop Lenovo LOQ 83GS001RVN, Sạc GaN) kèm thông số và thời hạn bảo hành chuẩn. | **CHỌN (Mức tham chiếu)** | Tách biệt mẫu hàng với thiết bị cụ thể có IMEI/Serial; lưu chính sách bảo hành đúng theo từng mã hàng. |
+| **11** | **Người dùng hệ thống**<br>`STAFF_USER` | Đại diện 5 vai trò nội bộ: Bán hàng & CSKH cửa hàng, Quản lý cửa hàng, CSKH chuỗi, Quản lý chuỗi, Quản trị hệ thống. | **CHỌN (Hệ thống)** | Sử dụng DocType `User` chuẩn của Frappe kết hợp phân quyền theo cửa hàng (User Permissions) để kiểm soát phạm vi truy cập dữ liệu. |
+| **12** | **Nhật ký gộp hồ sơ**<br>`CUSTOMER_MERGE_LOG` | Lưu vết kiểm toán khi Quản trị viên/Quản lý thực hiện gộp 2 hồ sơ khách hàng trùng lặp sau khi đã xác minh cảnh báo. | **CHỌN (Kiểm toán)** | Đảm bảo tính toàn vẹn dữ liệu, ghi nhận rõ ai thực hiện, hồ sơ bị gộp, hồ sơ giữ lại và số lượng Ticket/Tương tác đã di dời. |CHỌN (Child Table / Timeline)** | Lưu tiến trình phân công và xử lý công việc giữa các bộ phận, phục vụ đo lường thời gian thực hiện theo cam kết SLA. |
 | **9** | **Dữ liệu mua hàng tham chiếu**<br>`SALES_INVOICE_REFERENCE` | Lưu thông tin tham chiếu hóa đơn mua hàng: Mã hóa đơn, Ngày mua, Chi nhánh xuất bán, Sản phẩm kèm số IMEI/Serial, Hạn bảo hành gốc. | **CHỌN (Tham chiếu Mua hàng)** | Phục vụ tra cứu lịch sử mua hàng, xác thực điều kiện áp dụng chính sách đổi mới 1-đổi-1 trong 30 ngày và đối soát bảo hành chính hãng. |
 | **10** | **Sản phẩm tham chiếu**<br>`ITEM_REFERENCE` | Danh mục sản phẩm kinh doanh thuộc 3 ngành hàng: Điện thoại, Laptop, Phụ kiện (Mã SKU, Tên sản phẩm, Thương hiệu, Thời gian bảo hành). | **CHỌN (Mức tham chiếu)** | Không quản lý kế toán/tồn kho phức tạp trong CRM; chỉ lưu dữ liệu tham chiếu để chọn sản phẩm khi tư vấn cơ hội và kiểm tra điều kiện tiếp nhận bảo hành. |
 | **11** | **Người dùng hệ thống**<br>`STAFF_USER` | Đại diện cho 5 nhóm nhân sự: Nhân viên tư vấn, Nhân viên CSKH, Quản lý cửa hàng, Quản trị viên, Nhân viên phân tích. | **CHỌN (Hệ thống)** | Sử dụng DocType `User` chuẩn của Frappe Framework kết hợp phân quyền Role Permission Manager để kiểm soát quyền hạn dữ liệu. |
@@ -110,8 +112,8 @@ erDiagram
     }
 
     CUSTOMER {
-        string customer_id PK "Mã định danh KH (CUST-YYYY-XXXXX)"
-        string phone_number UK "Số điện thoại duy nhất (10 chữ số)"
+        string customer_id PK "Mã định danh KH duy nhất (CUST-YYYY-XXXXX)"
+        string phone_number UK "Số điện thoại liên hệ/tìm kiếm (10 chữ số)"
         string full_name "Họ và tên khách hàng cá nhân"
         string email "Email liên hệ cá nhân"
         string identity_card "Số CCCD / CMND (9 hoặc 12 số)"
@@ -126,7 +128,11 @@ erDiagram
     SMEMBER_PROFILE {
         string profile_id PK "Mã hồ sơ Smember (SMB-XXXXX)"
         string customer_id FK "Liên kết Khách hàng cá nhân (1-1 Unique)"
-        string member_tier "Hạng hội viên (Smember / S-VIP / S-New)"
+        string member_tier "Hạng hội viên mẫu (S-NULL / S-NEW / S-MEM / S-VIP)"
+        string edu_type "Nhóm giáo dục (None / S-Student / S-Teacher)"
+        string edu_status "Trạng thái xác minh GD (Chua_xac_minh / Da_xac_minh / Tu_choi)"
+        date edu_expiry_date "Thời hạn nhóm giáo dục nếu có"
+        string edu_verified_by FK "Người cập nhật xác minh (Link Staff_User)"
         date join_date "Ngày tham gia hội viên"
         date tier_expiry_date "Hạn duy trì hạng hiện tại"
         string tier_note "Ghi chú quyền lợi chính sách"
@@ -137,15 +143,21 @@ erDiagram
         string lead_name "Tên khách tiềm năng"
         string phone_number "Số điện thoại liên hệ"
         string email "Email liên hệ"
-        string channel "Kênh tiếp nhận (Website / Facebook / Zalo / Showroom)"
+        string channel "Kênh tiếp nhận (Website / Facebook / Zalo / Showroom / Hotline)"
         string product_category "Ngành hàng quan tâm (Dien_thoai / Laptop / Phu_kien)"
-        string item_sku FK "Sản phẩm cụ thể quan tâm (Link Item_Reference)"
-        string branch_id FK "Chi nhánh tư vấn / nhận máy (Link Branch_Store)"
+        string item_sku FK "Sản phẩm quan tâm (Link Item_Reference)"
+        currency budget "Ngân sách dự kiến của khách (VND)"
+        date expected_buy_date "Thời điểm dự kiến mua"
+        string device_in_use "Thiết bị đang dùng hiện tại"
+        string trade_in_demand "Nhu cầu thu cũ đổi mới (Co / Khong)"
+        string desired_specs "Cấu hình / Màu sắc / Dung lượng mong muốn"
+        string branch_id FK "Cửa hàng tư vấn / nhận máy (Link Branch_Store)"
         string consultation_type "Loại nhu cầu (Tu_van / Dat_truoc_PreOrder / Tra_gop)"
-        string status "Trạng thái (New / Contacted / Qualified / Converted / Lost)"
-        string assigned_to FK "Nhân viên tư vấn phụ trách (Link Staff_User)"
+        string status "Trạng thái (Open / Contacted / Qualified / Converted / Lost)"
+        datetime follow_up_due "Lịch nhắc chăm sóc (3 ngày làm việc)"
+        string assigned_to FK "Nhân viên phụ trách tư vấn (Link Staff_User)"
         string converted_customer_id FK "Mã KH sau chuyển đổi (Link Customer - Nullable)"
-        text notes "Nội dung nhu cầu tư vấn"
+        text notes "Nội dung ghi chú tư vấn chi tiết"
     }
 
     CUSTOMER_INTERACTION {
@@ -153,13 +165,13 @@ erDiagram
         string customer_id FK "Mã khách hàng (Link Customer - Nullable)"
         string contact_phone "SĐT người liên hệ"
         string contact_name "Họ tên người liên hệ"
-        string channel "Kênh (Hotline_1800 / Zalo_OA / Fanpage / Showroom)"
-        string branch_id FK "Chi nhánh tiếp nhận (Link Branch_Store)"
+        string channel "Kênh (Hotline_1800 / Zalo_OA / Fanpage / Showroom / Web)"
+        string branch_id FK "Cửa hàng tiếp nhận (Link Branch_Store)"
         string interaction_purpose "Mục đích (Tu_van / Don_hang / Ho_tro_ky_thuat / Khieu_nai)"
         text summary "Tóm tắt nội dung trao đổi"
-        string satisfaction_rating "Đánh giá CSAT (1-5 Sao)"
-        string staff_id FK "Nhân viên tiếp nhận (Link Staff_User)"
+        string staff_id FK "Nhân viên thực hiện liên hệ (Link Staff_User)"
         datetime interaction_time "Thời điểm phát sinh tương tác"
+        string interaction_result "Kết quả tương tác (Thanh_cong / Hen_lai / Khong_nghe_may)"
         string escalated_ticket_id FK "Phiếu hỗ trợ phát sinh (Link Support_Ticket - Nullable)"
     }
 
@@ -169,36 +181,37 @@ erDiagram
         string contact_phone "Số điện thoại liên hệ"
         string contact_name "Họ tên người yêu cầu"
         string channel "Kênh tiếp nhận (Hotline / Showroom / Zalo / Web)"
-        string branch_id FK "Chi nhánh tiếp nhận ban đầu (Link Branch_Store)"
+        string branch_id FK "Cửa hàng tiếp nhận ban đầu (Link Branch_Store)"
         string item_sku FK "Mã sản phẩm tiếp nhận (Link Item_Reference)"
         string serial_imei "Số Serial / IMEI thiết bị (15 số GSMA)"
-        string sales_invoice_id FK "Hóa đơn mua hàng đối soát (Link Sales_Invoice - Nullable)"
-        string issue_type "Loại yêu cầu (Tiep_nhan_bao_hanh / Doi_tra_30_ngay / Khieu_nai_dich_vu)"
+        string sales_invoice_id FK "Đơn mua hàng tham chiếu đối soát (Link Sales_Invoice - Nullable)"
+        string issue_type "Loại yêu cầu (Tiep_nhan_bao_hanh / Doi_tra_theo_chinh_sach / Khieu_nai_dich_vu)"
         string priority "Độ ưu tiên (Low / Medium / High / Urgent)"
         string status "Trạng thái (Open / In_Progress / Pending_Vendor / Resolved / Closed)"
         string assigned_staff FK "Nhân viên xử lý tiến độ (Link Staff_User)"
         datetime sla_deadline "Hạn chót giải quyết theo SLA"
         datetime resolved_time "Thời điểm giải quyết xong"
         datetime closed_time "Thời điểm đóng phiếu"
-        string resolution_result "Kết quả xử lý (Doi_may_moi / Chuyen_bao_hanh_hang / Huong_dan_khach / Tu_choi)"
+        string resolution_result "Kết quả xử lý (Bao_hanh / Doi_theo_chinh_sach / Sua_co_phi / Tu_choi / Khach_rut)"
+        string notify_customer_status "Trạng thái thông báo khách (Chua_thong_bao / Da_thong_bao_qua_dien_thoai)"
         text customer_feedback "Ý kiến và phản hồi của khách hàng"
-        string csat_score "Điểm hài lòng CSAT (1-5 Sao)"
+        string csat_score "Điểm hài lòng CSAT ghi nhận (1-5 Sao)"
     }
 
     TICKET_ITEM_CONDITION {
         string row_id PK "Mã dòng chi tiết"
         string ticket_id FK "Mã phiếu hỗ trợ cha (Link Support_Ticket)"
         string reported_issue "Mô tả hiện tượng lỗi từ khách hàng"
-        string physical_condition "Tình trạng ngoại quan (May_dep / Tray_xuoc / Can_mop / Nut_kinh)"
+        string physical_condition "Hiện trạng ngoại quan (May_dep / Tray_xuoc / Can_mop / Nut_kinh)"
         string accessories_included "Phụ kiện kèm theo (Hop, Cu_sac, Day_cap, Khong)"
-        string warranty_eligibility "Điều kiện tiếp nhận (Hop_le / Tu_choi_do_roi_nuoc / Het_han)"
+        string warranty_eligibility "Điều kiện tiếp nhận ban đầu (Hop_le / Nghi_ngo_roi_nuoc / Can_kiem_dinh)"
     }
 
     TICKET_ACTIVITY_LOG {
         string log_id PK "Mã nhật ký xử lý"
         string ticket_id FK "Mã phiếu hỗ trợ cha (Link Support_Ticket)"
         string staff_id FK "Nhân viên cập nhật (Link Staff_User)"
-        string action_type "Hành động (Cap_nhat_tien_do / Chuyen_trang_thai / Phan_cong / Ghi_chu)"
+        string action_type "Hành động (Cap_nhat_tien_do / Chuyen_trang_thai / Phan_cong / Xac_minh / Cho_khach / Ghi_nhan_thong_bao)"
         string from_status "Trạng thái trước"
         string to_status "Trạng thái sau"
         text progress_notes "Ghi chú tiến độ chi tiết"
@@ -206,31 +219,32 @@ erDiagram
     }
 
     SALES_INVOICE_REFERENCE {
-        string invoice_id PK "Mã hóa đơn mua hàng (INV-YYYY-XXXXX)"
+        string invoice_id PK "Mã đơn hàng / hóa đơn tham chiếu (INV-YYYY-XXXXX)"
         string customer_id FK "Mã khách hàng mua (Link Customer)"
-        string branch_id FK "Chi nhánh xuất bán (Link Branch_Store)"
+        string branch_id FK "Cửa hàng xuất bán (Link Branch_Store)"
         string item_sku FK "Mã sản phẩm mua (Link Item_Reference)"
-        string serial_imei "Số Serial / IMEI xuất kho"
-        datetime purchase_date "Ngày giờ mua hàng"
-        currency grand_total "Tổng giá trị thanh toán (VND)"
-        date warranty_expiry_date "Ngày hết hạn bảo hành gốc"
-        string invoice_status "Trạng thái hóa đơn (Paid / Exchanged / Cancelled)"
+        string serial_imei "Số Serial / IMEI xuất kho nếu có"
+        datetime purchase_date "Ngày giờ mua / nhận hàng"
+        currency grand_total "Tổng giá trị đơn hàng (VND)"
+        date warranty_expiry_date "Ngày hết hạn bảo hành theo mã hàng"
+        string invoice_status "Trạng thái đơn tham chiếu (Paid / Exchanged / Cancelled)"
     }
 
     ITEM_REFERENCE {
-        string item_sku PK "Mã sản phẩm / SKU (SP-XXXXX)"
+        string item_sku PK "Mã sản phẩm / SKU (SP-XXXXX / VD: SP-LOQ-83GS001RVN)"
         string item_name "Tên sản phẩm thương mại"
-        string brand "Thương hiệu (Apple / Samsung / Asus / Xiaomi / Sony...)"
+        string brand "Thương hiệu (Apple / Lenovo / Anker / Samsung...)"
         string category "Ngành hàng (Dien_thoai / Laptop / Phu_kien)"
-        int warranty_months "Thời gian bảo hành tiêu chuẩn (Tháng)"
+        int warranty_months "Thời gian bảo hành chính hãng (Tháng: 12, 24...)"
+        string warranty_policy_note "Ghi chú chính sách gói mở rộng (AppleCare+, Bảo hành hãng)"
         boolean is_active "Đang kinh doanh (Yes/No)"
     }
 
     STAFF_USER {
         string user_id PK "Tên đăng nhập / Email (user@cellphones.com.vn)"
         string full_name "Họ và tên nhân viên"
-        string role "Vai trò (Nhan_vien_tu_van / Nhan_vien_CSKH / Quan_ly_cua_hang / Quan_tri_vien / Chuyen_vien_phan_tich)"
-        string branch_id FK "Chi nhánh trực thuộc (Link Branch_Store)"
+        string role "5 Vai trò chuẩn (Ban_hang_CSKH_cua_hang / Quan_ly_cua_hang / CSKH_chuoi / Quan_ly_chuoi / Quan_tri_he_thong)"
+        string branch_id FK "Cửa hàng trực thuộc (Link Branch_Store)"
         boolean is_active "Đang hoạt động (Yes/No)"
     }
 
@@ -238,7 +252,7 @@ erDiagram
         string merge_id PK "Mã phiên gộp (MRG-YYYY-XXXXX)"
         string source_customer_id FK "Mã hồ sơ phụ bị gộp (Link Customer)"
         string target_customer_id FK "Mã hồ sơ chính giữ lại (Link Customer)"
-        string merge_reason "Lý do gộp (Trung_SDT / Cung_CCCD / Yeu_cau_khach_hang)"
+        string merge_reason "Lý do gộp (Xac_minh_trung_SDT / Cung_CCCD / Yeu_cau_xac_thuc)"
         int migrated_tickets_count "Số lượng Ticket đã chuyển giao"
         int migrated_interactions_count "Số lượng Tương tác đã chuyển giao"
         string executed_by FK "Quản trị viên thực hiện (Link Staff_User)"
