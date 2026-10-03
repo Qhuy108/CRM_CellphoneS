@@ -4,41 +4,41 @@
 **Mã sản phẩm:** D04  
 **Thuộc nhiệm vụ:** Nhiệm vụ 5 (Bảng ánh xạ mô hình sang Frappe Framework)  
 **Tác giả:** Trần Quang Huy (System Analyst & Project Manager)  
-**Nền tảng mục tiêu:** Frappe Framework v15.x / ERPNext v15.x (MariaDB 10.6+ / PostgreSQL 15+)  
+**Nền tảng mục tiêu:** Frappe Framework v15.x (Custom App `cellphones_crm` độc lập, Zero-dependency on ERPNext) / MariaDB 10.6+ hoặc PostgreSQL 15+  
 **Trạng thái:** Hoàn thiện Mốc M4 (Final Deliverable)
 
 > [!NOTE]
-> **Ghi chú thiết kế:** Đây là mô hình ánh xạ kỹ thuật đề xuất (Proposed Mapping Model) phục vụ triển khai cấu hình DocType, Workflow, Phân quyền và Tích hợp trên nền tảng Frappe Framework v15, được thiết kế tối ưu giữa việc kế thừa các thành phần sẵn có của ERPNext và xây dựng ứng dụng tùy biến riêng biệt (`cellphones_crm`).
+> **Ghi chú thiết kế:** Đây là mô hình ánh xạ kỹ thuật đề xuất (Proposed Mapping Model) phục vụ triển khai cấu hình DocType, Workflow, Phân quyền và Tích hợp trên nền tảng **Frappe Framework v15 thuần túy**. Toàn bộ các thực thể nghiệp vụ bán lẻ công nghệ đặc thù của CellphoneS được **tự xây dựng 100% dưới dạng Custom DocTypes** trong ứng dụng độc lập (`cellphones_crm`), hoàn toàn không phụ thuộc hay cài đặt các phân hệ cồng kềnh của ERPNext.
 
 ---
 
 ## PHẦN 1: CHỐT PHIÊN BẢN & KIẾN TRÚC ỨNG DỤNG SỬ DỤNG
 
-* **Nền tảng Core:** **Frappe Framework v15.x** kết hợp hệ sinh thái **ERPNext v15.x**.
-* **Ứng dụng triển khai:** Custom App mang tên **`cellphones_crm`** được tạo thông qua lệnh `bench new-app cellphones_crm`.
+* **Nền tảng Core:** **Frappe Framework v15.x** (Môi trường Frappe Bench thuần túy, không cài đặt các phân hệ ERPNext).
+* **Ứng dụng triển khai:** Custom App độc lập mang tên **`cellphones_crm`** được tạo thông qua lệnh `bench new-app cellphones_crm`.
 * **Cơ sở dữ liệu:** MariaDB 10.6+ (hoặc PostgreSQL 15+).
-* **Mô hình kiến trúc:**
-  * **Ứng dụng tùy biến (`cellphones_crm`):** Chứa các Custom DocTypes chuyên biệt cho bán lẻ công nghệ (Smember, Interaction, Support Ticket, Repair Items, Merge Logs).
-  * **Kế thừa ERPNext Standard Modules:** Tận dụng `CRM`, `Selling`, `Support`, `Stock`, `Core` để tránh phát minh lại bánh xe cho các thực thể Khách hàng (`Customer`), Khách tiềm năng (`Lead`), Sản phẩm (`Item`) và Người dùng (`User`).
+* **Mô hình kiến trúc (Standalone Custom App):**
+  * **Ứng dụng tùy biến độc lập (`cellphones_crm`):** Tự xây dựng 100% Custom DocTypes chuyên biệt cho chuỗi bán lẻ công nghệ CellphoneS (Khách hàng, Showroom, Nhu cầu tư vấn, Tương tác đa kênh, Phiếu hỗ trợ bảo hành, Đơn hàng & Sản phẩm tham chiếu, Bảng con linh kiện và Nhật ký).
+  * **Tận dụng Frappe Core Engine:** Kế thừa các dịch vụ nền tảng sẵn có của Frappe Framework gồm Quản lý người dùng (`User`, `Role`), Cơ chế phân quyền (`Role Permission Manager`, `User Permissions`), Động cơ quy trình (`Workflow Engine`), và Giao diện quản trị Desk UI.
 
 ---
 
 ## PHẦN 2: BẢNG ÁNH XẠ DOCTYPE TOÀN DIỆN (DOCTYPE MAPPING SPECIFICATION)
 
-Dưới đây là bảng phân định chi tiết giữa thành phần sẵn có kế thừa từ ERPNext và thành phần tự xây dựng trong app `cellphones_crm`:
+Dưới đây là bảng phân định chi tiết các DocType tự xây dựng trong custom app `cellphones_crm` trên nền tảng Frappe Framework v15:
 
 | Thực thể Logic (ERD) | DocType trong Frappe | Phân loại thành phần | Module Frappe | Naming Series / Sinh mã | Ý nghĩa nghiệp vụ trong hệ sinh thái CellphoneS |
 | :--- | :--- | :---: | :--- | :--- | :--- |
-| **Khách hàng** (`CUSTOMER`) | `Customer` | **SẴN CÓ**<br>*(Thêm Custom Fields)* | `CRM` / `Selling` | `CUST-.YYYY.-.#####` | Định danh khách hàng nội bộ duy nhất, lưu thông tin liên hệ (SĐT), 4 hạng Smember và nhóm giáo dục. |
-| **Chi nhánh Cửa hàng** (`BRANCH_STORE`) | `Branch` *(hoặc `Branch Store`)* | **SẴN CÓ / MỞ RỘNG** | `Core` / `CRM` | `BR-.#####` | Quản lý mạng lưới Showroom mô phỏng (`BR-00101`, `BR-00102`) và Trung tâm tiếp nhận bảo hành/CareS (`BR-00201`). |
-| **Cơ hội / Nhu cầu** (`LEAD_OPPORTUNITY`) | `Lead` *(hoặc `Opportunity`)* | **SẴN CÓ**<br>*(Thêm Custom Fields)* | `CRM` | `LEAD-.YYYY.-.#####` | Tiếp nhận nhu cầu tư vấn (Lenovo LOQ, iPhone 15 Pro Max, sạc GaN), ngân sách, cấu hình và lịch nhắc việc 3 ngày. |
-| **Tương tác Đa kênh** (`CUSTOMER_INTERACTION`) | `Customer Interaction` | **TỰ XÂY**<br>*(Custom DocType)* | `CellphoneS CRM` | `INT-.YYYY.-.#####` | Ghi nhận nhật ký tiếp xúc từ Tổng đài Hotline 1800, Zalo OA, Fanpage và Showroom. |
-| **Phiếu hỗ trợ** (`SUPPORT_TICKET`) | `Support Ticket` *(hoặc `Issue`)* | **TỰ XÂY**<br>*(Custom DocType)* | `CellphoneS CRM` | `TCK-.YYYY.-.#####` | Tiếp nhận bảo hành, đổi trả theo chính sách, điều phối xử lý, ghi nhận kết quả và trạng thái thông báo khách. |
-| **Đơn hàng tham chiếu** (`SALES_INVOICE_REF`) | `Sales Invoice Reference` | **TỰ XÂY**<br>*(Custom DocType)* | `CellphoneS CRM` | `INV-.YYYY.-.#####` | Tham chiếu đơn hàng/hóa đơn bán ra nạp từ CSV, lưu IMEI/Serial để đối chiếu chính sách hậu mãi. |
-| **Chi tiết linh kiện** (`TICKET_REPAIR_ITEM`) | `Ticket Repair Item` | **TỰ XÂY**<br>*(Child DocType)* | `CellphoneS CRM` | `autoincrement` | Bảng con (`istable = 1`) nhúng trong Ticket để ghi nhận linh kiện tiếp nhận và ngoại quan máy. |
-| **Nhật ký xử lý phiếu** (`TICKET_ACTIVITY_LOG`) | `Ticket Activity Log` | **TỰ XÂY**<br>*(Child DocType)* | `CellphoneS CRM` | `autoincrement` | Bảng con (`istable = 1`) lưu vết chuyển trạng thái, ghi chú xác minh và hành động chăm sóc. |
-| **Sản phẩm tham chiếu** (`ITEM_REFERENCE`) | `Item` | **SẴN CÓ**<br>*(CRM Reference)* | `Stock` | `SP-.#####` | Danh mục SKU đại diện nghiên cứu (`SP-LOQ-83GS001RVN`, `SP-IP15PM-256`, `SP-GAN-65W`) và thời hạn bảo hành. |
-| **Người dùng / Nhân sự** (`STAFF_USER`) | `User` | **SẴN CÓ** | `Core` | `user@cellphones.com.vn`| Định danh tài khoản phân quyền 5 nhóm vai trò nội bộ trong chuỗi. |
+| **Khách hàng** (`CUSTOMER`) | `Customer` *(hoặc `CellphoneS Customer`)* | **TỰ XÂY TRONG APP**<br>*(Custom DocType)* | `CellphoneS CRM` | `CUST-.YYYY.-.#####` | Định danh khách hàng nội bộ duy nhất, lưu thông tin liên hệ (SĐT), 4 hạng Smember và nhóm giáo dục. |
+| **Chi nhánh Cửa hàng** (`BRANCH_STORE`) | `Branch Store` | **TỰ XÂY TRONG APP**<br>*(Custom DocType)* | `CellphoneS CRM` | `BR-.#####` | Quản lý mạng lưới Showroom mô phỏng (`BR-00101`, `BR-00102`) và Trung tâm tiếp nhận bảo hành/CareS (`BR-00201`). |
+| **Cơ hội / Nhu cầu** (`LEAD_OPPORTUNITY`) | `Lead Opportunity` | **TỰ XÂY TRONG APP**<br>*(Custom DocType)* | `CellphoneS CRM` | `LEAD-.YYYY.-.#####` | Tiếp nhận nhu cầu tư vấn (Lenovo LOQ, iPhone 15 Pro Max, sạc GaN), ngân sách, cấu hình và lịch nhắc việc 3 ngày. |
+| **Tương tác Đa kênh** (`CUSTOMER_INTERACTION`) | `Customer Interaction` | **TỰ XÂY TRONG APP**<br>*(Custom DocType)* | `CellphoneS CRM` | `INT-.YYYY.-.#####` | Ghi nhận nhật ký tiếp xúc từ Tổng đài Hotline 1800, Zalo OA, Fanpage và Showroom. |
+| **Phiếu hỗ trợ** (`SUPPORT_TICKET`) | `Support Ticket` | **TỰ XÂY TRONG APP**<br>*(Custom DocType)* | `CellphoneS CRM` | `TCK-.YYYY.-.#####` | Tiếp nhận bảo hành, đổi trả theo chính sách, điều phối xử lý, ghi nhận kết quả và trạng thái thông báo khách. |
+| **Đơn hàng tham chiếu** (`SALES_INVOICE_REF`) | `Sales Invoice Reference` | **TỰ XÂY TRONG APP**<br>*(Custom DocType)* | `CellphoneS CRM` | `INV-.YYYY.-.#####` | Tham chiếu đơn hàng/hóa đơn bán ra nạp từ CSV, lưu IMEI/Serial để đối chiếu chính sách hậu mãi. |
+| **Chi tiết linh kiện** (`TICKET_REPAIR_ITEM`) | `Ticket Repair Item` | **TỰ XÂY TRONG APP**<br>*(Child DocType)* | `CellphoneS CRM` | `autoincrement` | Bảng con (`istable = 1`) nhúng trong Ticket để ghi nhận linh kiện tiếp nhận và ngoại quan máy. |
+| **Nhật ký xử lý phiếu** (`TICKET_ACTIVITY_LOG`) | `Ticket Activity Log` | **TỰ XÂY TRONG APP**<br>*(Child DocType)* | `CellphoneS CRM` | `autoincrement` | Bảng con (`istable = 1`) lưu vết chuyển trạng thái, ghi chú xác minh và hành động chăm sóc. |
+| **Sản phẩm tham chiếu** (`ITEM_REFERENCE`) | `Item Reference` | **TỰ XÂY TRONG APP**<br>*(Custom DocType)* | `CellphoneS CRM` | `SP-.#####` | Danh mục SKU đại diện nghiên cứu (`SP-LOQ-83GS001RVN`, `SP-IP15PM-256`, `SP-GAN-65W`) và thời hạn bảo hành. |
+| **Người dùng / Nhân sự** (`STAFF_USER`) | `User` | **SẴN CÓ FRAPPE CORE** | `Core` | `user@cellphones.com.vn`| Định danh tài khoản phân quyền 5 nhóm vai trò nội bộ trong chuỗi (kế thừa từ Frappe Framework). |
 
 ---
 

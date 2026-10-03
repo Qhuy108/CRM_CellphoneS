@@ -4,7 +4,7 @@
 **Mã sản phẩm:** D01  
 **Thuộc nhiệm vụ:** Nhiệm vụ 1 (Sàng lọc & Xác định thực thể) & Nhiệm vụ 2 (Xây dựng ERD Logic & Giải quyết 2 bài toán dữ liệu)  
 **Tác giả:** Trần Quang Huy (System Analyst & Project Manager)  
-**Nền tảng mục tiêu:** Frappe Framework v15 / ERPNext v15  
+**Nền tảng mục tiêu:** Frappe Framework v15.x (Custom App `cellphones_crm` độc lập)  
 **Trạng thái:** Hoàn thiện Mốc M4 (Final Deliverable)
 
 ---

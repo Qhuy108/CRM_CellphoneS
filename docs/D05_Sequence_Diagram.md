@@ -4,7 +4,7 @@
 **Mã sản phẩm:** D05  
 **Thuộc nhiệm vụ:** Nhiệm vụ 6 (Vẽ 1–2 Sequence Diagram cho luồng xử lý chính có kiểm tra điều kiện)  
 **Tác giả:** Trần Quang Huy (System Analyst & Project Manager)  
-**Nền tảng mục tiêu:** Frappe Framework v15 / ERPNext v15  
+**Nền tảng mục tiêu:** Frappe Framework v15.x (Custom App `cellphones_crm` độc lập)  
 **Trạng thái:** Hoàn thiện Mốc M4 (Final Deliverable)  
 **Nhãn xác nhận:** **THIẾT KẾ ĐỀ XUẤT (PROPOSED DESIGN)**
 

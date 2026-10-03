@@ -4,7 +4,7 @@
 
 - **Dự án:** CRM Chuỗi Bán lẻ Công nghệ CellphoneS & Hệ thống Sửa chữa Điện Thoại Vui
 - **Tác giả:** Trần Quang Huy (System Analyst & Project Manager)
-- **Nền tảng mục tiêu:** Frappe Desk UI v15 / ERPNext Web Client
+- **Nền tảng mục tiêu:** Frappe Desk UI v15 (Custom App `cellphones_crm` độc lập)
 - **Công cụ thiết kế & sinh mã:** Stitch MCP (AI UI/UX Engine) & Frappe Design System
 - **Trạng thái:** Hoàn thiện 100% (Final Production-Ready Prototype)
 - **Ngày cập nhật:** 03/10/2026

@@ -4,7 +4,7 @@
 **Mã sản phẩm:** D02  
 **Thuộc nhiệm vụ:** Nhiệm vụ 3 (Lập Từ điển Dữ liệu & Quy tắc kiểm tra tính hợp lệ)  
 **Tác giả:** Trần Quang Huy (System Analyst & Project Manager)  
-**Nền tảng mục tiêu:** Frappe Framework v15 / ERPNext v15 (MariaDB / PostgreSQL)  
+**Nền tảng mục tiêu:** Frappe Framework v15.x (Custom App `cellphones_crm` độc lập) / MariaDB 10.6+ hoặc PostgreSQL 15+  
 **Trạng thái:** Hoàn thiện Mốc M4 (Final Deliverable)
 
 ---

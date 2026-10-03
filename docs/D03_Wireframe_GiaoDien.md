@@ -4,7 +4,7 @@
 **Mã sản phẩm:** D03  
 **Thuộc nhiệm vụ:** Nhiệm vụ 4 (Phác thảo 4–6 màn hình ưu tiên theo Use Case)  
 **Tác giả:** Trần Quang Huy (System Analyst & Project Manager)  
-**Nền tảng mục tiêu:** Frappe Desk UI v15 / ERPNext Web Client  
+**Nền tảng mục tiêu:** Frappe Desk UI v15 (Custom App `cellphones_crm` độc lập)  
 **Trạng thái:** Hoàn thiện Mốc M4 (Final Deliverable)
 
 ---
