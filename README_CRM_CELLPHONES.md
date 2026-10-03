@@ -84,3 +84,4 @@ Tất cả các tài liệu được hoàn thiện chi tiết trong thư mục `
 - [x] **2026-10-02:** Hoàn thiện sản phẩm D05: Sequence Diagram (Tạo/phân công phiếu & Nghiệm thu/đóng phiếu CSAT có điều kiện).
 - [x] **2026-10-02:** Lập Ma trận đối soát chéo (Traceability Matrix) chuẩn bị cho Mốc M3 và hoàn tất Mốc M4.
 - [x] **2026-10-02:** Chốt bàn giao chính thức Mốc M4 (Final Sign-off).
+- [x] **2026-10-03:** Rà soát và cập nhật chuẩn hóa tài liệu [D01_ERD_ThuyetMinh.md](file:///d:/CRM_CellphoneS/docs/D01_ERD_ThuyetMinh.md) bám sát các ranh giới nghiệp vụ: Khách hàng B2C cá nhân, 3 ngành hàng (Điện thoại, Laptop, Phụ kiện), 5 nhóm người dùng CRM, 5 nghiệp vụ chính, giới hạn hậu mãi (tiếp nhận & tiến độ, không quản lý sửa chữa/hoàn tiền) và giới hạn Smember (lưu trữ/tra cứu hạng, chưa tự tính điểm xét hạng).
