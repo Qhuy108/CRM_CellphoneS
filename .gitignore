@@ -18,3 +18,7 @@ $RECYCLE.BIN/
 *.swp
 *.swo
 *~
+
+# Design & Agent skills (Local only)
+.stitch/
+skills/
