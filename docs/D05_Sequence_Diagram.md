@@ -1,148 +1,135 @@
-# SẢN PHẨM BÀN GIAO D05: SEQUENCE DIAGRAMS CHỌN LỌC & GHI CHÚ THIẾT KẾ
-## MODULE CRM CHUỖI BÁN LẺ CÔNG NGHỆ CELLPHONES (TRÊN FRAPPE FRAMEWORK)
+# SẢN PHẨM BÀN GIAO D05: BIỂU ĐỒ TUẦN TỰ (SEQUENCE DIAGRAM)
+## HỆ THỐNG CRM CHUỖI BÁN LẺ CELLPHONES (TRÊN NỀN TẢNG FRAPPE FRAMEWORK)
 
 **Mã sản phẩm:** D05  
-**Thuộc nhiệm vụ:** Nhiệm vụ 6 (Vẽ 1–2 Sequence Diagram cho luồng xử lý chính có kiểm tra điều kiện)  
-**Tác giả:** Trần Quang Huy (System Analyst & Project Manager)  
-**Nền tảng mục tiêu:** Frappe Framework v15.x (Custom App `cellphones_crm` độc lập)  
-**Trạng thái:** Hoàn thiện Mốc M4 (Final Deliverable)  
-**Nhãn xác nhận:** **THIẾT KẾ ĐỀ XUẤT (PROPOSED DESIGN)**
+**Tên sản phẩm:** Biểu đồ tuần tự chọn lọc và ghi chú thiết kế (Sequence Diagrams – Proposed Design)  
+**Người thực hiện:** Trần Quang Huy (MSSV: 24520706 – TV4)  
+**Vai trò:** Quản trị hệ thống, Phụ trách Mô hình Dữ liệu và Thiết kế Triển khai  
+**Nền tảng mục tiêu:** Frappe Framework v15 (Custom App độc lập `cellphones_crm`)  
+**Tài liệu cơ sở:**
+- `Nền Tảng CRM.md` (Nền tảng phân tích hệ thống CRM CellphoneS)
+- `Nhiemvu.md` (Phân công nhiệm vụ và yêu cầu chuẩn đầu ra TV4)
+- `docs/D01_ERD_ThuyetMinh.md`, `docs/D02_TuDienDuLieu.md`, `docs/D04_AnhXa_Frappe.md`  
+**Trạng thái:** Hoàn thiện (Thiết kế đề xuất – Proposed Design)
 
 ---
 
-## TỔNG QUAN CẤU TRÚC BIỂU ĐỒ TUẦN TỰ (UML SEQUENCE ARCHITECTURE)
+## 1. NGUYÊN TẮC THIẾT KẾ BIỂU ĐỒ TUẦN TỰ
 
-Các biểu đồ tuần tự được thiết kế theo mô hình 4 tầng phân lập rõ ràng, đồng bộ 100% với Use Case, Từ điển dữ liệu (D02), Wireframe (D03) và Ma trận phân quyền Frappe (D04):
-1. **Tác nhân (Actor / User):** Khách hàng Smember, Bán hàng & CSKH cửa hàng, Kỹ thuật viên đối tác / CareS, Quản lý cửa hàng.
-2. **Tầng Giao diện (UI Layer):** Form Tiếp nhận Ticket (Desk Form View), Pop-up Nghiệm thu & Kết quả giải quyết.
-3. **Tầng Điều khiển Nghiệp vụ (Controller / Backend):** Frappe Server Script Controller, Workflow Engine, Routing Service.
-4. **Tầng Cơ sở Dữ liệu & Dịch vụ Ngoài (Database & External Services):** MariaDB, Cổng tra cứu Apple Care API, Dữ liệu đơn hàng tham chiếu.
+1. **Phân tầng kiến trúc rõ ràng (Multi-tier Separation):**
+   * **Actor Layer:** Khách hàng (`Customer`), Nhân viên CSKH cửa hàng (`Store CSKH`), Nhân viên CSKH chuỗi (`Chain CSKH`).
+   * **Presentation Layer (UI):** Giao diện Frappe Desk (`Support Ticket Form / Desk UI`).
+   * **Business Logic Layer (Controller):** Frappe Server Controller (`support_ticket.py`, `Workflow Engine`).
+   * **Persistence Layer (Database):** Cơ sở dữ liệu MariaDB (`Support_Ticket Table`, `Interaction Table`).
+2. **Gắn nhãn chuẩn hóa:**
+   * Toàn bộ các biểu đồ dưới đây được định danh là **"Thiết kế đề xuất" (Proposed Design)**, dùng để minh họa logic xử lý kỹ thuật trước khi xây dựng mã nguồn chính thức.
 
 ---
 
-## LUỒNG 1: TIẾP NHẬN & PHÂN CÔNG PHIẾU HỖ TRỢ CÓ ĐIỀU KIỆN (TẠO & ĐIỀU PHỐI THEO SHOWROOM)
+## 2. BIỂU ĐỒ TUẦN TỰ 1: TIẾP NHẬN VÀ ĐIỀU PHỐI PHIẾU HỖ TRỢ LIÊN CHI NHÁNH
 
-### 1. Bối cảnh Nghiệp vụ CellphoneS
-Khi khách hàng mang thiết bị đến Showroom CellphoneS yêu cầu bảo hành/đổi trả (hoặc liên hệ Hotline), nhân viên Bán hàng & CSKH cửa hàng mở phiếu tiếp nhận. Hệ thống kiểm tra thông tin khách hàng, hạng Smember (`S-NULL`, `S-NEW`, `S-MEM`, `S-VIP`) và nhóm giáo dục (`S-Student`/`S-Teacher`), tính toán mức độ ưu tiên và điều phối phân công cho nhân viên xử lý hoặc chuyển đơn vị bảo hành/CareS.
-
-### 2. Biểu đồ Sequence Diagram (Proposed Design)
+* **Tình huống nghiệp vụ:** Khách hàng liên hệ CSKH chuỗi hoặc đến Cửa hàng 1 (CN01) yêu cầu bảo hành/hỗ trợ sản phẩm nhưng yêu cầu cần được chuyển giao cho nhân viên tại Cửa hàng 2 (CN02) xử lý tiếp.
+* **Mục tiêu kỹ thuật:** Làm rõ luồng tiếp nhận, kiểm tra dữ liệu khách hàng, ghi nhận phiếu và cơ chế phân quyền điều phối theo chi nhánh.
 
 ```mermaid
 sequenceDiagram
     autonumber
-    actor StoreAgent as 👔 Bán hàng & CSKH cửa hàng
-    participant UI as 🖥️ Ticket Form (Desk UI)
-    participant Ctrl as ⚙️ Ticket Controller (Frappe Backend)
-    participant DB as 🗄️ Cơ sở Dữ liệu (MariaDB)
-    actor TechAgent as 🛠️ KTV / CSKH Phụ trách
+    actor Customer as Khách hàng
+    actor Agent1 as Nhân viên CSKH (CN01)
+    participant UI as Frappe Desk UI
+    participant Ctrl as SupportTicket Controller
+    participant DB as MariaDB Database
+    actor Agent2 as Nhân viên CSKH (CN02)
 
-    Note over StoreAgent,TechAgent: THIẾT KẾ ĐỀ XUẤT (PROPOSED DESIGN) - LUỒNG TIẾP NHẬN & PHÂN CÔNG PHIẾU HỖ TRỢ
+    Note over Customer, Agent2: [THIẾT KẾ ĐỀ XUẤT] Luồng tiếp nhận & Điều phối Phiếu hỗ trợ liên chi nhánh
 
-    StoreAgent->>UI: Nhập thông tin phiếu: SĐT (0908123456), SKU (SP-IP15PM-256), IMEI (358941098234112), Loại (Lỗi nguồn)
-    StoreAgent->>UI: Nhấn nút [Tiếp nhận & Tạo Phiếu]
-    
-    UI->>Ctrl: submit_new_ticket(ticket_data)
+    Customer->>Agent1: Yêu cầu bảo hành / khiếu nại (SĐT, Sản phẩm, Tình trạng lỗi)
+    Agent1->>UI: Mở Form Tạo Phiếu Hỗ Trợ (Nhập SĐT / Mã KH)
+    UI->>Ctrl: get_customer_profile(phone_number)
+    Ctrl->>DB: SELECT * FROM `tabCellphoneS Customer` WHERE phone_number = ?
+    DB-->>Ctrl: Trả về thông tin khách hàng & lịch sử mua hàng
+    Ctrl-->>UI: Hiển thị thông tin KH (Tên, Hạng thành viên, Lịch sử mua)
+
+    Agent1->>UI: Nhập thông tin lỗi, chọn Phân loại: "Bảo hành", chọn Chi nhánh xử lý: "CN02", Phân công: "Agent2"
+    Agent1->>UI: Bấm nút [Lưu & Chuyển tiếp nhận]
+    UI->>Ctrl: submit_ticket(ticket_data)
     
     activate Ctrl
-    Ctrl->>DB: 1. Kiểm tra SĐT trong tabCustomer & tabSmember Profile
-    DB-->>Ctrl: Khách: Nguyễn Văn An | Hạng: ⭐ S-VIP | Chi tiêu: 85.4 triệu
+    Ctrl->>Ctrl: validate_ticket_data()
+    Note right of Ctrl: Kiểm tra bắt buộc: customer_id, issue_description, assigned_to_user
+    Ctrl->>DB: INSERT INTO `tabSupport Ticket` (status='Tiếp nhận', branch_id='CN02', assigned_to='Agent2', ...)
+    Ctrl->>DB: INSERT INTO `tabCustomer Interaction` (summary='Tiếp nhận yêu cầu bảo hành tại CN01, chuyển CN02')
+    DB-->>Ctrl: Ghi nhận thành công (ticket_id: TICK-2026-00089)
     
-    Ctrl->>Ctrl: 2. Thiết lập mức ưu tiên và thời hạn xử lý
-    alt Khách hàng là S-VIP
-        Ctrl->>Ctrl: Set priority = 'Critical', Phân luồng tiếp nhận ưu tiên
-    else Khách hàng S-MEM / S-NEW / S-NULL
-        Ctrl->>Ctrl: Set priority = 'Medium'
-    end
-
-    Ctrl->>Ctrl: 3. Kiểm tra phân loại vấn đề & Điều phối đơn vị phối hợp
-    alt issue_category IN ('Tiep_nhan_bao_hanh', 'Doi_tra_theo_chinh_sach')
-        Ctrl->>DB: Truy vấn nhân viên tiếp nhận kỹ thuật thuộc Showroom/CareS
-        DB-->>Ctrl: KTV khả dụng: TranVanTu (DTV/CareS Q9)
-        Ctrl->>Ctrl: Set partner_unit = 'Trung_tam_CareS', allocated_to = 'TranVanTu'
-        Ctrl->>Ctrl: Set status = 'In_Progress' (Bắt đầu kiểm tra)
-    else issue_category == 'Khieu_nai_dich_vu'
-        Ctrl->>DB: Truy vấn Quản lý Showroom tiếp nhận
-        DB-->>Ctrl: Quản lý: StoreManager_Linh
-        Ctrl->>Ctrl: Set partner_unit = 'CSKH_Showroom', allocated_to = 'StoreManager_Linh'
-        Ctrl->>Ctrl: Set status = 'Open'
-    end
-
-    Ctrl->>DB: 4. Lưu bản ghi `Support_Ticket` (TCK-2026-00155)
-    Ctrl->>DB: 5. Ghi nhật ký vào bảng con `Ticket_Activity_Log` (Action: Tiep_nhan_va_phan_cong)
-    
-    Ctrl-->>TechAgent: Gửi thông báo hệ thống: "Phiếu TCK-2026-00155 đã được phân công xử lý!"
+    Ctrl->>Ctrl: trigger_notification(assigned_to='Agent2')
+    Ctrl-->>UI: Trả về thông báo thành công & Mã phiếu TICK-2026-00089
     deactivate Ctrl
 
-    Ctrl-->>UI: Trả về kết quả thành công kèm Mã Ticket & Trạng thái
-    UI-->>StoreAgent: Hiển thị thông báo: "Tạo phiếu thành công! Đã chuyển tiếp nhận kiểm tra tại Showroom."
-```
+    UI-->>Agent1: Hiển thị thông báo "Đã tạo và phân công phiếu thành công"
+    Agent1-->>Customer: Cung cấp mã tiếp nhận & hẹn thời gian liên hệ lại
 
-### 3. Ghi chú Thiết kế & Xử lý Luồng Ngoại lệ (Exception Handling)
-* **Khách hàng vãng lai không cung cấp SĐT:** Hệ thống tự động gán `customer_id = 'CUST-GUEST'`, `contact_phone = '0000000000'`, đặt mức ưu tiên `priority = 'Low'`.
-* **Khách hàng đến từ cửa hàng khác (O03):** Giữ nguyên mã khách hàng duy nhất; nhân viên Showroom B chỉ được xem thông tin hồ sơ và các ticket cần thiết được phân công, không hiển thị toàn bộ lịch sử nội bộ ngoài phạm vi cửa hàng.
+    Ctrl-)Agent2: Gửi thông báo trên Desk & Notification: "Bạn có phiếu hỗ trợ mới TICK-2026-00089 cần xử lý tại CN02"
+    Agent2->>UI: Mở xem chi tiết phiếu TICK-2026-00089 trên Workspace CN02
+```
 
 ---
 
-## LUỒNG 2: NGHIỆM THU KỸ THUẬT, ĐỐI CHIẾU CHÍNH SÁCH & ĐÓNG PHIẾU HỖ TRỢ CÓ ĐIỀU KIỆN
+## 3. BIỂU ĐỒ TUẦN TỰ 2: THẨM ĐỊNH ĐIỀU KIỆN VÀ ĐÓNG PHIẾU HỖ TRỢ (CLOSING GATES VALIDATION)
 
-### 1. Bối cảnh Nghiệp vụ CellphoneS
-Sau khi thiết bị được kiểm định lỗi phần cứng do nhà sản xuất (IC nguồn hỏng) trên máy iPhone của hội viên trong thời hạn chính sách, hệ thống thực hiện đối chiếu điều kiện (chính sách hãng và gói AppleCare+), cập nhật kết quả giải quyết (`resolution_result`), ghi nhận thông báo cho khách và đóng phiếu.
-
-### 2. Biểu đồ Sequence Diagram (Proposed Design)
+* **Tình huống nghiệp vụ:** Nhân viên CSKH sau khi nhận phản hồi kết quả từ đối tác bảo hành/hãng tiến hành nghiệm thu và đóng phiếu hỗ trợ trên hệ thống.
+* **Mục tiêu kỹ thuật:** Ràng buộc logic kiểm tra điều kiện đóng phiếu nghiêm ngặt (Practice #2 – Đảm bảo 100% phiếu đóng có kết quả xử lý và xác nhận đã thông báo cho khách hàng).
 
 ```mermaid
 sequenceDiagram
     autonumber
-    actor TechAgent as 🛠️ KTV / CSKH Phụ trách
-    actor StoreAgent as 👔 Bán hàng & CSKH cửa hàng
-    participant UI as 🖥️ Ticket Detail Form (Desk UI)
-    participant Ctrl as ⚙️ Ticket Workflow Engine
-    participant AppleAPI as 🌐 Tra cứu Apple Care / IMEI
-    participant DB as 🗄️ Cơ sở Dữ liệu (MariaDB)
-    actor Customer as 👤 Khách hàng
+    actor Agent as Nhân viên CSKH
+    participant UI as Form Chi Tiết Phiếu Hỗ Trợ
+    participant Ctrl as SupportTicket Controller
+    participant DB as MariaDB Database
+    actor Customer as Khách hàng
 
-    Note over TechAgent,Customer: THIẾT KẾ ĐỀ XUẤT (PROPOSED DESIGN) - LUỒNG NGHIỆM THU & ĐÓNG PHIẾU CÓ ĐIỀU KIỆN
+    Note over Agent, Customer: [THIẾT KẾ ĐỀ XUẤT] Luồng thẩm định điều kiện & Đóng phiếu hỗ trợ (Closing Gates)
 
-    TechAgent->>UI: Nhập Bảng linh kiện `Ticket_Repair_Item` (Lỗi: Mainboard Nguồn)
-    TechAgent->>UI: Chọn Kết quả giải quyết: "Đổi theo chính sách" & Nhập `resolution_notes`
-    TechAgent->>UI: Nhấn nút [Hoàn tất / Resolve]
-
-    UI->>Ctrl: trigger_workflow_action("Mark Resolved")
+    Agent->>UI: Mở phiếu TICK-2026-00089 (Trạng thái hiện tại: 'Đang xử lý')
+    Agent->>UI: Bấm nút hành động [Đóng phiếu hỗ trợ]
     
+    UI->>Ctrl: validate_and_close_ticket(ticket_id)
     activate Ctrl
-    Note over Ctrl,AppleAPI: KIỂM TRA ĐIỀU KIỆN NGHIỆM THU (VALIDATION 1 & 2)
-    alt Thiếu kết quả giải quyết hoặc ghi chú xử lý
-        Ctrl-->>UI: Báo lỗi: "Bắt buộc chọn Kết quả giải quyết (resolution_result) và nhập Ghi chú xử lý!"
-    else Đủ thông tin chẩn đoán
-        Ctrl->>AppleAPI: Tra cứu trạng thái bảo hành chính hãng / AppleCare+
-        AppleAPI-->>Ctrl: Status: AppleCare+ Active (Hợp lệ)
+
+    Note over Ctrl: BƯỚC 1: Kiểm tra kết quả xử lý (Resolution Result Gate)
+    alt resolution_result IS NULL hoặc rỗng
+        Ctrl-->>UI: Throw ValidationError("Không thể đóng phiếu: Vui lòng nhập Kết quả xử lý chi tiết trước khi đóng!")
+        UI-->>Agent: Hiển thị cảnh báo lỗi màu đỏ (Highlight ô 'Kết quả xử lý')
+    else resolution_result ĐÃ NHẬP
         
-        Ctrl->>DB: Cập nhật status = 'Resolved', resolution_result = 'Doi_theo_chinh_sach'
-        Ctrl->>DB: Ghi log `Ticket_Activity_Log` (Trạng thái: In_Progress -> Resolved)
-        Ctrl-->>StoreAgent: Thông báo: "Đã duyệt phương án đổi theo chính sách! Vui lòng thông báo cho khách."
+        Note over Ctrl: BƯỚC 2: Kiểm tra cờ xác nhận đã thông báo khách (Customer Notification Gate)
+        alt customer_notified == FALSE (Chưa báo khách)
+            Ctrl-->>UI: Throw ValidationError("Không thể đóng phiếu: Bạn phải xác nhận đã liên hệ thông báo kết quả cho khách hàng!")
+            UI-->>Agent: Hiển thị cảnh báo lỗi (Yêu cầu tích chọn 'Đã thông báo khách')
+        else customer_notified == TRUE (Đã báo khách)
+            
+            Note over Ctrl: BƯỚC 3: Hợp lệ -> Tiến hành đóng phiếu
+            Ctrl->>DB: UPDATE `tabSupport Ticket` SET status = 'Đóng phiếu', closed_at = NOW() WHERE name = 'TICK-2026-00089'
+            Ctrl->>DB: UPDATE `tabCustomer Care Task` SET status = 'Hoàn thành', completed_at = NOW() WHERE ticket_id = 'TICK-2026-00089'
+            DB-->>Ctrl: Cập nhật thành công
+            
+            Ctrl->>Ctrl: update_sla_metrics(ticket_id)
+            Ctrl-->>UI: Trả về trạng thái mới 'Đóng phiếu' & Thời điểm closed_at
+            deactivate Ctrl
+
+            UI-->>Agent: Cập nhật giao diện: Trạng thái [ĐÃ ĐÓNG PHIẾU], Khóa các ô nhập liệu
+            Agent->>Customer: Bàn giao thiết bị hoàn tất / Xác nhận kết thúc khiếu nại
+        end
     end
-    deactivate Ctrl
-
-    Note over StoreAgent,Customer: Nhân viên CSKH Showroom gọi điện thông báo kết quả cho khách hàng hẹn ngày nhận máy
-
-    StoreAgent->>UI: Cập nhật `notify_customer_status = 'Da_thong_bao_qua_dien_thoai'` & `customer_notified_at = now()`
-    StoreAgent->>UI: Bàn giao máy cho khách -> Nhấn [Bàn giao & Đóng phiếu]
-    UI->>Ctrl: trigger_workflow_action("Notify & Close")
-
-    activate Ctrl
-    Note over Ctrl,DB: KIỂM TRA ĐIỀU KIỆN ĐÓNG PHIẾU (VALIDATION 3)
-    alt notify_customer_status == 'Chua_thong_bao'
-        Ctrl-->>UI: Báo lỗi: "Bắt buộc ghi nhận đã thông báo cho khách trước khi Đóng phiếu!"
-    else Đã ghi nhận thông báo khách
-        Ctrl->>DB: 1. Cập nhật status = 'Closed', closed_time = now()
-        Ctrl->>DB: 2. Ghi log `Ticket_Activity_Log` (Trạng thái: Resolved -> Closed)
-        Ctrl-->>UI: Cập nhật trạng thái phiếu thành công [Closed]
-    end
-    deactivate Ctrl
 ```
 
-### 3. Ghi chú Thiết kế & Xử lý Luồng Ngoại lệ (Exception Handling)
-* **Khách chưa thoát tài khoản iCloud:** Nếu thiết bị kích hoạt khóa Find My / iCloud, nhân viên hướng dẫn khách hỗ trợ mở khóa trước khi thực hiện các thủ tục đổi máy/bảo hành.
-* **Thời hạn 30 ngày và tình trạng máy:** Thời hạn 30 ngày không đồng nghĩa mọi yêu cầu đều được đổi miễn phí hoặc đổi máy nguyên seal. Nếu máy bị cấn móp, rơi vỡ hoặc không đạt điều kiện chính sách, nhân viên ghi nhận `resolution_result = 'Khong_du_dieu_kien'` hoặc chuyển diện sửa chữa có phí sau khi thỏa thuận với khách hàng.
-* **Quy tắc Thông báo Khách hàng (MVP):** Trong giai đoạn MVP, CRM hỗ trợ nhân viên ghi nhận kết quả liên lạc trực tiếp qua điện thoại hoặc tại quầy thông qua trường `notify_customer_status`, đảm bảo mọi tương tác đều được lưu vết đầy đủ trước khi đóng phiếu.
+---
 
+## 4. GHI CHÚ THIẾT KẾ & ĐỒNG BỘ VỚI CÁC SẢN PHẨM KHÁC
+
+1. **Đồng bộ với D01 (ERD) & D02 (Từ điển dữ liệu):**
+   * Các thực thể và trường gọi trong Sequence Diagram (`Support_Ticket.status`, `assigned_to_user`, `resolution_result`, `customer_notified`, `closed_at`) khớp chính xác 100% với tên vật lý và kiểu dữ liệu trong D02.
+2. **Đồng bộ với D03 (Wireframe):**
+   * Các thông báo lỗi `ValidationError` trong biểu đồ 2 tương ứng chính xác với các cảnh báo đỏ được thiết kế trên giao diện `UI-04` (Support Ticket View).
+3. **Đồng bộ với D04 (Ánh xạ Frappe):**
+   * Các bước chuyển trạng thái (Transitions) tuân thủ đúng quy trình Workflow và Ma trận phân quyền của Frappe Framework v15.

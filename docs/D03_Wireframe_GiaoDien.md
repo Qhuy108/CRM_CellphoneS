@@ -1,254 +1,286 @@
-# SẢN PHẨM BÀN GIAO D03: WIREFRAME & LAYOUT CÁC MÀN HÌNH ƯU TIÊN
-## MODULE CRM CHUỖI BÁN LẺ CÔNG NGHỆ CELLPHONES (TRÊN FRAPPE FRAMEWORK)
+# SẢN PHẨM BÀN GIAO D03: PHÁC THẢO WIREFRAME GIAO DIỆN HỆ THỐNG
+## HỆ THỐNG CRM CHUỖI BÁN LẺ CELLPHONES (TRÊN NỀN TẢNG FRAPPE FRAMEWORK)
 
 **Mã sản phẩm:** D03  
-**Thuộc nhiệm vụ:** Nhiệm vụ 4 (Phác thảo 4–6 màn hình ưu tiên theo Use Case)  
-**Tác giả:** Trần Quang Huy (System Analyst & Project Manager)  
-**Nền tảng mục tiêu:** Frappe Desk UI v15 (Custom App `cellphones_crm` độc lập)  
-**Trạng thái:** Hoàn thiện Mốc M4 (Final Deliverable)
+**Tên sản phẩm:** Phác thảo Wireframe các màn hình ưu tiên (UI Specifications)  
+**Người thực hiện:** Trần Quang Huy (MSSV: 24520706 – TV4)  
+**Vai trò:** Quản trị hệ thống, Phụ trách Mô hình Dữ liệu và Thiết kế Triển khai  
+**Nền tảng mục tiêu:** Frappe Framework v15 (Custom App độc lập `cellphones_crm`)  
+**Tài liệu cơ sở:**
+- `Nền Tảng CRM.md` (Nền tảng phân tích hệ thống CRM CellphoneS)
+- `Nhiemvu.md` (Phân công nhiệm vụ và yêu cầu chuẩn đầu ra TV4)
+- `docs/D01_ERD_ThuyetMinh.md` & `docs/D02_TuDienDuLieu.md` (Mô hình ERD và Từ điển dữ liệu)  
+**Trạng thái:** Hoàn thiện (Thiết kế đề xuất – Proposed Design)
 
 ---
 
-## TỔNG QUAN THIẾT KẾ GIAO DIỆN (DESK UI STANDARDS)
+## 1. NGUYÊN TẮC THIẾT KẾ WIREFRAME
 
-Toàn bộ 6 màn hình trọng tâm dưới đây được thiết kế bám sát chuẩn giao diện **Frappe Desk UI v15**, phục vụ các Use Case chính của CellphoneS:
-1. Quản trị vòng đời khách hàng và quyền lợi Smember VIP.
-2. Quản lý cơ hội tư vấn bán hàng đa kênh & đặt trước (Pre-order) Flagship.
-3. Tiếp nhận tương tác tổng đài đa kênh & nhắc việc chăm sóc (Task Reminder).
-4. Điều phối và xử lý phiếu hỗ trợ bảo hành - sửa chữa Điện Thoại Vui.
-5. Nghiệm thu kỹ thuật, đối soát IMEI/Apple Care và giải trình đóng phiếu.
-6. Giám sát thời gian thực chỉ số cam kết chất lượng dịch vụ (SLA & CSAT).
-
-Mỗi màn hình được bóc tách chặt chẽ theo 4 cấu phần:
-* **1. Thông tin hiển thị (Xem):** Dữ liệu chỉ đọc và nguồn gốc truy vấn.
-* **2. Dữ liệu thao tác (Nhập):** Các ô nhập liệu, bộ lọc, danh sách chọn và bảng con.
-* **3. Hành động chính (Actions):** Các nút bấm chức năng kích hoạt quy trình nghiệp vụ.
-* **4. Thông báo lỗi quan trọng (Important Validation & Error Alerts):** Cảnh báo khi người dùng thao tác sai hoặc vi phạm ràng buộc dữ liệu.
+1. **Chuẩn hóa bố cục Frappe Desk v15:**
+   * Mỗi màn hình tuân thủ cấu trúc giao diện chuẩn của Frappe Framework: Thanh điều hướng (Navbar) $\rightarrow$ Tiêu đề trang & Thanh nút hành động (Page Header & Actions) $\rightarrow$ Nội dung chi tiết bố trí theo các Section / Tab $\rightarrow$ Bảng con (Child Table) và Dòng thời gian hoạt động (Activity Timeline).
+2. **Cấu trúc đặc tả 3 phần bắt buộc cho mỗi màn hình:**
+   * **Phần 1: Thông tin hiển thị (Xem - Read-only):** Dữ liệu chỉ đọc và nguồn gốc trích xuất từ các trường trong Từ điển dữ liệu D02.
+   * **Phần 2: Thông tin nhập / chỉnh sửa (Nhập - Input):** Các ô nhập liệu, danh sách chọn (Select), ô đánh dấu (Check) cùng quy tắc bắt buộc/tùy chọn.
+   * **Phần 3: Hành động (Actions) & Cảnh báo / Thông báo lỗi:** Các nút bấm thao tác (Lưu, Phân công, Chuyển bước...) và logic kiểm tra điều kiện kèm thông báo phản hồi người dùng.
 
 ---
 
-## MÀN HÌNH 1: HỒ SƠ KHÁCH HÀNG 360° & DANH SÁCH (CUSTOMER 360° PROFILE VIEW)
+## 2. CHI TIẾT 5 MÀN HÌNH TÁC NGHIỆP TRỌNG TÂM
 
-### 1. Bảng Đặc tả Thành phần Màn hình
+---
 
-| Thành phần | Chi tiết đặc tả nghiệp vụ & kỹ thuật |
-| :--- | :--- |
-| **1. Thông tin hiển thị (Xem)** | • **Header Profile:** Mã KH nội bộ duy nhất (`customer_id`), Họ tên, SĐT liên hệ, Email, CCCD, Địa chỉ, Ngày tạo hồ sơ.<br>• **Thẻ Smember 4 Hạng & Nhóm Giáo dục:** Badge Hạng mức (`S-NULL`, `S-NEW`, `S-MEM`, `⭐ S-VIP`), Badge Giáo dục (`🎓 S-Student` / `👨‍🏫 S-Teacher` kèm trạng thái Xác minh & Hạn hưởng), Tổng chi tiêu tham chiếu (`total_spent`), Điểm thưởng (`reward_points`).<br>• **Tab 1 - Thiết bị sở hữu / Lịch sử mua hàng:** Danh sách máy đã mua lấy từ `Sales_Invoice_Reference` (Mã SKU, Tên máy, Số IMEI/Serial, Ngày mua, Showroom xuất bán, Hạn bảo hành theo mã).<br>• **Tab 2 - Lịch sử Phiếu hỗ trợ:** Danh sách toàn bộ Ticket đã mở (Mã TCK, Lỗi, Trạng thái 5 State, Kết quả xử lý, Đơn vị tiếp nhận).<br>• **Tab 3 - Dòng thời gian Tương tác (Timeline):** Lịch sử các cuộc gọi Hotline 1800, Chat Zalo, Showroom.<br>• **Tab 4 - Nhu cầu / Cơ hội mở:** Các cơ hội tư vấn đang mở và lịch chăm sóc. |
-| **2. Dữ liệu thao tác (Nhập)** | • Form cập nhật thông tin liên hệ (Địa chỉ nhận hàng, Email, Tỉnh/Thành phố).<br>• Cập nhật thông tin nhóm giáo dục (Loại ưu đãi, trạng thái duyệt, thời hạn xác nhận - yêu cầu quyền quản trị).<br>• Ô nhập ghi chú đặc điểm CSKH. |
-| **3. Hành động chính (Actions)** | • **[+ Tạo Phiếu Hỗ Trợ]:** Mở form tạo Ticket mới (tự động điền thông tin KH).<br>• **[+ Tạo Cơ Hội Tư Vấn]:** Mở form ghi nhận nhu cầu/sản phẩm quan tâm.<br>• **[+ Ghi Nhận Tương Tác]:** Mở cửa sổ nhật ký cuộc gọi/chat.<br>• **[Lưu Thay Đổi]:** Cập nhật dữ liệu vào cơ sở dữ liệu. |
-| **4. Thông báo lỗi quan trọng** | • **Cảnh báo trùng SĐT:** *"Số điện thoại [0908123456] đã tồn tại trên hồ sơ CUST-2026-00001! Hệ thống cảnh báo để kiểm tra, không tự ý gộp hồ sơ."*<br>• **Lỗi quyền hạn:** *"Bạn không có quyền chỉnh sửa thông tin Hạng thành viên hoặc Xác minh nhóm Giáo dục!"* |
+### 2.1. MÀN HÌNH UI-01: HỒ SƠ KHÁCH HÀNG 360° (CUSTOMER 360 VIEW)
 
-### 2. Wireframe Mockup UI (Frappe Desk Form View - Tabbed)
-
+#### A. Sơ đồ Wireframe (ASCII Layout)
 ```text
-+--------------------------------------------------------------------------------------------------------------+
-| CellphoneS CRM > Khách hàng > CUST-2026-00002                  [⭐ S-MEM] [🎓 S-Student: Đã duyệt] [ Lưu ]    |
-+--------------------------------------------------------------------------------------------------------------+
-| LÊ THỊ BÍCH TRÂM                                                                [+ Tạo Ticket] [+ Tạo Cơ Hội] |
-| SĐT: 0912345678  |  Email: tram.le@yahoo.com  |  CCCD: 079195005678             [+ Ghi Tương Tác]            |
-| Địa chỉ: Showroom 125 Lê Văn Việt, P. Hiệp Phú, TP. Thủ Đức, TP.HCM                                          |
-+--------------------------------------------------------------------------------------------------------------+
-| [ THÔNG TIN HỘI VIÊN SMEMBER & ƯU ĐÃI GIÁO DỤC ]                                                             |
-| Hạng Smember: ⭐ S-MEM (Chi tiêu năm: 18,500,000 đ)  | Nhóm giáo dục: 🎓 S-Student (Đã duyệt - Hạn: 30/06/2027) |
-| Tổng tích lũy tham chiếu: 18,500,000 đ               | Người cập nhật: HuyTV4 (Admin)                         |
-+--------------------------------------------------------------------------------------------------------------+
-| [TAB 1: Thiết bị sở hữu / IMEI (1)] | [TAB 2: Cơ hội (1)] | [TAB 3: Phiếu hỗ trợ (1)] | [TAB 4: Tương tác]    |
-+--------------------------------------------------------------------------------------------------------------+
-| • Laptop Lenovo LOQ 15IAX9 83GS001RVN | SN: 83GS001RVNVN101 | HĐ: INV-2025-01124 | Mua: 15/01/2025 | BH: 24 Tháng |
-+--------------------------------------------------------------------------------------------------------------+
-| [ LỊCH SỬ PHIẾU HỖ TRỢ GẦN NHẤT ]                                                                            |
-| - TCK-2026-00150: Lenovo LOQ quạt kêu to -> [🟡 In Progress] -> Đang kiểm tra tại DTV Lê Văn Việt              |
-+--------------------------------------------------------------------------------------------------------------+
++----------------------------------------------------------------------------------------------------+
+| [CellphoneS CRM]  Tìm kiếm khách hàng (SĐT / Họ tên / Mã KH)...           [Chi nhánh: CN01] [huy.tq v]|
++----------------------------------------------------------------------------------------------------+
+| < Trở lại Danh sách KH     HỒ SƠ KHÁCH HÀNG: CUST-2026-00128               [Chỉnh sửa] [Gộp hồ sơ] [...] |
++----------------------------------------------------------------------------------------------------+
+| THÔNG TIN ĐỊNH DANH & PHÂN NHÓM                                                                    |
+| Họ và tên: [Nguyễn Văn An                 ]   Mã KH: CUST-2026-00128   Chi nhánh gốc: CN01-Nguyễn T.Học|
+| Số điện thoại: [0901234567               ]   Nhóm khách: [S-Student (HSSV)   v]                    |
+| Email: [an.nguyen@gmail.com              ]   Hạng hội viên: [S-Mem (Thành viên mẫu) v]             |
+| Địa chỉ: [123 Cầu Giấy, Hà Nội           ]   Quyền riêng tư: [ ] Ngừng nhận liên hệ chăm sóc (Opt-out)|
++----------------------------------------------------------------------------------------------------+
+| [TAB: Nhu cầu & Cơ hội (2)]  [TAB: Nhật ký tương tác (5)]  [TAB: Phiếu hỗ trợ (1)]  [TAB: Lịch sử mua hàng (3)] |
++----------------------------------------------------------------------------------------------------+
+| DANH SÁCH CƠ HỘI MUA SẮM (OPPORTUNITIES)                                          [+ Tạo cơ hội mới] |
+| Mã cơ hội    | Nhóm SP     | SP quan tâm         | Ngân sách dự kiến | Giai đoạn     | Người phụ trách |
+| OPP-2026-045 | Điện thoại  | iPhone 15 Pro Max   | 30.000.000 đ      | Đang tư vấn   | Võ Duy Mạnh     |
+| OPP-2026-012 | Phụ kiện    | Củ sạc nhanh GaN 65W| 700.000 đ         | Thành công    | Võ Duy Mạnh     |
++----------------------------------------------------------------------------------------------------+
+| LỊCH SỬ MUA HÀNG THAM CHIẾU (TỪ DỮ LIỆU MẪU CSV)                                                   |
+| Mã đơn hàng  | Ngày mua   | Sản phẩm                   | IMEI / Serial   | Giá trị (VNĐ)| Chi nhánh bán    |
+| DH20260915-01| 15/09/2026 | iPhone 15 Pro Max 256GB    | 354890123456789 | 29.990.000   | CN01-Nguyễn T.Học|
+| DH20260925-04| 25/09/2026 | Ốp lưng MagSafe IP15PM     | N/A             |    450.000   | CN01-Nguyễn T.Học|
++----------------------------------------------------------------------------------------------------+
+| TIMELINE & NHẮC VIỆC GẦN NHẤT                                                    [+ Ghi nhận tương tác] |
+| * 02/10/2026 14:30 [Gọi điện]: Khách hỏi tư vấn nâng cấp củ sạc nhanh cho máy mới mua (Võ Duy Mạnh)  |
+| * LỊCH HẸN: 06/10/2026 10:00 - Gọi lại kiểm tra sự hài lòng sau mua sắm (Nguyễn Đức Nhật)        |
++----------------------------------------------------------------------------------------------------+
 ```
 
----
-
-## MÀN HÌNH 2: QUẢN LÝ CƠ HỘI TƯ VẤN & NHU CẦU MUA SẮM (LEAD & OPPORTUNITY VIEW)
-
-### 1. Bảng Đặc tả Thành phần Màn hình
-
-| Thành phần | Chi tiết đặc tả nghiệp vụ & kỹ thuật |
-| :--- | :--- |
-| **1. Thông tin hiển thị (Xem)** | • Mã cơ hội (`lead_id`), Tên khách hàng, SĐT liên hệ, Email, Nguồn tiếp nhận.<br>• **Thông tin Tư vấn Chuyên sâu:** Sản phẩm/SKU quan tâm (ví dụ: `Lenovo LOQ 15IAX9 83GS001RVN`, `iPhone 15 Pro Max`), Ngân sách dự kiến (`budget`), Thiết bị đang dùng (`device_in_use`), Nhu cầu thu cũ (`trade_in_demand`), Yêu cầu cấu hình/tác vụ (`desired_specs` - đồ họa, RAM, cổng sạc GaN...), Ngày dự kiến mua (`expected_buy_date`).<br>• Lịch nhắc việc chăm sóc (`follow_up_due` = Tạo + 3 ngày làm việc). |
-| **2. Dữ liệu thao tác (Nhập)** | • Form nhập thông tin nhu cầu và kết quả tư vấn: Trạng thái cơ hội (`Open` $\rightarrow$ `Contacted` $\rightarrow$ `Qualified` $\rightarrow$ `Converted` $\rightarrow$ `Lost`).<br>• Chọn Showroom tiếp nhận tư vấn và Nhân viên phụ trách.<br>• Ô ghi chú chi tiết nhu cầu quà tặng / tư vấn gói AppleCare+ (phân biệt rõ với CareS). |
-| **3. Hành động chính (Actions)** | • **[Bắt đầu cuộc gọi Telesales]:** Quay số tới SĐT khách.<br>• **[⏰ Tạo Lịch Hẹn Chăm Sóc (3 Ngày)]:** Tự động đặt lịch follow-up sau 3 ngày làm việc.<br>• **[🎯 Chuyển Đổi Thành Công (Converted)]:** Chốt mua, tạo đơn tham chiếu hoặc liên kết khách hàng.<br>• **[Đóng Cơ Hội (Lost)]:** Đánh dấu thất bại kèm lý do cụ thể. |
-| **4. Thông báo lỗi quan trọng** | • **Thiếu thông tin tư vấn:** *"Vui lòng nhập Ngân sách dự kiến hoặc Thiết bị quan tâm trước khi chuyển trạng thái Qualified!"*<br>• **Trùng lặp cơ hội:** *"Khách hàng đã có một cơ hội mở cho sản phẩm này tại Showroom 125 Lê Văn Việt!"* |
-
-### 2. Wireframe Mockup UI (Frappe Desk Opportunity Form View)
-
-```text
-+--------------------------------------------------------------------------------------------------------------+
-| CellphoneS CRM > Cơ hội Tư vấn > LEAD-2026-08912            [ Trạng thái: 🟡 CONTACTED ] [ 📞 Gọi Telesales ] |
-+--------------------------------------------------------------------------------------------------------------+
-| KHÁCH HÀNG: Trần Thị Mai Loan (SĐT: 0938112233)              KÊNH TIẾP NHẬN: [ Showroom 125 Lê Văn Việt   ▼ ]|
-| SẢN PHẨM QUAN TÂM: Laptop Lenovo LOQ 15IAX9 83GS001RVN      NGÂN SÁCH DỰ KIẾN: [ 20,000,000 - 25,000,000 đ ]|
-| THIẾT BỊ ĐANG DÙNG: Asus Vivobook cũ                         NHU CẦU THU CŨ ĐỔI MỚI: [☑ Có nhu cầu trợ giá ]  |
-| YÊU CẦU CẤU HÌNH / TÁC VỤ: Học CNTT, nâng cấp 16GB RAM, game nhẹ, màn hình chuẩn màu 100% sRGB               |
-| NGÀY DỰ KIẾN MUA: [ 10/10/2026 📅 ]                          HẠN CHĂM SÓC (+3 Ngày LV): [ 06/10/2026 17:00 ⏰ ]|
-+--------------------------------------------------------------------------------------------------------------+
-| TIẾN TRÌNH TƯ VẤN (STATE):                                                                                   |
-| ( ) 1. Mới tạo (Open)   (•) 2. Đã liên hệ (Contacted)   ( ) 3. Đủ điều kiện (Qualified)   ( ) 4. Chốt mua   |
-+--------------------------------------------------------------------------------------------------------------+
-| GHI CHÚ TƯ VẤN & TƯ VẤN GÓI BẢO HÀNH:                                                                        |
-| +----------------------------------------------------------------------------------------------------------+ |
-| | Đã tư vấn bản LOQ 83GS001RVN bảo hành 24 tháng chính hãng. Khách thuộc nhóm S-Student cần chuẩn bị CCCD  | |
-| | + Thẻ SV để được hưởng chính sách giá ưu đãi giáo dục. Khách hẹn T7 ra Showroom trải nghiệm máy.         | |
-| +----------------------------------------------------------------------------------------------------------+ |
-+--------------------------------------------------------------------------------------------------------------+
-| [ Hủy / Đóng Cơ Hội (Lost) ]    [ ⏰ Đặt Lịch Chăm Sóc (+3 Ngày) ]    [ 🎯 Đã Mua Hàng (Converted) ]   [ Lưu ]|
-+--------------------------------------------------------------------------------------------------------------+
-```
+#### B. Đặc tả 3 thành phần giao diện
+1. **Thông tin hiển thị (Xem - Read-only):**
+   * Mã khách hàng (`Customer.customer_id`), Chi nhánh gốc (`Customer.branch_id`), Thời điểm tạo (`Customer.created_at`).
+   * Bảng danh sách cơ hội (`Opportunity` theo `customer_id`).
+   * Bảng lịch sử mua hàng tham chiếu (`Purchase_History_Ref` khớp qua `customer_phone` hoặc `customer_id`).
+   * Lịch sử tương tác và công việc chăm sóc (`Interaction`, `Care_Task`).
+2. **Thông tin nhập / chỉnh sửa (Nhập - Input):**
+   * Họ và tên (`Customer.full_name` - Bắt buộc).
+   * Số điện thoại (`Customer.phone_number` - Bắt buộc, đúng Regex).
+   * Email (`Customer.email` - Tùy chọn), Địa chỉ (`Customer.address` - Tùy chọn).
+   * Nhóm khách (`Customer.customer_group` - Select: Cá nhân, S-Student, S-Teacher).
+   * Hạng thành viên mẫu (`Customer.membership_tier` - Select: S-New, S-Mem, S-Vip).
+   * Ngừng nhận chăm sóc (`Customer.opt_out_care` - Checkbox).
+3. **Hành động (Actions) & Cảnh báo lỗi:**
+   * `[Lưu]`: Lưu thông tin khách hàng. Hệ thống kiểm tra Regex SĐT, nếu sai định dạng hiển thị: *"Số điện thoại không hợp lệ (yêu cầu 10 chữ số đầu 03/05/07/08/09)"*.
+   * *Cảnh báo trùng*: Nếu SĐT đã tồn tại, hiển thị popup: *"Phát hiện số điện thoại đã tồn tại ở hồ sơ CUST-xxxxx. Vui lòng kiểm tra lại trước khi tạo mới!"*.
+   * `[Gộp hồ sơ]`: Chỉ hiển thị với `System Administrator` hoặc `Chain Manager`. Mở hộp thoại chọn hồ sơ đích để gộp theo quy tắc đã chốt.
+   * `[+ Tạo cơ hội mới]`: Mở form UI-02 tự động điền sẵn thông tin khách hàng.
 
 ---
 
-## MÀN HÌNH 3: GHI NHẬN TƯƠNG TÁC ĐA KÊNH & NHẮC VIỆC (INTERACTION & TASK REMINDER)
+### 2.2. MÀN HÌNH UI-02: CHI TIẾT CƠ HỘI BÁN HÀNG & TƯ VẤN SẢN PHẨM (OPPORTUNITY & CONSULTATION)
 
-### 1. Bảng Đặc tả Thành phần Màn hình
-
-| Thành phần | Chi tiết đặc tả nghiệp vụ & kỹ thuật |
-| :--- | :--- |
-| **1. Thông tin hiển thị (Xem)** | • Mã tương tác (`interaction_id`), Thời gian phát sinh cuộc gọi/chat/tại quầy.<br>• Thông tin nhận diện người gọi: Tên khách hàng, Hạng Smember (`S-NULL`, `S-NEW`, `S-MEM`, `S-VIP`), Badge Giáo dục, Chi nhánh phụ trách.<br>• Nhân viên thực hiện (`staff_agent`). |
-| **2. Dữ liệu thao tác (Nhập)** | • **Khách hàng:** Chọn khách hàng (`customer_id`).<br>• **SĐT liên hệ:** `contact_phone` (Bắt buộc, 10 chữ số).<br>• **Kênh tiếp nhận:** `Hotline_1800`, `Zalo_OA`, `Fanpage`, `Showroom_Store`.<br>• **Phân loại nhu cầu:** `Tu_van_mua_hang`, `Tra_cuu_don_hang`, `Tiep_nhan_doi_tra`, `Bao_hanh_khieu_nai`.<br>• **Tóm tắt nội dung:** Biên bản trao đổi ngắn gọn.<br>• **Tạo lịch nhắc việc (Follow-up Task):** Chọn ngày giờ hẹn và nội dung nhắc nhở. |
-| **3. Hành động chính (Actions)** | • **[Lưu Tương Tác]:** Ghi nhận vào nhật ký hệ thống.<br>• **[⚡ Tạo Nhanh Ticket]:** Chuyển sang tạo `Support_Ticket`.<br>• **[⏰ Tạo Lịch Nhắc Việc]:** Thêm nhiệm vụ nhắc việc vào lịch cá nhân.<br>• **[Hủy Bỏ].** |
-| **4. Thông báo lỗi quan trọng** | • **Thiếu nội dung:** *"Vui lòng nhập Tóm tắt nội dung trao đổi trước khi lưu!"*<br>• **SĐT không hợp lệ:** *"Số điện thoại phải gồm 10 chữ số!"* |
-
-### 2. Wireframe Mockup UI (Interaction Pop-up & Follow-up Task)
-
+#### A. Sơ đồ Wireframe (ASCII Layout)
 ```text
-+--------------------------------------------------------------------------------------------------------------+
-| [GHI NHẬN TƯƠNG TÁC KHÁCH HÀNG] - INT-2026-00542                             [ Hotline 1800.2097 ] [ Cuộc gọi]|
-+--------------------------------------------------------------------------------------------------------------+
-| SĐT người gọi (*): [ 0908123456             ]  Khách hàng: [ CUST-2026-00001 - Nguyễn Văn An (⭐ S-VIP)   ▼ ]|
-| Tên người liên hệ: [ Nguyễn Văn An          ]  Kênh tiếp nhận (*): [ Hotline 1800                         ▼ ]|
-+--------------------------------------------------------------------------------------------------------------+
-| Phân loại tương tác (*):                                                                                     |
-| ( ) Tư vấn mua hàng / Cấu hình    (•) Tiếp nhận bảo hành / Đổi trả    ( ) Tra cứu đơn hàng    ( ) Khiếu nại  |
-+--------------------------------------------------------------------------------------------------------------+
-| Tóm tắt nội dung trao đổi (*):                                                                               |
-| +----------------------------------------------------------------------------------------------------------+ |
-| | Khách báo iPhone 15 Pro Max 256GB bị sập nguồn khi sạc. Hướng dẫn khách mang máy và hóa đơn đến Showroom  | |
-| | 125 Lê Văn Việt để kỹ thuật viên kiểm tra điều kiện chính sách hãng và gói dịch vụ AppleCare+.            | |
-| +----------------------------------------------------------------------------------------------------------+ |
-+--------------------------------------------------------------------------------------------------------------+
-| [⏰ TẠO LỊCH NHẮC VIỆC GỌI LẠI (FOLLOW-UP TASK)]                                                             |
-| Ngày giờ hẹn gọi: [ 04/10/2026 10:00 📅 ]   Nội dung: [ Gọi lại xác nhận khách đã gửi máy tại Showroom 125  ]|
-+--------------------------------------------------------------------------------------------------------------+
-| [ Hủy bỏ ]                                  [ Lưu tương tác ]  [ ⚡ Tạo nhanh Ticket ]  [ ⏰ Lưu Lịch Hẹn ]  |
-+--------------------------------------------------------------------------------------------------------------+
++----------------------------------------------------------------------------------------------------+
+| [CellphoneS CRM]  Cơ hội bán hàng: OPP-2026-045                             [Chi nhánh: CN01]       |
++----------------------------------------------------------------------------------------------------+
+| < Trở lại Danh sách     CƠ HỘI TƯ VẤN: OPP-2026-045        Trạng thái: [ĐANG TƯ VẤN v]   [LƯU THAY ĐỔI] |
++----------------------------------------------------------------------------------------------------+
+| THÔNG TIN KHÁCH HÀNG & PHÂN CÔNG                                                                   |
+| Khách hàng: [CUST-2026-00128 - Nguyễn Văn An        v]    [+ Tạo nhanh KH nếu khách vãng lai]     |
+| Số điện thoại: 0901234567                                  Chi nhánh phụ trách: CN01-Nguyễn T.Học  |
+| Nhóm khách hàng: S-Student                                 Nhân viên phụ trách: [Võ Duy Mạnh    v] |
++----------------------------------------------------------------------------------------------------+
+| CHI TIẾT NHU CẦU TƯ VẤN SẢN PHẨM                                                                   |
+| Nhóm sản phẩm: (*) [Điện thoại           v]    Sản phẩm quan tâm: (*) [iPhone 15 Pro Max 256GB    ]|
+| Ngân sách dự kiến: [30.000.000        ] VNĐ    Thời điểm dự kiến mua: [Trong tuần này            v]|
+| Mục đích sử dụng:                                                                                  |
+| [Nhu cầu chụp ảnh sự kiện, quay video học tập, nâng cấp từ iPhone 11 cũ                         ]  |
+| Yêu cầu riêng / Cấu hình / Phụ kiện kèm theo:                                                      |
+| [Quan tâm màu Titan Tự Nhiên; hỏi về chính sách Thu cũ đổi mới và gói bảo hành AppleCare+       ]  |
++----------------------------------------------------------------------------------------------------+
+| TIẾN ĐỘ TƯ VẤN & HÀNH ĐỘNG TIẾP THEO                                                               |
+| Giai đoạn: [Đang tư vấn            v]     Lý do thất bại/hủy (nếu có): [                         ] |
+| [*] Nút chuyển nhanh: [Chờ phản hồi]  [Chốt thành công (Won)]  [Thất bại (Lost)]  [Hủy cơ hội]     |
++----------------------------------------------------------------------------------------------------+
+| CÔNG VIỆC CHĂM SÓC LIÊN QUAN                                                      [+ Tạo lịch hẹn mới]|
+| Tiêu đề việc                 | Hạn chót          | Trạng thái     | Người thực hiện | Hành động    |
+| Gọi báo giá AppleCare+ kèm máy| 06/10/2026 15:00  | Chưa thực hiện | Võ Duy Mạnh     | [Hoàn thành] |
++----------------------------------------------------------------------------------------------------+
 ```
+
+#### B. Đặc tả 3 thành phần giao diện
+1. **Thông tin hiển thị (Xem - Read-only):**
+   * Mã cơ hội (`Opportunity.opportunity_id`), Chi nhánh phụ trách (`Opportunity.branch_id`), Thời gian tạo (`Opportunity.created_at`).
+   * Thông tin định danh của khách hàng liên kết (`Customer.full_name`, `Customer.phone_number`, `Customer.customer_group`).
+2. **Thông tin nhập / chỉnh sửa (Nhập - Input):**
+   * Khách hàng liên kết (`Opportunity.customer_id` - Tùy chọn nếu khách vãng lai).
+   * Tên tạm, SĐT tạm (`temp_customer_name`, `temp_phone_number` nếu chưa chọn `customer_id`).
+   * Nhóm sản phẩm (`Opportunity.product_category` - Bắt buộc: Điện thoại, Laptop, Phụ kiện).
+   * Sản phẩm quan tâm (`Opportunity.product_name` - Bắt buộc).
+   * Ngân sách dự kiến (`Opportunity.expected_budget` - Số tiền $\ge 0$).
+   * Mục đích sử dụng & Yêu cầu riêng (`usage_purpose`, `specific_requirement`).
+   * Thời điểm dự kiến mua (`expected_buy_time`).
+   * Nhân viên phụ trách (`Opportunity.assigned_to_user` - Bắt buộc).
+   * Giai đoạn (`Opportunity.stage`).
+   * Lý do thất bại/hủy (`Opportunity.lost_reason` - Bắt buộc nếu chuyển sang Thất bại/Hủy).
+3. **Hành động (Actions) & Cảnh báo lỗi:**
+   * `[Lưu]`: Lưu thông tin cơ hội.
+   * `[Thất bại (Lost)]` / `[Hủy cơ hội]`: Chuyển trạng thái; nếu `lost_reason` để trống, hệ thống chặn và báo lỗi: *"Vui lòng nhập lý do thất bại hoặc lý do hủy cơ hội để hoàn tất!"*.
+   * `[+ Tạo lịch hẹn mới]`: Tự động tạo `Care_Task` liên kết với cơ hội này để nhắc việc đúng hẹn.
 
 ---
 
-## MÀN HÌNH 4: DANH SÁCH & KANBAN PHIẾU HỖ TRỢ (TICKET KANBAN & LIST VIEW)
+### 2.3. MÀN HÌNH UI-03: GHI NHẬN TƯƠNG TÁC & QUẢN LÝ CÔNG VIỆC CHĂM SÓC (INTERACTION & CARE TASKS)
 
-### 1. Bảng Đặc tả Thành phần Màn hình
-
-| Thành phần | Chi tiết đặc tả nghiệp vụ & kỹ thuật |
-| :--- | :--- |
-| **1. Thông tin hiển thị (Xem)** | • **Kanban Board 5 Cột chuẩn State Diagram C03 (Nhật):**<br>  1. `Open (Mới tạo)` $\rightarrow$ 2. `In Progress (Đang xử lý)` $\rightarrow$ 3. `Pending Vendor (Chờ Hãng/LK)` $\rightarrow$ 4. `Resolved (Đã giải quyết)` $\rightarrow$ 5. `Closed (Đóng phiếu)`.<br>• **Thông tin trên mỗi Card:** Mã Ticket, Tên khách, SKU Thiết bị + IMEI, Nhãn ưu tiên (`Critical` / `High` / `S-VIP`), Phương án kết quả nếu có, Nhân viên phụ trách.<br>• **Bộ lọc cửa hàng:** Phân quyền theo Showroom (Showroom 125 Lê Văn Việt, Showroom 213 Trần Quang Khải). |
-| **2. Dữ liệu thao tác (Nhập)** | • Ô lọc nhanh theo Mã Ticket, IMEI, Tên khách, SĐT.<br>• Kéo thả Card giữa các cột trạng thái hợp lệ. |
-| **3. Hành động chính (Actions)** | • **[+ Tạo Phiếu Hỗ Trợ Mới]:** Mở form tiếp nhận.<br>• **[Chuyển Chế Độ List / Kanban]:** Đổi cách hiển thị.<br>• **[Phân Công Xử Lý]:** Gán nhân viên CSKH/Kỹ thuật viên phụ trách. |
-| **4. Thông báo lỗi quan trọng** | • **Vi phạm luồng trạng thái:** *"Không thể chuyển trực tiếp từ Open sang Resolved mà chưa qua bước xử lý/xác minh!"*<br>• **Quyền truy cập:** *"Bạn chỉ được thao tác trên các phiếu thuộc phạm vi Showroom của mình!"* |
-
-### 2. Wireframe Mockup UI (Frappe Desk Kanban View - 5 Cột)
-
+#### A. Sơ đồ Wireframe (ASCII Layout)
 ```text
-+--------------------------------------------------------------------------------------------------------------+
-| CellphoneS CRM > Phiếu hỗ trợ (Kanban)           [ Chi nhánh: Showroom 125 Lê Văn Việt ▼ ] [+ Tạo Ticket Mới]|
-| Phân loại: [ Tất cả ▼ ]   Ưu tiên: [ Tất cả ▼ ]                               [ 🔍 Tìm mã ticket, IMEI, SĐT... ]|
-+--------------------------------------------------------------------------------------------------------------+
-| 1. MỚI TẠO (Open)   | 2. ĐANG XỬ LÝ (In Prog)| 3. CHỜ HÃNG (Pending)  | 4. ĐÃ XỬ LÝ (Resolved) | 5. ĐÓNG (Closed)   |
-| (2 Phiếu)           | (3 Phiếu)              | (1 Phiếu)               | (2 Phiếu)              | (12 Phiếu)         |
-+---------------------+------------------------+-------------------------+------------------------+--------------------+
-| [TCK-2026-00155] ⭐  | [TCK-2026-00150]        | [TCK-2026-00145]         | [TCK-2026-00142] ⭐     | [TCK-2026-00130]    |
-| KH: Nguyễn Văn An   | KH: Lê Thị Bích Trâm   | KH: Đỗ Mỹ Linh          | KH: Hoàng Minh Quân    | KH: Bùi Anh Tuấn   |
-| iPhone 15 Pro Max   | Lenovo LOQ 15IAX9      | Asus ROG Zephyrus G16   | Củ sạc GaN Anker 65W   | Loa Marshall       |
-| IMEI: 3589410982... | SN: 83GS001RVNVN101    | SN: K9N0CV124982        | SN: AN2024GAN65001     | SN: MS20240912     |
-| Lỗi: Nóng sập nguồn | Lỗi: Quạt kêu rè rè    | Lỗi: Lỗi màn hình       | Kết quả: Đổi theo CS   | Hoàn tất trả máy   |
-| Phụ trách: Chưa gán | Phụ trách: KTV DTV-Tú  | Phụ trách: KTV DTV-Hải  | Đã báo khách qua ĐT    | Đã thông báo khách |
-| Store: 125 LVV      | Store: 125 LVV         | Chuyển: Apple Service   | Phụ trách: CSKH-Thuận  | Phụ trách: CSKH-My |
-+---------------------+------------------------+-------------------------+------------------------+--------------------+
++----------------------------------------------------------------------------------------------------+
+| [CellphoneS CRM]  Quản lý Tương tác & Nhắc việc Chăm sóc                    [Chi nhánh: CN01]       |
++----------------------------------------------------------------------------------------------------+
+| DANH SÁCH VIỆC CẦN LÀM HÔM NAY (CARE TASKS DUE TODAY)                 [Bộ lọc: Việc của tôi v]     |
+| [!] 2 việc quá hạn   [*] 3 việc đến hạn hôm nay   [v] 5 việc đã hoàn thành                         |
++----------------------------------------------------------------------------------------------------+
+| Hạn chót       | Ưu tiên   | Khách hàng       | Tiêu đề công việc            | Trạng thái     | Xử lý   |
+| 05/10 11:00 (QH)| [CAO]    | Nguyễn Văn An    | Báo kết quả bảo hành sạc GaN | Chưa thực hiện | [Xem][V]|
+| 05/10 16:30    | [TR.BÌNH] | Trần Thị Mai     | Tư vấn nâng cấp RAM Lenovo LOQ| Đang thực hiện | [Xem][V]|
++----------------------------------------------------------------------------------------------------+
+| FORM GHI NHẬN TƯƠNG TÁC NHANH (QUICK LOG INTERACTION)                                             |
+| Khách hàng: (*) [CUST-2026-00128 - Nguyễn Văn An     v]   Gắn với Cơ hội: [OPP-2026-045         v] |
+| Kênh liên hệ: (*) [Gọi điện thoại        v]               Gắn với Phiếu HT: [TICK-2026-00089     v] |
+| Chiều liên hệ: (*) [Đến (Inbound)        v]               Thời điểm: [05/10/2026 11:15            ] |
+| Người ghi nhận: [Võ Duy Mạnh (Store Sales)          v]                                             |
+| Nội dung trao đổi: (*)                                                                             |
+| [Khách gọi hỏi củ sạc Ugreen 65W gửi bảo hành hôm trước đã có hàng đổi mới về cửa hàng chưa.       ] |
+| [Nhân viên đã kiểm tra hệ thống và thông báo hàng đã về, mời khách ghé lấy chiều nay.              ] |
+| Kết quả tương tác: [Khách đồng ý chiều ghé]    [X] Tự động đánh dấu hoàn thành việc liên quan      |
+|                                                     [LƯU TƯƠNG TÁC] [LƯU & TẠO VIỆC TIẾP THEO]     |
++----------------------------------------------------------------------------------------------------+
 ```
+
+#### B. Đặc tả 3 thành phần giao diện
+1. **Thông tin hiển thị (Xem - Read-only):**
+   * Danh sách công việc cần làm (`Care_Task`) được phân loại trực quan theo màu: Đỏ (Quá hạn), Vàng (Đến hạn hôm nay), Xanh (Hoàn thành).
+   * Thông tin nhân viên đăng nhập (`performed_by_user`).
+2. **Thông tin nhập / chỉnh sửa (Nhập - Input):**
+   * Khách hàng (`Interaction.customer_id` - Bắt buộc).
+   * Kênh liên hệ (`channel` - Select: Gọi điện, Trực tiếp tại quầy, Tin nhắn).
+   * Chiều liên hệ (`direction` - Select: Đến, Đi).
+   * Thời điểm tương tác (`interaction_time` - Datetime $\le NOW()$).
+   * Liên kết nghiệp vụ (`opportunity_id` hoặc `ticket_id` - Tùy chọn).
+   * Nội dung trao đổi (`summary` - Long Text, Bắt buộc).
+3. **Hành động (Actions) & Cảnh báo lỗi:**
+   * `[LƯU TƯƠNG TÁC]`: Lưu bản ghi vào bảng `Interaction`. Nếu khách hàng đã `opt_out_care = 1`, hệ thống hiển thị icon cảnh báo: *"Khách hàng đã yêu cầu ngừng nhận liên hệ chăm sóc tiếp thị"*.
+   * `[LƯU & TẠO VIỆC TIẾP THEO]`: Lưu tương tác và tự động mở popup tạo `Care_Task` mới cho bước chăm sóc tiếp theo.
+   * `[Hoàn thành việc]`: Nút tích chọn hoàn thành nhanh trên danh sách `Care_Task`, tự động cập nhật `status = 'Hoàn thành'` và `completed_at = NOW()`.
 
 ---
 
-## MÀN HÌNH 5: CHI TIẾT PHIẾU HỖ TRỢ & TIẾP NHẬN BẢO HÀNH (TICKET DETAIL & RESOLUTION)
+### 2.4. MÀN HÌNH UI-04: PHIẾU HỖ TRỢ DỊCH VỤ & PHỐI HỢP HẬU MÃI (SUPPORT TICKET & AFTER-SALES)
 
-### 1. Bảng Đặc tả Thành phần Màn hình
-
-| Thành phần | Chi tiết đặc tả nghiệp vụ & kỹ thuật |
-| :--- | :--- |
-| **1. Thông tin hiển thị (Xem)** | • **Header Status:** Mã Ticket (`TCK-YYYY-XXXXX`), Trạng thái 5 State, Badge Hội viên Smember / Học sinh - Sinh viên.<br>• **Thông tin Chung:** Khách hàng, SĐT, Thiết bị lỗi (SKU, Tên máy, Serial/IMEI), Hóa đơn mua tham chiếu, Hạn bảo hành theo mã.<br>• **Bảng con Linh kiện (`Ticket_Repair_Item`):** Bộ phận lỗi, Tình trạng ngoại quan, Phụ kiện giữ lại, Diện bảo hành.<br>• **Dòng thời gian Xử lý (`Ticket_Activity_Log`):** Lịch sử chuyển trạng thái, ghi chú xác minh kỹ thuật. |
-| **2. Dữ liệu thao tác (Nhập)** | • Phân công xử lý: Chọn người phụ trách và Chi nhánh tiếp nhận.<br>• **Nghiệm thu & Kết quả giải quyết (Bắt buộc khi Resolve/Close):**<br>  - `resolution_result`: Chọn *Bảo hành chính hãng, Đổi theo chính sách, Sửa chữa có phí, Không đủ điều kiện, Khách rút yêu cầu*.<br>  - `resolution_notes`: Ghi chú nội dung đã xử lý / mã thân máy đổi mới.<br>• **Ghi nhận thông báo cho khách (MVP Rule):**<br>  - `notify_customer_status`: Chọn *Chưa thông báo, Đã thông báo qua điện thoại, Đã thông báo tại quầy*.<br>  - `customer_notified_at`: Ngày giờ nhân viên thực hiện thông báo. |
-| **3. Hành động chính (Actions)** | • **[Nhận Xử Lý (In Progress)]:** Tiếp nhận máy vào bước chẩn đoán.<br>• **[Chuyển Hãng / Đơn vị Bảo hành (Pending Vendor)]:** Gửi thiết bị sang trung tâm ủy quyền.<br>• **[Hoàn Tất / Resolve]:** Ghi nhận kết quả xử lý được duyệt.<br>• **[Bàn Giao & Đóng Phiếu (Close)]:** Hoàn tất bàn giao và ghi nhận đã thông báo khách.<br>• **[In Biên Nhận Tiếp Nhận / Trả Máy]:** Xuất mẫu in bàn giao. |
-| **4. Thông báo lỗi quan trọng** | • **Thiếu kết quả xử lý:** *"Bắt buộc phải chọn Kết quả giải quyết (resolution_result) và nhập Ghi chú xử lý trước khi đánh dấu Hoàn tất (Resolved)!"*<br>• **Chưa ghi nhận thông báo khách:** *"Vui lòng xác nhận đã thông báo cho khách hàng trước khi Đóng phiếu (Closed)!"*<br>• **Chính sách đổi trả:** *"Thời hạn 30 ngày không mặc định đổi mới nguyên seal cho mọi trường hợp. Vui lòng kiểm tra điều kiện ngoại quan và chính sách hãng!"* |
-
-### 2. Wireframe Mockup UI (Frappe Desk Ticket Detail Form View)
-
+#### A. Sơ đồ Wireframe (ASCII Layout)
 ```text
-+--------------------------------------------------------------------------------------------------------------+
-| CellphoneS CRM > Phiếu hỗ trợ > TCK-2026-00155             [⭐ S-VIP] [ In Phiếu Tiếp Nhận ] [ Lưu Dữ Liệu ]  |
-| Trạng thái: [🟡 IN PROGRESS]                                                [ Cập nhật ] [ HOÀN TẤT / RESOLVE ]|
-+--------------------------------------------------------------------------------------------------------------+
-| KHÁCH HÀNG: Nguyễn Văn An (SĐT: 0908123456)             CHI NHÁNH: [ Showroom 125 Lê Văn Việt             ▼ ]|
-| THIẾT BỊ: iPhone 15 Pro Max 256GB Titan Tự Nhiên         NGƯỜI PHỤ TRÁCH: [ CSKH_NguyenVanThuan            ▼ ]|
-| SỐ SERIAL / IMEI: 358941098234112                        HÓA ĐƠN THAM CHIẾU: INV-2024-08912                   |
-| DỊCH VỤ / GÓI BẢO VỆ: AppleCare+ (Trang dịch vụ riêng)   ĐƠN VỊ PHỐI HỢP: [ Trung tâm CareS Q9             ▼ ]|
-+--------------------------------------------------------------------------------------------------------------+
-| [ BẢNG KIỂM TRA NGOẠI QUAN & LINH KIỆN TIẾP NHẬN ] (Ticket_Repair_Item)                                      |
-+----+---------------------+----------------------+----------------------+------------------+---------------+
-| No | Bộ phận phát hiện lỗi| Tình trạng ngoại quan| Phụ kiện giữ lại     | Diện xử lý       | Chi phí dự kiến|
-+----+---------------------+----------------------+----------------------+------------------+---------------+
-| 1  | [ Nguồn / Pin     ▼]| [ Máy không cấn móp ▼]| [ Thân máy, Không hộp] | [ Bảo hành hãng ▼]| [         0 đ ]|
-+----+---------------------+----------------------+----------------------+------------------+---------------+
-| [ THÔNG TIN KẾT QUẢ GIẢI QUYẾT & THÔNG BÁO KHÁCH HÀNG ]                                                      |
-| Kết quả giải quyết (*): [ Đổi theo chính sách (Đổi thân máy bảo hành)                                      ▼ ]|
-| Ghi chú xử lý (*):      [ Trung tâm bảo hành xác nhận đổi thân máy mới IMEI: 358941098999888.              ]|
-| Trạng thái thông báo:   [☑ Đã thông báo qua điện thoại ]   Thời điểm: [ 03/10/2026 16:30 📅 ]                |
-+--------------------------------------------------------------------------------------------------------------+
-| [ DÒNG THỜI GIAN XỬ LÝ (TIMELINE) ]                                                                          |
-| • 10:15 - CSKH_Thuan: Tiếp nhận máy tại Showroom 125 Lê Văn Việt -> Trạng thái: Open.                        |
-| • 11:00 - CSKH_Thuan: Chuyển máy sang CareS kiểm định nguồn -> Trạng thái: In Progress.                     |
-| • 15:30 - CSKH_Thuan: Nhận kết quả đổi thân máy, gọi điện thông báo khách hẹn ngày 04/10 nhận máy.           |
-+--------------------------------------------------------------------------------------------------------------+
++----------------------------------------------------------------------------------------------------+
+| [CellphoneS CRM]  Phiếu hỗ trợ: TICK-2026-00089                             [Chi nhánh: CN01]       |
++----------------------------------------------------------------------------------------------------+
+| < Trở lại Danh sách     PHIẾU HỖ TRỢ: TICK-2026-00089        Trạng thái: [ĐÃ CÓ KẾT QUẢ v] [LƯU PHIẾU]|
++----------------------------------------------------------------------------------------------------+
+| THÔNG TIN TIẾP NHẬN YÊU CẦU HẬU MÃI                                                               |
+| Khách hàng: (*) [CUST-2026-00128 - Nguyễn Văn An     v]   Chi nhánh tiếp nhận: CN01-Nguyễn Thái Học|
+| Số điện thoại: 0901234567                                  Thời điểm tiếp nhận: 01/10/2026 09:30   |
+| Phân loại: (*) [Bảo hành thiết bị                   v]   Người chịu trách nhiệm: (*) [Nguyễn Đ.Nhật]|
+| Sản phẩm liên quan: (*) [Củ sạc nhanh GaN 65W Ugreen  ]   Số IMEI/Serial: [UG65W-2026             ]|
+| Mô tả lỗi / Phản ánh của khách: (*)                                                                |
+| [Củ sạc cắm không vào điện, đã test với nhiều cáp khác nhau tại quầy, đèn led không sáng.          ] |
++----------------------------------------------------------------------------------------------------+
+| TIẾN ĐỘ PHỐI HỢP & KẾT QUẢ XỬ LÝ                                                                   |
+| Trạng thái xử lý: [Đã có kết quả                     v]   (Quy trình: Tiếp nhận -> Xử lý -> Kết quả)|
+| Tiến độ đối tác ngoài (Hãng/CareS):                                                               |
+| [Đã gửi TTBH Ugreen ngày 02/10; Hãng xác nhận lỗi mạch nguồn, đã đổi củ sạc mới mã mới về shop.    ] |
+| Kết quả xử lý chi tiết: (*) [BẮT BUỘC KHI ĐÓNG PHIẾU]                                              |
+| [Đổi mới 100% sản phẩm theo chính sách 1 đổi 1 trong 12 tháng. Củ sạc mới đã sẵn sàng tại quầy.    ] |
++----------------------------------------------------------------------------------------------------+
+| ĐIỀU KIỆN ĐÓNG PHIẾU (CLOSING GATES)                                                               |
+| [X] ĐÃ THÔNG BÁO CHO KHÁCH HÀNG (Customer Notified) (*)                                            |
+| Phương thức thông báo: [Gọi điện thoại thông báo lúc 05/10 11:15 - Khách hẹn ghé lấy chiều nay     ] |
+| [CHUYỂN TIẾP NHẬN]   [CHUYỂN ĐANG XỬ LÝ]   [CẬP NHẬT KẾT QUẢ]   >>> [ĐÓNG PHIẾU HỖ TRỢ] <<<        |
++----------------------------------------------------------------------------------------------------+
 ```
+
+#### B. Đặc tả 3 thành phần giao diện
+1. **Thông tin hiển thị (Xem - Read-only):**
+   * Mã phiếu (`ticket_id`), Chi nhánh tiếp nhận (`branch_id`), Ngày giờ lập phiếu (`created_at`), Ngày đóng phiếu (`closed_at`).
+   * Lịch sử tương tác và ghi chú điều chuyển giữa 2 chi nhánh.
+2. **Thông tin nhập / chỉnh sửa (Nhập - Input):**
+   * Khách hàng liên kết (`customer_id` - Bắt buộc).
+   * Phân loại phiếu (`ticket_type` - Select: Bảo hành, Đổi trả, Khiếu nại).
+   * Sản phẩm & IMEI/Serial (`related_product`, `imei_serial`).
+   * Mô tả lỗi (`issue_description` - Long Text, Bắt buộc).
+   * Nhân viên chịu trách nhiệm (`assigned_to_user` - Link, Bắt buộc).
+   * Tiến độ đối tác ngoài (`external_partner_status`).
+   * Kết quả xử lý (`resolution_result` - Long Text).
+   * Cờ xác nhận đã thông báo khách (`customer_notified` - Checkbox).
+3. **Hành động (Actions) & Cảnh báo lỗi (Hard Gate Validation):**
+   * `[LƯU PHIẾU]`: Lưu thông tin cập nhật.
+   * `[ĐÓNG PHIẾU HỖ TRỢ]`: Chuyển `status = 'Đóng phiếu'`.
+   * *Kiểm tra điều kiện đóng phiếu nghiêm ngặt*:
+     * Nếu `resolution_result` để trống: Báo lỗi *"Không thể đóng phiếu: Vui lòng nhập Kết quả xử lý chi tiết trước khi đóng!"*.
+     * Nếu `customer_notified = 0` (chưa tích chọn đã thông báo): Báo lỗi *"Không thể đóng phiếu: Bạn phải xác nhận đã liên hệ thông báo kết quả cho khách hàng!"*.
+     * Đóng thành công: Hệ thống tự động ghi nhận `closed_at = NOW()`.
 
 ---
 
-## MÀN HÌNH 6: DASHBOARD BÁO CÁO TỔNG HỢP & HIỆU SUẤT DỊCH VỤ (CSKH ANALYTICS DASHBOARD)
+### 2.5. MÀN HÌNH UI-05: DASHBOARD BÁO CÁO QUẢN LÝ & GIÁM SÁT SLA (MANAGEMENT REPORT & SLA TRACKING)
 
-### 1. Bảng Đặc tả Thành phần Màn hình
-
-| Thành phần | Chi tiết đặc tả nghiệp vụ & kỹ thuật |
-| :--- | :--- |
-| **1. Thông tin hiển thị (Xem)** | • **4 Thẻ chỉ số tổng quan (KPI Cards theo Mục 5.1 BA):**<br>  - Tỷ lệ Thắng cơ hội ($\text{Tỷ lệ thắng} = \frac{\text{Thắng}}{\text{Thắng} + \text{Thua}} \times 100\%$).<br>  - Số lượng Khách hàng mới trong kỳ (đếm theo ngày tạo hồ sơ).<br>  - Tổng số Ticket phát sinh & Đã giải quyết.<br>  - Số lượng Cơ hội mở cần chăm sóc (Quá hạn 3 ngày làm việc).<br>• **Biểu đồ 1 (Bar Chart):** Hiệu suất tư vấn cơ hội thắng/thua theo 2 Showroom mô phỏng.<br>• **Biểu đồ 2 (Donut Chart):** Phân bổ Ticket theo Kết quả xử lý (Bảo hành, Đổi theo chính sách, Sửa có phí...).<br>• **Bảng danh sách nhắc việc chăm sóc khách hàng đến hạn.** |
-| **2. Dữ liệu thao tác (Nhập)** | • Bộ lọc khoảng thời gian: `Hôm nay`, `Tuần này`, `Tháng này`, `Tùy chọn ngày`.<br>• Bộ lọc Chi nhánh: `Tất cả chuỗi`, `Showroom 125 Lê Văn Việt`, `Showroom 213 Trần Quang Khải`.<br>• Bộ lọc Ngành hàng: `Điện thoại`, `Laptop`, `Phụ kiện`. |
-| **3. Hành động chính (Actions)** | • **[Xuất Báo Cáo PDF / Excel]:** Xuất báo cáo tổng hợp.<br>• **[Làm Mới Dữ Liệu (Refresh)]:** Nạp lại dữ liệu mới nhất. |
-| **4. Thông báo lỗi quan trọng** | • **Lỗi chọn khoảng ngày:** *"Ngày bắt đầu không được lớn hơn Ngày kết thúc trong bộ lọc thời gian!"*<br>• **Chưa có dữ liệu:** *"Chưa phát sinh cơ hội đóng trong kỳ để tính tỷ lệ thắng (Mẫu số = 0)."* |
-
-### 2. Wireframe Mockup UI (Frappe Desk Dashboard View)
-
+#### A. Sơ đồ Wireframe (ASCII Layout)
 ```text
-+--------------------------------------------------------------------------------------------------------------+
-| CellphoneS CRM > Dashboard Báo cáo Hiệu suất Dịch vụ                       [ Tháng này: 10/2026 ▼ ] [ Xuất Báo Cáo ]|
-| Chi nhánh: [ Showroom 125 Lê Văn Việt ▼ ]   Ngành hàng: [ Tất cả ▼ ]                         [ 🔄 Làm mới ]  |
-+--------------------------------------------------------------------------------------------------------------+
-| +---------------------+ +---------------------+ +---------------------+ +---------------------+             |
-| | TỶ LỆ THẮNG CƠ HỘI  | | KHÁCH HÀNG MỚI      | | TỔNG PHIẾU TICKET   | | NHẮC VIỆC CẦN CHĂM  |             |
-| |       68.5%         | |      142 Khách      | |      85 Phiếu       | |       12 Cơ hội     |             |
-| | (Thắng: 54/ Đóng:79)| | (Đã kiểm soát trùng)| | (Đã xử lý: 78/85)   | | (Quá hạn 3 ngày LV) |             |
-| +---------------------+ +---------------------+ +---------------------+ +---------------------+             |
-+--------------------------------------------------------------------------------------------------------------+
-| [ BIỂU ĐỒ KẾT QUẢ XỬ LÝ PHIẾU HỖ TRỢ ]         | [ CƠ HỘI BÁN HÀNG THEO SHOWROOM ]                           |
-|                                                |                                                             |
-|   Đổi theo chính sách [====================]40%| Showroom 125 Lê Văn Việt [====================] 48 Đơn     |
-|   Bảo hành chính hãng [==============      ]30%| Showroom 213 Trần Q. Khải [==============      ] 31 Đơn     |
-|   Sửa chữa có phí     [=========           ]18%|                                                             |
-|   Không đủ điều kiện  [====                ] 8%|                                                             |
-|   Khách rút yêu cầu   [==                  ] 4%|                                                             |
-+--------------------------------------------------------------------------------------------------------------+
-| [ DANH SÁCH CƠ HỘI CẦN CHĂM SÓC GẤP (QUÁ HẠN 3 NGÀY LÀM VIỆC) ]                                             |
-| • LEAD-2026-08912 | Trần Thị Mai Loan | Laptop Lenovo LOQ | Quá hạn 1 ngày | Phụ trách: CSKH_Thuận (125 LVV)   |
-| • LEAD-2026-08905 | Hoàng Minh Quân   | Phụ kiện sạc GaN  | Đến hạn hôm nay| Phụ trách: CSKH_Linh  (213 TQK)   |
-+--------------------------------------------------------------------------------------------------------------+
++----------------------------------------------------------------------------------------------------+
+| [CellphoneS CRM]  Dashboard Báo cáo Quản trị Toàn chuỗi                   [Phạm vi: Cả 2 cửa hàng v]|
++----------------------------------------------------------------------------------------------------+
+| BỘ LỌC BÁO CÁO:  Từ ngày: [01/10/2026]  Đến ngày: [15/10/2026]  Chi nhánh: [Tất cả (CN01, CN02) v] |
++----------------------------------------------------------------------------------------------------+
+| CÁC CHỈ TIÊU NGHIỆM THU CỐT LÕI (SUCCESS METRICS - KARL WIEGERS PRACTICE #2)                       |
+| +-------------------------+ +-------------------------+ +-------------------------+                |
+| | TIẾP NỐI TƯ VẤN THUẬN LỢI| | CHĂM SÓC ĐÚNG HẸN (SLA) | | TRÁCH NHIỆM HẬU MÃI   |                |
+| |       19 / 20 ca        | |         94.2 %          | |         100 %           |                |
+| | [ĐẠT CHỈ TIÊU >=18/20]  | | [ĐẠT CHỈ TIÊU >= 90%]   | | [100% Phiếu có người XL]|                |
+| +-------------------------+ +-------------------------+ +-------------------------+                |
++----------------------------------------------------------------------------------------------------+
+| BÁO CÁO TIẾN ĐỘ CƠ HỘI BÁN HÀNG                         | BÁO CÁO XỬ LÝ PHIẾU HỖ TRỢ DỊCH VỤ       |
+| Phân loại theo giai đoạn:                               | Tổng số phiếu: 45                        |
+| - Mới tiếp nhận : 12 ca (24%)                           | - Tiếp nhận     : 5 phiếu (11.1%)        |
+| - Đang tư vấn   : 18 ca (36%)                           | - Đang xử lý    : 10 phiếu (22.2%)       |
+| - Chờ phản hồi  :  8 ca (16%)                           | - Đã có kết quả : 8 phiếu (17.8%)        |
+| - Thành công (V): 10 ca (20%)                           | - Đã thông báo  : 7 phiếu (15.6%)        |
+| - Thất bại / Hủy:  2 ca ( 4%)                           | - Đã đóng phiếu : 15 phiếu (33.3%)       |
++----------------------------------------------------------------------------------------------------+
+| THEO DÕI NĂNG SUẤT VÀ TỶ LỆ HOÀN THÀNH THEO CHI NHÁNH                                              |
+| Chi nhánh          | Tổng việc giao | Hoàn thành đúng hạn | Quá hạn | Tỷ lệ SLA  | Đánh giá        |
+| CN01 - Nguyễn T.Học|       65       |          62         |    3    |   95.4 %   | Xuất sắc        |
+| CN02 - Hàng Bài    |       40       |          37         |    3    |   92.5 %   | Đạt yêu cầu     |
+| Toàn hệ thống      |      105       |          99         |    6    |   94.2 %   | ĐẠT MỤC TIÊU    |
++----------------------------------------------------------------------------------------------------+
 ```
+
+#### B. Đặc tả 3 thành phần giao diện
+1. **Thông tin hiển thị (Xem - Read-only):**
+   * Các thẻ KPI tổng hợp tương ứng 3 mục tiêu thành công trong `Nền Tảng CRM.md`.
+   * Biểu đồ tỷ lệ chuyển đổi cơ hội tư vấn (`Opportunity.stage`).
+   * Phân bổ trạng thái phiếu hỗ trợ (`Support_Ticket.status`).
+   * Bảng đối soát SLA chăm sóc đúng hạn giữa 2 chi nhánh.
+2. **Thông tin nhập / bộ lọc (Nhập - Input):**
+   * Khoảng thời gian báo cáo (`From Date`, `To Date`).
+   * Phạm vi chi nhánh (`Branch Filter`: CN01, CN02, Toàn chuỗi).
+   * Lọc theo nhân viên phụ trách (`Assigned User Filter`).
+3. **Hành động (Actions) & Phân quyền:**
+   * `[Xuất báo cáo Excel / PDF]`: Xuất dữ liệu thống kê ra file báo cáo.
+   * `[Xem danh sách chi tiết]`: Nhấp vào từng chỉ số để khoan sâu (drill-down) vào danh sách các bản ghi cụ thể.
+   * *Giới hạn quyền truy cập*:
+     * `Store Manager` chỉ xem được dữ liệu của chi nhánh mình.
+     * `Chain Manager` và `System Administrator` có toàn quyền xem số liệu so sánh giữa 2 chi nhánh.

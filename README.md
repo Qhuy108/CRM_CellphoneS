@@ -1,88 +1,31 @@
-# DỰ ÁN: PHÂN TÍCH & THIẾT KẾ MODULE QUẢN TRỊ QUAN HỆ KHÁCH HÀNG (CRM)
-# CHUỖI BÁN LẺ CÔNG NGHỆ CELLPHONES TRÊN NỀN TẢNG FRAPPE FRAMEWORK
+# Phân Hệ Quản Trị Mối Quan Hệ Khách Hàng (CRM) Chuỗi Bán Lẻ CellphoneS
 
-**Tác giả / Vai trò:** Chuyên viên Phân tích Thiết kế Hệ thống (System Analyst) & Quản lý Dự án (Project Manager)  
-**Chủ nhiệm dự án (User):** Trần Quang Huy  
-**Nền tảng kỹ thuật:** Frappe Framework v15.x (Custom App `cellphones_crm` độc lập, Zero-dependency on ERPNext)  
-**Cơ sở dữ liệu:** MariaDB 10.6+ / PostgreSQL 15+  
-**Tài liệu tham chiếu:** [Nhiemvu.md](Nhiemvu.md)
+Dự án phân tích nghiệp vụ và thiết kế triển khai hệ thống CRM chuyên biệt cho chuỗi bán lẻ công nghệ **CellphoneS** trên nền tảng **Frappe Framework v15** (Custom App độc lập `cellphones_crm`).
 
----
-
-## 1. TỔNG QUAN DỰ ÁN (PROJECT OVERVIEW)
-Dự án nhằm phân tích, mô hình hóa và thiết kế giải pháp phần mềm quản trị quan hệ khách hàng (CRM) chuyên biệt cho chuỗi bán lẻ công nghệ **CellphoneS** (hơn 100 cửa hàng trên toàn quốc, hệ thống website/app và chuỗi trung tâm sửa chữa - bảo hành **Điện Thoại Vui**).
-
-### 1.1. Bối cảnh Nghiệp vụ Cốt lõi
-* **Bán lẻ đa kênh (Omnichannel):** Tiếp nhận khách hàng từ Hotline tổng đài 1800.2097, Fanpage/Zalo Official Account, Website trực tuyến, và trực tiếp tại chuỗi Showroom CellphoneS.
-* **Hệ thống Hội viên Smember:** Quản lý vòng đời khách hàng, chính sách tích lũy chi tiêu, nâng hạng hội viên (Smember Standard, Smember VIP - S-VIP), và áp dụng đặc quyền ưu đãi dịch vụ/SLA.
-* **Tiếp nhận Khiếu nại & Bảo hành/Sửa chữa (Điện Thoại Vui):** Quản lý phiếu hỗ trợ (Ticket), kiểm tra số Serial/IMEI theo chuẩn GSMA/Luhn, luân chuyển bảo hành nội bộ hoặc hãng thứ ba (Apple Care, Samsung Service Center), cam kết SLA xử lý theo từng phân hạng khách hàng.
-* **Chăm sóc Khách hàng Chủ động & Đánh giá Dịch vụ (CSAT):** Tự động gửi tin nhắn Zalo ZNS / SMS mời khách hàng đánh giá sau khi hoàn tất hỗ trợ; tự động phân luồng telesales chăm sóc các khách đặt trước (Pre-order) dòng sản phẩm chiến lược (iPhone, Galaxy S series).
+## Thành viên thực hiện
+* **Người thực hiện:** Trần Quang Huy (MSSV: 24520706 – TV4)
+* **Vai trò:** Quản trị hệ thống, Phụ trách Mô hình Dữ liệu và Thiết kế Triển khai
+* **Môn học:** Quản trị mối quan hệ khách hàng (CRM)
 
 ---
 
-## 2. CƠ CHẾ PHỐI HỢP & PHÂN VAI (ROLES & COLLABORATION)
+## Danh mục tài liệu và sản phẩm bàn giao (Deliverables)
 
-| Vai trò | Phụ trách chính | Trách nhiệm then chốt |
-| :--- | :--- | :--- |
-| **System Analyst & Project Manager** | **Trần Quang Huy** | Chủ trì phân tích dữ liệu, thiết kế ERD, từ điển dữ liệu, wireframe, kiến trúc DocType Frappe, sequence diagrams, lập kế hoạch WBS và kiểm soát chất lượng bàn giao. |
-| **Business Flow & Process Analyst** | **Nhật** | Xây dựng tài liệu Use Case, Biểu đồ luồng trạng thái (State Diagram C03) của Ticket và Lead. |
-| **Domain & Retail Business Expert** | **Mạnh** | Cung cấp và thẩm định tính thực tế của các quy trình nghiệp vụ CellphoneS (Smember, IMEI, SLA, quy trình bảo hành Điện Thoại Vui). |
-
----
-
-## 3. KIẾN TRÚC HỆ THỐNG TRÊN NỀN TẢNG FRAPPE FRAMEWORK
-
-```
-+-------------------------------------------------------------------------+
-|                       TẦNG GIAO DIỆN (UI LAYER)                        |
-|  [Desk UI / Form View]   [Kanban Board Ticket]   [CSKH Dashboard Charts]|
-+-------------------------------------------------------------------------+
-                                    |
-                                    v
-+-------------------------------------------------------------------------+
-|                  TẦNG ĐIỀU KHIỂN & NGHIỆP VỤ (FRAPPE CORE)              |
-|  - Workflow Engine (5 Trạng thái Ticket & Phân quyền Transition Rules)   |
-|  - Role Permission Manager (Agent, Manager, Kỹ thuật Điện Thoại Vui)     |
-|  - Server Scripts / Hooks (Auto-routing SLA, Pre-order to Order, Dedupe) |
-|  - Notification Engine (Email, SMS API, Zalo ZNS)                       |
-+-------------------------------------------------------------------------+
-                                    |
-                                    v
-+-------------------------------------------------------------------------+
-|             TẦNG MÔ HÌNH DỮ LIỆU (STANDALONE CUSTOM APP DOCTYPES)       |
-|  [Frappe Core DocTypes]: User, Role, Communication, Activity Log        |
-|  [Custom App DocTypes]: Customer, Lead Opportunity, Interaction...      |
-|  [Support & Reference]: Support Ticket, Branch Store, Item Ref, Inv Ref |
-|  [Child Tables]: Ticket Repair Item, Ticket Activity Log                |
-|  [Database]: MariaDB / PostgreSQL                                       |
-+-------------------------------------------------------------------------+
-```
+| Mã | Tên sản phẩm | Mô tả tóm tắt | Liên kết |
+| :---: | :--- | :--- | :---: |
+| **Tổng quan** | **Tài liệu quản trị dự án** | Tổng quan mục tiêu, kiến trúc công nghệ, 5 thực hành Chương 2 và Ma trận truy vết. | [PROJECT_OVERVIEW.md](PROJECT_OVERVIEW.md) |
+| **D01** | **Sơ đồ ERD Logic & Thuyết minh** | ERD 8 thực thể, phân tích bội số, giải pháp khách vãng lai và quy tắc gộp hồ sơ trùng. | [docs/D01_ERD_ThuyetMinh.md](docs/D01_ERD_ThuyetMinh.md) |
+| **D02** | **Từ điển dữ liệu & Quy tắc kiểm tra** | Đặc tả 8 thực thể theo bảng 6 cột chuẩn kỹ thuật, đồng bộ trạng thái và cấu trúc file CSV mẫu. | [docs/D02_TuDienDuLieu.md](docs/D02_TuDienDuLieu.md) |
+| **D03** | **Wireframe giao diện 5 màn hình** | Phác thảo layout ASCII Desk v15 bóc tách 3 phần: Xem – Nhập – Hành động & Cảnh báo lỗi. | [docs/D03_Wireframe_GiaoDien.md](docs/D03_Wireframe_GiaoDien.md) |
+| **D04** | **Bảng ánh xạ sang Frappe Framework** | Kiến trúc Standalone Custom App, ánh xạ DocType, Workflow và Ma trận phân quyền 6 vai trò. | [docs/D04_AnhXa_Frappe.md](docs/D04_AnhXa_Frappe.md) |
+| **D05** | **Biểu đồ tuần tự (Sequence Diagram)** | 2 biểu đồ UML: Luồng điều phối liên chi nhánh và Luồng thẩm định đóng phiếu nghiêm ngặt. | [docs/D05_Sequence_Diagram.md](docs/D05_Sequence_Diagram.md) |
 
 ---
 
-## 4. DANH MỤC SẢN PHẨM BÀN GIAO (DELIVERABLES MAP)
-
-Tất cả các tài liệu được hoàn thiện chi tiết trong thư mục `docs/`:
-
-* **[D01 - ERD & Thuyết minh Quan hệ](docs/D01_ERD_ThuyetMinh.md):** Danh mục thực thể (Chi nhánh, Khách hàng, Smember, Lead, Tương tác, Ticket, Dữ liệu mua hàng, Sản phẩm, Nhân sự, Merge log), sơ đồ Mermaid ERD chuẩn hóa, giải pháp Khách vãng lai & Deduplication/Merge hồ sơ.
-* **[D02 - Từ điển Dữ liệu & Validation Rules](docs/D02_TuDienDuLieu.md):** Đặc tả 8 thuộc tính chuẩn cho 100% trường dữ liệu, biểu thức chính quy (Regex), thuật toán Luhn IMEI, ràng buộc SLA, đồng bộ State Diagram C03, bảng dữ liệu mẫu và quy định cột CSV cần nhập.
-* **[D03 - Wireframe & Layout Màn hình Ưu tiên](docs/D03_Wireframe_GiaoDien.md):** Wireframe 6 màn hình cốt lõi bóc tách 3 khối (Xem - Nhập - Hành động) kèm danh sách thông báo lỗi quan trọng.
-* **[D04 - Bảng Ánh xạ Kỹ thuật sang Frappe Framework](docs/D04_AnhXa_Frappe.md):** Ánh xạ DocType tự xây dựng trên custom app độc lập, Child Tables, cấu hình Workflow 5 trạng thái, ma trận phân quyền Role Permission, phối hợp A03 về hệ sinh thái ngoài và phương án mô phỏng.
-* **[D05 - Sequence Diagrams Chọn lọc](docs/D05_Sequence_Diagram.md):** 2 biểu đồ tuần tự UML: (1) Tạo và tự động phân công phiếu hỗ trợ theo điều kiện SLA/Smember; (2) Nghiệm thu kỹ thuật và đóng phiếu đổi mới 1-1 S-VIP kèm khảo sát CSAT qua Zalo ZNS.
-* **[Ma trận Đối soát Chéo (Cross-check Traceability Matrix)](docs/Traceability_Matrix.md):** Ma trận kiểm tra tính nhất quán 100% giữa Giao diện - Dữ liệu - Quy trình - Phân quyền.
-
----
-
-## 5. NHẬT KÝ CÔNG VIỆC & TIẾN ĐỘ THỰC HIỆN (WORK LOG)
-
-- [x] **2026-10-02:** Tiếp nhận yêu cầu dự án từ `Nhiemvu.md`, phỏng vấn làm rõ các quyết định thiết kế (Grill-me) cùng anh Trần Quang Huy.
-- [x] **2026-10-02:** Lập kế hoạch thực thi chi tiết Action Plan & WBS, thống nhất cấu trúc tài liệu bàn giao.
-- [x] **2026-10-02:** Khởi tạo tài liệu kiến trúc tổng quan hệ thống `README.md`.
-- [x] **2026-10-02:** Hoàn thiện sản phẩm D01: Danh mục thực thể, ERD Logic & Thuyết minh 2 bài toán dữ liệu.
-- [x] **2026-10-02:** Hoàn thiện sản phẩm D02: Từ điển dữ liệu chuẩn 8 cột & Validation Rules, đồng bộ C03, dữ liệu mẫu và quy định cột CSV.
-- [x] **2026-10-02:** Hoàn thiện sản phẩm D03: Wireframe 6 màn hình ưu tiên (Xem - Nhập - Actions) kèm thông báo lỗi quan trọng.
-- [x] **2026-10-02:** Hoàn thiện sản phẩm D04: Bảng ánh xạ DocType, Workflow, Role Permissions, phối hợp A03 và phương án mô phỏng.
-- [x] **2026-10-02:** Hoàn thiện sản phẩm D05: Sequence Diagram (Tạo/phân công phiếu & Nghiệm thu/đóng phiếu CSAT có điều kiện).
-- [x] **2026-10-02:** Lập Ma trận đối soát chéo (Traceability Matrix) chuẩn bị cho Mốc M3 và hoàn tất Mốc M4.
-- [x] **2026-10-02:** Chốt bàn giao chính thức Mốc M4 (Final Sign-off).
-- [x] **2026-10-04:** Chuẩn hóa kiến trúc kỹ thuật sang mô hình Custom App độc lập trên nền tảng Frappe Framework v15 (`cellphones_crm`, Zero-dependency on ERPNext). Tự xây dựng 100% Custom DocTypes nghiệp vụ, cập nhật bảng ánh xạ D04 và đồng bộ toàn bộ tài liệu bàn giao D01–D05.
+## Nền tảng phương pháp luận
+Hệ thống tuân thủ 5 thực hành cốt lõi trong Chương 2 (*Laying the Foundation*) cuốn sách **"Software Requirements Essentials: Core Practices for Successful Business Analysis"** (Karl Wiegers, Candase Hokanson):
+1. **Practice #1:** Understand the problem before converging on a solution.
+2. **Practice #2:** Define business objectives.
+3. **Practice #3:** Define the solution's boundaries.
+4. **Practice #4:** Identify and characterize stakeholders.
+5. **Practice #5:** Identify empowered decision makers.
