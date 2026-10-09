@@ -52,7 +52,7 @@ Toàn bộ các sản phẩm phân tích và thiết kế của TV4 được chu
 
 ---
 
-## 4. TỔNG HỢP 5 SẢN PHẨM BÀN GIAO KỸ THUẬT (TV4)
+## 4. TỔNG HỢP 6 SẢN PHẨM BÀN GIAO KỸ THUẬT (TV4)
 
 | Mã | Tên sản phẩm bàn giao | Nội dung tóm tắt | Đường dẫn tài liệu |
 | :---: | :--- | :--- | :---: |
@@ -61,6 +61,7 @@ Toàn bộ các sản phẩm phân tích và thiết kế của TV4 được chu
 | **D03** | **Wireframe giao diện 5 màn hình chính** | Phác thảo layout ASCII Desk v15 cho 5 màn hình tác nghiệp (Hồ sơ 360°, Chi tiết cơ hội, Tương tác & Nhắc việc, Phiếu hỗ trợ hậu mãi, Dashboard SLA) bóc tách rõ 3 phần: Xem – Nhập – Hành động & Cảnh báo lỗi. | [D03_Wireframe_GiaoDien.md](file:///d:/CRM_CellphoneS/docs/D03_Wireframe_GiaoDien.md) |
 | **D04** | **Bảng ánh xạ sang Frappe Framework** | Ánh xạ 8 thực thể sang DocType chuẩn/tùy biến, thiết kế Workflow transitions cho `Support Ticket` và `Opportunity`, Ma trận phân quyền 6 vai trò và phương án nạp dữ liệu lịch sử mua hàng qua Data Import Tool. | [D04_AnhXa_Frappe.md](file:///d:/CRM_CellphoneS/docs/D04_AnhXa_Frappe.md) |
 | **D05** | **Biểu đồ tuần tự (Sequence Diagram)** | 2 biểu đồ UML (Proposed Design): (1) Tiếp nhận & Điều phối phiếu hỗ trợ liên chi nhánh; (2) Thẩm định điều kiện và Đóng phiếu hỗ trợ kèm kiểm tra kết quả và cờ xác nhận đã thông báo khách hàng. | [D05_Sequence_Diagram.md](file:///d:/CRM_CellphoneS/docs/D05_Sequence_Diagram.md) |
+| **D06** | **Đặc tả Sự kiện & Phản ứng hệ thống (Event–Response & State Transition)** | Danh mục 19 sự kiện MVP chuẩn Karl Wiegers (13 Business, 2 Signal, 4 Temporal), Bảng phản ứng 6 cột bóc tách hệ thống và con người, Sơ đồ trạng thái Mermaid v2, Ma trận trạng thái và đối chiếu 9 ngoại lệ EX-01 đến EX-09. | [D06_Event_Response_Specification.md](file:///d:/CRM_CellphoneS/docs/D06_Event_Response_Specification.md) |
 
 ---
 
@@ -104,4 +105,4 @@ Toàn bộ các sản phẩm phân tích và thiết kế của TV4 được chu
     5. Ma trận truy vết 4 chiều (Traceability Matrix) kết nối Customer Expectations / Gaps Model $\leftrightarrow$ Use Cases $\leftrightarrow$ Events & Responses $\leftrightarrow$ Dữ liệu & Cổng kiểm soát Frappe CRM.
     6. Bảng đối chiếu toàn diện 9 tình huống ngoại lệ bắt buộc (EX-01 đến EX-09).
     7. Rà soát kiểm tra đạt 100% tiêu chí Checklist baseline mục 14.
-
+  - Đóng gói chính thức hồ sơ bàn giao kỹ thuật [D06_Event_Response_Specification.md](file:///d:/CRM_CellphoneS/docs/D06_Event_Response_Specification.md) lưu trữ trong thư mục `docs/`, phục vụ báo cáo đồ án và trình bày nhóm.
