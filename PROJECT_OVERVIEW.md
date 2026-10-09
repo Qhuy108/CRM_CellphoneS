@@ -81,6 +81,27 @@ Toàn bộ các sản phẩm phân tích và thiết kế của TV4 được chu
   - Xây dựng hoàn chỉnh sơ đồ ERD Logic 8 thực thể kèm thuyết minh và giải pháp cho 2 bài toán dữ liệu đặc thù (`docs/D01_ERD_ThuyetMinh.md`).
   - Xây dựng Từ điển dữ liệu 6 cột kỹ thuật, đồng bộ trạng thái và cấu trúc CSV `order_history.csv` (`docs/D02_TuDienDuLieu.md`).
   - Thiết kế Wireframe ASCII 5 màn hình tác nghiệp Desk v15 bóc tách Xem – Nhập – Hành động (`docs/D03_Wireframe_GiaoDien.md`).
-  - Hoàn thiện Bảng ánh xạ DocType, Workflow và Ma trận phân quyền 6 vai trò trên Frappe Framework v15 độc lập (`docs/D04_AnhXa_Frappe.md`).
+  - Hoàn thiện Bảng ánh xạ DocType, sơ đồ Mermaid State Diagram cho cả 2 Workflow (`Support Ticket` & `CellphoneS Opportunity`) và Ma trận phân quyền 6 vai trò trên Frappe Framework v15 độc lập (`docs/D04_AnhXa_Frappe.md`).
   - Thiết kế 2 Sequence Diagram UML cho luồng điều phối liên chi nhánh và luồng kiểm tra điều kiện đóng phiếu nghiêm ngặt (`docs/D05_Sequence_Diagram.md`).
+  - Phối hợp bộ kỹ năng (`taste-design`, `enhance-prompt`, `manage-design-system`, `generate-design`) triển khai sinh 5 màn hình UI High-Fidelity trên **Google Stitch** chuẩn Frappe Desk v15 (Project ID: `1163140924608807106`):
+    1. `UI-01`: Hồ sơ khách hàng 360° (Customer 360 View - CUST-2026-00128)
+    2. `UI-02`: Chi tiết cơ hội bán hàng & Tư vấn sản phẩm (Opportunity - OPP-2026-045)
+    3. `UI-03`: Quản lý tương tác & Nhắc việc chăm sóc (Care Tasks & Quick Log)
+    4. `UI-04`: Phiếu hỗ trợ dịch vụ & Phối hợp hậu mãi (Support Ticket - TICK-2026-00089)
+    5. `UI-05`: Dashboard báo cáo quản trị & Giám sát SLA (3 chỉ tiêu Wiegers Practice #2)
+  - Đồng bộ và tải trọn bộ file HTML & ảnh render PNG độ phân giải cao vào thư mục `.stitch/designs/`, cập nhật `.stitch/metadata.json`.
+  - Khởi tạo và xuất toàn bộ 8 bảng từ điển dữ liệu chi tiết Mục 2 sang định dạng tài liệu Microsoft Word chuẩn trắng đen [D02_TuDienDuLieu_v2.docx](file:///d:/CRM_CellphoneS/docs/D02_TuDienDuLieu_v2.docx).
   - Tổng hợp toàn diện tài liệu quản trị `PROJECT_OVERVIEW.md`.
+
+* **2026-10-09 (Phiên bản v1.1 - Hoàn thiện Mốc Practice #7 theo Karl Wiegers):**
+  - Nghiên cứu và tiếp nhận tài liệu baseline dùng chung của nhóm (`baseline_case_study_crm_cellphones.md`) về Case tiếp nhận & theo dõi bảo hành/đổi trả tại hai chi nhánh CH01 & CH02.
+  - Phân tích và tham chiếu chuyên sâu tài liệu *Software Requirements Essentials* (Karl Wiegers & Candase Hokanson, Chapter 3, Practice #7: Identify Events and Responses), kết hợp chéo với phân tích Gaps Model SERVQUAL của Võ Duy Mạnh (`nội dung của mạnh.md`) và Use Cases Practice #6 của Nguyễn Đức Nhật (`nôi dung của nhật.md`).
+  - Xây dựng hoàn chỉnh tài liệu [practice7_tran_quang_huy.md](file:///d:/CRM_CellphoneS/practice7_tran_quang_huy.md) bao gồm:
+    1. Định vị bối cảnh mô phỏng 2 cửa hàng, kịch bản chuẩn Happy path và nguyên tắc phân loại thông tin A/B/C.
+    2. Danh mục 28 sự kiện chi tiết (Event List) phân loại thành: 12 Business Events (`EVT-B01` đến `EVT-B12`), 12 Signal Events (`EVT-S01` đến `EVT-S12`) và 4 Temporal Events (`EVT-T01` đến `EVT-T04`).
+    3. Bảng phản ứng với sự kiện toàn diện (Event–Response Table) chuẩn 6 cột kỹ thuật: Event ID, Tên sự kiện & Tác nhân, Phân loại, Điều kiện/Trạng thái kích hoạt, Phản ứng kỳ vọng (tách bạch hành vi CRM và trách nhiệm con người), Dữ liệu & Nhật ký bị tác động.
+    4. Sơ đồ máy trạng thái Mermaid (State Transition Diagram) và Ma trận chuyển trạng thái (State Transition Matrix) trên đúng 5 trạng thái chính, chuẩn hóa `wait_reason` thành sub-state của trạng thái `Đang xử lý` và mô hình hóa 2 vòng lặp ngoại lệ (EX-07 khách chưa đồng ý quay về xử lý, EX-08 mở lại ticket đã đóng về xác minh).
+    5. Ma trận truy vết 4 chiều (Traceability Matrix) kết nối Customer Expectations / Gaps Model $\leftrightarrow$ Use Cases $\leftrightarrow$ Events & Responses $\leftrightarrow$ Dữ liệu & Cổng kiểm soát Frappe CRM.
+    6. Bảng đối chiếu toàn diện 9 tình huống ngoại lệ bắt buộc (EX-01 đến EX-09).
+    7. Rà soát kiểm tra đạt 100% tiêu chí Checklist baseline mục 14.
+

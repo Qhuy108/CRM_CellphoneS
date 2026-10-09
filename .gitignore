@@ -22,3 +22,6 @@ $RECYCLE.BIN/
 # Design & Agent skills (Local only)
 .stitch/
 skills/
+.venv/
+__pycache__/
+
